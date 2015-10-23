@@ -25,8 +25,9 @@
                 <plugins>
                     <plugin>
                         <artifactId>maven-war-plugin</artifactId>
-                        <version>2.1.1</version>
+                        <version>2.3</version>
                         <configuration>
+                            <failOnMissingWebXml>false</failOnMissingWebXml>
                             <outputDirectory>deployments</outputDirectory>
                             <warName>ROOT</warName>
                         </configuration>
