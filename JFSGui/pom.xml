@@ -11,6 +11,7 @@
 
     <artifactId>JFSGui</artifactId>
     <packaging>war</packaging>
+    <name>jfs</name>
 
 
 </project>

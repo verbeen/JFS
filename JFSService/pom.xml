@@ -11,5 +11,6 @@
 
     <artifactId>JFSService</artifactId>
     <packaging>war</packaging>
+    <name>service</name>
 
 </project>
