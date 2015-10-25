@@ -10,7 +10,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>JFSService</artifactId>
-    <packaging>war</packaging>
+    <packaging>ear</packaging>
 
     <profiles>
         <profile>
@@ -30,15 +30,6 @@
                             <outputDirectory>deployments</outputDirectory>
                             <warName>service</warName>
                         </configuration>
-                        <executions>
-                            <execution>
-                                <id>war-exploded</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>exploded</goal>
-                                </goals>
-                            </execution>
-                        </executions>
                     </plugin>
                 </plugins>
             </build>
