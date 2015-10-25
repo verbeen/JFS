@@ -7,11 +7,9 @@
         <groupId>JFSParent</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
 
+    <modelVersion>4.0.0</modelVersion>
     <artifactId>JFSGui</artifactId>
-    <packaging>war</packaging>
-    <name>jfs</name>
 
 
     <profiles>
@@ -32,6 +30,15 @@
                             <outputDirectory>deployments</outputDirectory>
                             <warName>jfs</warName>
                         </configuration>
+                        <executions>
+                            <execution>
+                                <id>war-exploded</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>exploded</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>
