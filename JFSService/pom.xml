@@ -47,9 +47,9 @@
             </build>
             <repositories>
                 <repository>
-                    <id>jboss</id>
-                    <name>JBoss Maven2 repository</name>
-                    <url>http://repository.jboss.com/maven2/</url>
+                    <id>maven</id>
+                    <name>maven central repository</name>
+                    <url>http://repo1.maven.org/maven/</url>
                 </repository>
             </repositories>
         </profile>
