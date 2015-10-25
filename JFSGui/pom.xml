@@ -10,6 +10,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>JFSGui</artifactId>
+    <packaging>war</packaging>
 
     <profiles>
         <profile>
@@ -25,7 +26,6 @@
                         <artifactId>maven-war-plugin</artifactId>
                         <version>2.3</version>
                         <configuration>
-                            <failOnMissingWebXml>false</failOnMissingWebXml>
                             <outputDirectory>deployments</outputDirectory>
                             <warName>jfs</warName>
                         </configuration>
