@@ -23,7 +23,7 @@
                 <finalName>service</finalName>
                 <plugins>
                     <plugin>
-                        <artifactId>maven-war-plugin</artifactId>
+                        <artifactId>maven-ear-plugin</artifactId>
                         <version>2.3</version>
                         <configuration>
                             <failOnMissingWebXml>false</failOnMissingWebXml>
