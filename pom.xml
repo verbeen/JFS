@@ -13,12 +13,4 @@
         <module>JFSGui</module>
         <module>JFSService</module>
     </modules>
-
-    <repositories>
-        <repository>
-            <id>jboss</id>
-            <name>JBoss Maven2 repository</name>
-            <url>http://repository.jboss.com/maven2/</url>
-        </repository>
-    </repositories>
 </project>
