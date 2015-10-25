@@ -16,8 +16,9 @@
 
     <repositories>
         <repository>
-            <id>mvnrepository</id>
-            <url>http://mvnrepository.com</url>
+            <id>jboss</id>
+            <name>JBoss Maven2 repository</name>
+            <url>http://repository.jboss.com/maven2/</url>
         </repository>
     </repositories>
 </project>
