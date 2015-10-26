@@ -12,5 +12,6 @@
     <modules>
         <module>JFSGui</module>
         <module>JFSService</module>
+        <module>JFSData</module>
     </modules>
 </project>
