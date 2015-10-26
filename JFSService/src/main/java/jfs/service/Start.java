@@ -7,7 +7,7 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
 /**
- * Created by zade on 26-10-2015.
+ * Created by lpuddu on 26-10-2015.
  */
 @Singleton @Startup
 public class Start {
@@ -20,6 +20,7 @@ public class Start {
         {
             Start.service = new JFSService();
             //Start.service.init();
+            //testing if develop commit triggers jenkins build
         }
     }
 
