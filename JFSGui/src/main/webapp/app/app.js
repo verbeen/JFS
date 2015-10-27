@@ -1,7 +1,7 @@
 angular.module('jfsApp', ["ngRoute", "mgcrea.ngStrap", "jobofferList", "jobofferDetails"])
 	.config(['$routeProvider', function($routeProvider) {
 		$routeProvider.when('/', {
-			template: '<h1>home</h1>'
+			template: '<h1>home of vishnu</h1>'
 		})
 		.when('/joboffer/list', {
 			templateUrl: 'app/modules/joboffer/list/joboffer-list.html',
