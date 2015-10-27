@@ -9,6 +9,7 @@
 *.iws
 out/
 deployments/*
+classes/
 
 # Mac
 .DS_Store
