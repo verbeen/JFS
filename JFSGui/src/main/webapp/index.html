@@ -1,10 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html ng-app="jfsApp">
 <head>
-    <meta charset="UTF-8">
-    <title></title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>JfS - work.study.innovate</title>
+
+	<link rel="stylesheet" href="vendor/bootstrap-3.3.5/css/bootstrap.min.css">
+
+	<link rel="stylesheet" href="css/app.css">
+	<link rel="stylesheet" href="app/modules/joboffer/list/create/joboffer-create.css">
 </head>
 <body>
-hello
+	<nav id="jfs-navbar" class="navbar navbar-default" role="navigation" bs-navbar>
+		<div class="navbar-header">
+			<a class="navbar-brand" href="#/">
+				<img alt="JfS work.study.innovate" id="brandlogo" class="img-responsive" src="img/logo_jfs-slogan.png">
+			</a>
+		</div>
+		<ul class="nav navbar-nav">
+			<li data-match-route="/joboffer/list.*"><a href="#/joboffer/list">Job offers</a></li>
+		</ul>
+	</nav>
+
+	<div id="jfs-contentview" ng-view></div>
+
+	<script type="text/javascript" src="vendor/angularjs-1.4.7/angular.min.js"></script>
+	<script type="text/javascript" src="vendor/angularjs-1.4.7/angular-route.min.js"></script>
+	<script type="text/javascript" src="vendor/angular-strap-2.3.2/angular-strap.min.js"></script>
+	<script type="text/javascript" src="vendor/angular-strap-2.3.2/angular-strap.tpl.min.js"></script>
+
+	<script type="text/javascript" src="app/app.js"></script>
+	<script type="text/javascript" src="app/modules/joboffer/list/joboffer-list.js"></script>
+	<script type="text/javascript" src="app/modules/joboffer/list/joboffer-list-service.js"></script>
+	<script type="text/javascript" src="app/modules/joboffer/details/joboffer-details.js"></script>
+	<script type="text/javascript" src="app/modules/joboffer/details/joboffer-details-service.js"></script>
+	<script type="text/javascript" src="app/modules/joboffer/list/create/joboffer-create.js"></script>
 </body>
 </html>
