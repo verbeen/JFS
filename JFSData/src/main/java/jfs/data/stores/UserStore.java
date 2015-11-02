@@ -1,0 +1,33 @@
+package jfs.data.stores;
+
+import com.google.gson.Gson;
+import jfs.data.connections.DataClient;
+import jfs.data.dataobjects.UserDO;
+import org.bson.Document;
+
+/**
+ * Created by lpuddu on 29-10-2015.
+ */
+public class UserStore extends DataStore {
+
+    public UserStore(DataClient client) {
+        super(client, "users");
+    }
+
+    public Boolean addUser(UserDO user){
+        if (user != null) {
+            return this.insert(user, user.Id);
+        } else {
+            throw new NullPointerException("UserDO user parameter is null");
+        }
+    }
+
+    public UserDO getUser(String id){
+        UserDO user = null;
+        Object obj = this.store.find(new Document("_id", id)).first();
+        if (obj != null) {
+            user = (UserDO) new Gson().fromJson(obj.toString(), UserDO.class);
+        }
+        return user;
+    }
+}
