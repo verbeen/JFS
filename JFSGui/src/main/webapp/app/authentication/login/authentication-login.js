@@ -19,11 +19,12 @@
         function login() {
             vm.dataLoading = true;
             AuthenticationService.Login(vm.email, vm.password, function (response) {
-                if (response.success) {
+                if (response) {
+                    console.debug("User logged in!");
                     AuthenticationService.SetCredentials(vm.email, vm.password);
                     $location.path('/');
                 } else {
-                    console.log("FlashService.Error(response.message)");
+                    console.error("Error logging in!");
                     vm.dataLoading = false;
                 }
             });
