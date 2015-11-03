@@ -1,9 +1,8 @@
 package jfs.data.connections;
 
-import com.mongodb.*;
+import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.sun.org.apache.bcel.internal.classfile.Unknown;
 
 import java.net.UnknownHostException;
 

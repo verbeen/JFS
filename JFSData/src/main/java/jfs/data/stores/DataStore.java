@@ -1,13 +1,9 @@
 package jfs.data.stores;
 
-import com.google.gson.Gson;
-import com.mongodb.*;
+import com.mongodb.MongoWriteException;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.util.JSON;
-import com.sun.istack.internal.logging.Logger;
 import jfs.data.connections.DataClient;
 import jfs.data.serializers.Serializer;
-import org.bson.BsonDocument;
 import org.bson.Document;
 
 import java.util.logging.Level;
@@ -35,7 +31,7 @@ public abstract class DataStore {
             if(ex.getError().getCode() == 11000){
                 return false;
             }else {
-                Logger.getLogger(this.getClass()).log(Level.INFO, ex.getMessage(), ex);
+                //Logger.getLogger(this.getClass()).log(Level.INFO, ex.getMessage(), ex);
                 return false;
             }
         }
