@@ -28,6 +28,6 @@ public class UserWebService
 
     @POST @Path("/login") @Consumes("application/json")
     public String login(LoginDTO login){
-        return new Gson().toJson(this.service.loginUser(login.id, login.password));
+        return new Gson().toJson(this.service.loginUser(login.email, login.password));
     }
 }
