@@ -22,7 +22,7 @@ public class UserWebService
     public String register(RegisterDTO register){
         this.service.registerStudent(register.email, register.password);
         return "ok";
-    }
+    }   
 
     @POST @Path("/login") @Consumes("application/json")
     public String login(LoginDTO login){
