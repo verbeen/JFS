@@ -24,10 +24,10 @@ public class UserStore extends DataStore {
 
     public UserDO getUser(String id, String password){
         UserDO user = null;
-        Object obj = this.store.find(new Document("_id", id)).first();
-        if (obj != null) {
-            user = (UserDO) new Gson().fromJson(obj.toString(), UserDO.class);
-            if(user.password == password){
+        Document doc = this.store.find(new Document("_id", id)).first();
+        if (doc != null) {
+            user = (UserDO) new Gson().fromJson((doc).toJson(), UserDO.class);
+            if(user.password.equals(password)){
                 return user;
             }
         }

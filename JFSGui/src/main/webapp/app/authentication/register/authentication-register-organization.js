@@ -17,11 +17,10 @@
             UserService.Create(vm.user)
                 .then(function (response) {
                     console.debug(response);
+
                     if (response.success) {
-                        console.log("FlashService.Success('Registration successful', true)");
                         $location.path('/authentication/login');
                     } else {
-                        console.log("FlashService.Error(response.message)");
                         vm.dataLoading = false;
                     }
                 });
