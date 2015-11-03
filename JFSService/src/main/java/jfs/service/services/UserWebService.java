@@ -18,10 +18,12 @@ public class UserWebService
     @Inject
     UserService service;
 
-    @POST @Path("/register") @Consumes("application/json")
+    @POST
+    @Path("/register")
+    @Consumes("application/json")
     public String register(RegisterDTO register){
         this.service.registerStudent(register.email, register.password);
-        return "ok";
+        return "{ \"registrationSuccessful\": true }";
     }
 
     @POST @Path("/login") @Consumes("application/json")
