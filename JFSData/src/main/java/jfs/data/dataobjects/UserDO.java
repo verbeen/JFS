@@ -1,20 +1,22 @@
 package jfs.data.dataobjects;
 
+import jfs.data.dataobjects.enums.UserType;
+
 import java.io.Serializable;
 
 /**
  * Created by lpuddu on 29-10-2015.
  */
 public class UserDO {
-    public String Id;
-    public String Email;
-    public String Name;
+    public String id;
+    public String password;
+    public UserType type;
 
     public UserDO() {}
 
-    public UserDO(String id, String email, String name) {
-        Id = id;
-        Email = email;
-        Name = name;
+    public UserDO(String id, String password, UserType type) {
+        this.id = id;
+        this.password = password;
+        this.type = type;
     }
 }

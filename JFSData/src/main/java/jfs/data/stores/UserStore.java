@@ -16,18 +16,21 @@ public class UserStore extends DataStore {
 
     public Boolean addUser(UserDO user){
         if (user != null) {
-            return this.insert(user, user.Id);
+            return this.insert(user, user.id);
         } else {
             throw new NullPointerException("UserDO user parameter is null");
         }
     }
 
-    public UserDO getUser(String id){
+    public UserDO getUser(String id, String password){
         UserDO user = null;
         Object obj = this.store.find(new Document("_id", id)).first();
         if (obj != null) {
             user = (UserDO) new Gson().fromJson(obj.toString(), UserDO.class);
+            if(user.password == password){
+                return user;
+            }
         }
-        return user;
+        return null;
     }
 }
