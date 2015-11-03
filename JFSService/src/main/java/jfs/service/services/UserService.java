@@ -24,9 +24,9 @@ public class UserService {
         this.userStore = new UserStore(this.dataService.getDataClient());
     }
 
-    public void registerStudent(String email, String password){
+    public Boolean registerStudent(String email, String password){
         UserDO user = new UserDO(email, password, UserType.STUDENT);
-        this.userStore.addUser(user);
+        return this.userStore.addUser(user);
     }
 
     public UserDO loginUser(String email, String password) {

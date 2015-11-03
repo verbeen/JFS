@@ -22,8 +22,8 @@ public class UserWebService
     @Path("/register")
     @Consumes("application/json")
     public String register(RegisterDTO register){
-        this.service.registerStudent(register.email, register.password);
-        return "{ \"registrationSuccessful\": true }";
+        Boolean result = this.service.registerStudent(register.email, register.password);
+        return new Gson().toJson(result);
     }
 
     @POST @Path("/login") @Consumes("application/json")
