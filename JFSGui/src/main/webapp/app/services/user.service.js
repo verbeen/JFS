@@ -33,7 +33,6 @@
         */
 
         function Create(user) {
-            console.debug(user);
             return $http.post('/service/users/register', user).then(handleSuccess, handleError('Error creating user'));
         }
 
@@ -50,7 +49,6 @@
         // private functions
 
         function handleSuccess(res) {
-            console.debug(res);
             return res.data;
         }
 
@@ -60,5 +58,4 @@
             };
         }
     }
-
 })();

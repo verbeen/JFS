@@ -1,7 +1,8 @@
 angular.module('app', ["ngRoute", "ngCookies", "mgcrea.ngStrap", "jobofferList", "jobofferDetails"])
-	.config(['$routeProvider', function($routeProvider) {
+    .config(['$routeProvider', function($routeProvider, $rootScope) {
 		$routeProvider.when('/', {
-			template: '<h1>Welcome to JFS jobportal!</h1>'
+            templateUrl: 'app/home.html',
+            controller: 'MainController as MainCtrl'
         })
 		.when('/joboffer/list', {
 			templateUrl: 'app/modules/joboffer/list/joboffer-list.html',
@@ -25,6 +26,9 @@ angular.module('app', ["ngRoute", "ngCookies", "mgcrea.ngStrap", "jobofferList",
         })
 		.otherwise({redirectTo: '/'});
 	}])
+    .controller('MainController', function($scope, $rootScope) {
+        $scope.username = $rootScope.globals.currentUser.username;
+    })
     .run(['$rootScope', '$location', '$cookieStore', '$http', function($rootScope, $location, $cookieStore, $http) {
         // keep user logged in after page refresh
         $rootScope.globals = $cookieStore.get('globals') || {};

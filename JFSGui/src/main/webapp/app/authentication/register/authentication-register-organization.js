@@ -16,15 +16,14 @@
             console.debug(vm.user);
             UserService.Create(vm.user)
                 .then(function (response) {
-                    console.debug(response);
-
-                    if (response.success) {
+                    if (response) {
+                        console.debug("Registration successful!");
                         $location.path('/authentication/login');
                     } else {
+                        console.info("Registration not successful!");
                         vm.dataLoading = false;
                     }
                 });
         }
     }
-
 })();

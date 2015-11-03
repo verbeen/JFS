@@ -34,7 +34,7 @@
 
             /* Use this for real authentication
              ----------------------------------------------*/
-            $http.post('/service/users/login', { id: email, password: password })
+            $http.post('/service/users/login', { email: email, password: password })
                 .success(function (response) {
                     callback(response);
                 });
