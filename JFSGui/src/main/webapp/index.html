@@ -6,22 +6,34 @@
 	<title>JfS - work.study.innovate</title>
 
 	<link rel="stylesheet" href="vendor/bootstrap-3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="vendor/angular-motion-0.4.2/angular-motion.min.css">
 
 	<link rel="stylesheet" href="css/app.css">
 </head>
 <body>
     <!-- navigation -->
 	<nav id="jfs-navbar" class="navbar navbar-default" role="navigation" bs-navbar>
-		<div class="navbar-header">
-			<a class="navbar-brand" href="#/">
-				<img alt="JfS work.study.innovate" id="brandlogo" class="img-responsive" src="img/logo_jfs-slogan.png">
-			</a>
-		</div>
-		<ul class="nav navbar-nav">
-			<li data-match-route="/job/list.*"><a href="#/job/list">Job offers</a></li>
-			<li data-match-route="/authentication/register.*"><a href="#/authentication/register">Register as organization</a></li>
-			<li><a href="#/authentication/logout">Logout</a></li>
-		</ul>
+        <div class="container-fluid" bs-collapse start-collapsed="true">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#/">
+                    <img alt="JfS work.study.innovate" id="brandlogo" class="img-responsive" src="img/logo_jfs-slogan.png">
+                </a>
+                <button type="button" class="navbar-toggle" bs-collapse-toggle>
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+            <div class="collapse navbar-collapse" bs-collapse-target>
+                <ul class="nav navbar-nav">
+                    <li data-match-route="/job/list.*"><a href="#/job/list">Job offers</a></li>
+                    <li data-match-route="/authentication/register.*"><a href="#/authentication/register">Register as organization</a></li>
+                    <li><a href="#/authentication/logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
 	</nav>
 
     <!-- container where all html templates of components go -->

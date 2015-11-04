@@ -2,10 +2,6 @@
 	padding: 5px 20px 5px 10px;
 }
 
-#jfs-navbar #brandlogo {
+#jfs-navbar .navbar-brand #brandlogo {
 	height: 40px;
-}
-
-#jfs-contentview {
-	padding: 0 20px;
 }
