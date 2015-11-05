@@ -30,7 +30,7 @@
                 controller: 'LogoutController as vm'
             })
             .when('/authentication/register', {
-                templateUrl: 'app/authentication/register/authentication-register-organization.html',
+                templateUrl: 'app/authentication/register/authentication-register.html',
                 controller: 'RegisterController as vm'
             })
             .otherwise({redirectTo: '/'});
