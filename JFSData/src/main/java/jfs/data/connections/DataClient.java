@@ -1,6 +1,9 @@
 package jfs.data.connections;
 
+import com.mongodb.AuthenticationMechanism;
+import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoCredential;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
@@ -15,7 +18,19 @@ public class DataClient {
 
     public DataClient(String databaseName)
     {
-        MongoClient client = new MongoClient();
+        String dbUrl = System.getenv("OPENSHIFT_MONGODB_DB_URL");
+        MongoClient client;
+        if(dbUrl != null){
+            /*String dbPort = System.getenv("OPENSHIFT_MONGODB_DB_PORT");
+            String dbUser = System.getenv("OPENSHIFT_MONGODB_DB_USERNAME");
+            String dbPass = System.getenv("OPENSHIFT_MONGODB_DB_PASSWORD");
+            client = new MongoClient(dbIP, Integer.parseInt(dbPort));
+            MongoCredential credential = MongoCredential.createCredential(dbUser, databaseName, dbPass.toCharArray());*/
+            client = new MongoClient(dbUrl);
+        }
+        else{
+            client = new MongoClient();
+        }
         this.database = client.getDatabase(databaseName);
     }
 
