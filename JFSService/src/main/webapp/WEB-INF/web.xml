@@ -25,5 +25,9 @@
             <param-name>cors.allowOrigin</param-name>
             <param-value>*</param-value>
         </init-param>
+        <init-param>
+            <param-name>cors.supportedMethods</param-name>
+            <param-value>GET, POST, HEAD, PUT, DELETE</param-value>
+        </init-param>
     </filter>
 </web-app>
