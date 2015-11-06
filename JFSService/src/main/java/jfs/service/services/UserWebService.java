@@ -18,13 +18,13 @@ public class UserWebService
     @Inject
     UserService service;
 
-    @POST @Path("/register") @Consumes("application/json")
+    @POST @Path("/register") @Consumes("application/json") @Produces("application/json")
     public String register(RegisterDTO register){
         Boolean result = this.service.registerStudent(register.email, register.password);
         return new Gson().toJson(result);
     }
 
-    @POST @Path("/login") @Consumes("application/json")
+    @POST @Path("/login") @Consumes("application/json") @Produces("application/json")
     public String login(LoginDTO login){
         return new Gson().toJson(this.service.loginUser(login.email, login.password));
     }
