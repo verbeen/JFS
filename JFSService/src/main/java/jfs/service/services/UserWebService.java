@@ -26,6 +26,7 @@ public class UserWebService
         return new Gson().toJson(result);
     }
 
+    @CrossOriginResourceSharing(allowOrigins = { "*" })
     @POST @Path("/login") @Consumes("application/json") @Produces("application/json")
     public String login(LoginDTO login){
         return new Gson().toJson(this.service.loginUser(login.email, login.password));
