@@ -12,15 +12,13 @@ import javax.ws.rs.*;
 /**
  * Created by zade on 26-10-2015.
  */
-@Path("/users") @Startup @Singleton
+@Path("/users")
 public class UserWebService
 {
     @Inject
     UserService service;
 
-    @POST
-    @Path("/register")
-    @Consumes("application/json")
+    @POST @Path("/register") @Consumes("application/json")
     public String register(RegisterDTO register){
         Boolean result = this.service.registerStudent(register.email, register.password);
         return new Gson().toJson(result);
