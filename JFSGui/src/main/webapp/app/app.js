@@ -3,6 +3,9 @@
 
     angular.module('app', ["ngRoute", "ngCookies", "mgcrea.ngStrap"])
         .config(config)
+        .config(['$httpProvider', function($httpProvider) {
+            delete $httpProvider.defaults.headers.common["X-Requested-With"]
+        }])
         .run(run)
         .controller('HomeController', HomeController);
 
