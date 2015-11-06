@@ -25,6 +25,7 @@
                     $location.path('/');
                 } else {
                     console.error("Error logging in!");
+                    vm.error = "Error logging in!";
                     vm.dataLoading = false;
                 }
             });

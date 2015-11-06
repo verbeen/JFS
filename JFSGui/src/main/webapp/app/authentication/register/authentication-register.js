@@ -20,6 +20,7 @@
                         console.debug("Registration successful!");
                         $location.path('/authentication/login');
                     } else {
+                        vm.error = "Registration not successful!";
                         console.info("Registration not successful!");
                         vm.dataLoading = false;
                     }
