@@ -15,32 +15,14 @@ public class DataClient {
 
     public DataClient(String databaseName)
     {
-        String dbUrl = System.getenv("OPENSHIFT_MONGODB_DB_URL");
         MongoClient client;
+        String dbUrl = System.getenv("OPENSHIFT_MONGODB_DB_URL");
         if(dbUrl != null){
-            /*String dbPort = System.getenv("OPENSHIFT_MONGODB_DB_PORT");
-            String dbUser = System.getenv("OPENSHIFT_MONGODB_DB_USERNAME");
-            String dbPass = System.getenv("OPENSHIFT_MONGODB_DB_PASSWORD");
-            client = new MongoClient(dbIP, Integer.parseInt(dbPort));
-            MongoCredential credential = MongoCredential.createCredential(dbUser, databaseName, dbPass.toCharArray());*/
-            client = new MongoClient(new MongoClientURI(dbUrl));
+                client = new MongoClient(new MongoClientURI(dbUrl));
         }
         else{
             client = new MongoClient();
         }
-        this.database = client.getDatabase(databaseName);
-    }
-
-    public DataClient(String serverAddress, String databaseName) throws UnknownHostException
-    {
-        MongoClient client = new MongoClient(serverAddress);
-        this.database = client.getDatabase(databaseName);
-
-    }
-
-    public DataClient(String serverAddress, String databaseName, int port) throws UnknownHostException
-    {
-        MongoClient client = new MongoClient(serverAddress, port);
         this.database = client.getDatabase(databaseName);
     }
 
