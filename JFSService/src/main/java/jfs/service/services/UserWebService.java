@@ -3,8 +3,12 @@ package jfs.service.services;
 import com.google.gson.Gson;
 import jfs.service.transferobjects.LoginDTO;
 import jfs.service.transferobjects.RegisterDTO;
+
 import javax.inject.Inject;
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 
 /**
  * Created by zade on 26-10-2015.

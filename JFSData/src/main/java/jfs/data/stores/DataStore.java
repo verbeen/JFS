@@ -12,20 +12,20 @@ import java.util.logging.Level;
  * Created by lpuddu on 2-11-2015.
  */
 public abstract class DataStore {
-    protected MongoCollection<Document> store;
+    // Mongocollection is thread safe, as well as the serializer. So this class can be used concurrently.
+    protected MongoCollection<Document> collection;
     protected Serializer serializer = Serializer.DefaultSerializer;
 
-    public DataStore(DataClient client, String dbName) {
-        this.store = client.getCollection(dbName);
+    public DataStore(String dbName) {
+        this.collection = DataClient.defaultClient.getCollection(dbName);
     }
 
     public boolean insert(Object obj, Object id){
-
         Document doc = Document.parse(this.serializer.Serialize(obj));
         doc.put("_id", id);
 
         try {
-            this.store.insertOne(doc);
+            this.collection.insertOne(doc);
             return true;
         } catch(MongoWriteException ex) {
             if(ex.getError().getCode() == 11000){

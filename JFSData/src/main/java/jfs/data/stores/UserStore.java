@@ -9,9 +9,10 @@ import org.bson.Document;
  * Created by lpuddu on 29-10-2015.
  */
 public class UserStore extends DataStore {
+    public static UserStore store = new UserStore();
 
-    public UserStore(DataClient client) {
-        super(client, "users");
+    private UserStore() {
+        super("users");
     }
 
     public Boolean addUser(UserDO user){
@@ -24,7 +25,7 @@ public class UserStore extends DataStore {
 
     public UserDO getUser(String id, String password){
         UserDO user = null;
-        Document doc = this.store.find(new Document("_id", id)).first();
+        Document doc = this.collection.find(new Document("_id", id)).first();
         if (doc != null) {
             user = (UserDO) new Gson().fromJson((doc).toJson(), UserDO.class);
             if(user.password.equals(password)){
