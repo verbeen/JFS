@@ -9,7 +9,7 @@ import org.bson.Document;
  * Created by lpuddu on 29-10-2015.
  */
 public class UserStore extends DataStore {
-    public static UserStore store = new UserStore();
+    public static final UserStore store = new UserStore();
 
     private UserStore() {
         super("users");
