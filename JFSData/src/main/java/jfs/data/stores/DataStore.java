@@ -20,9 +20,16 @@ public abstract class DataStore {
         this.collection = DataClient.defaultClient.getCollection(dbName);
     }
 
+    public boolean insert(Object obj){
+        return this.insert(obj, null);
+    }
+
     public boolean insert(Object obj, Object id){
         Document doc = Document.parse(this.serializer.Serialize(obj));
-        doc.put("_id", id);
+
+        if(id != null) {
+            doc.put("_id", id);
+        }
 
         try {
             this.collection.insertOne(doc);

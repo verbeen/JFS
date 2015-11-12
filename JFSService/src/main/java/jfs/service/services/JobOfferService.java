@@ -3,6 +3,7 @@ package jfs.service.services;
 import javafx.util.Pair;
 import jfs.data.dataobjects.JobOfferDO;
 import jfs.data.stores.JobOfferStore;
+import jfs.service.transferobjects.JobOfferDTO;
 import jfs.service.transferobjects.SearchDTO;
 
 import javax.ejb.Singleton;
@@ -15,6 +16,36 @@ import java.util.List;
 @Singleton
 public class JobOfferService {
     private JobOfferStore jobOfferStore = JobOfferStore.store;
+
+    private JobOfferDO createOfferDO(JobOfferDTO offerDTO, String userId){
+        JobOfferDO offer = new JobOfferDO();
+
+        offer.description = offerDTO.description;
+        offer.duration = offerDTO.duration;
+        offer.function = offerDTO.function;
+        offer.location = offerDTO.location;
+        offer.name = offerDTO.name;
+        offer.task = offerDTO.task;
+        offer.type = offerDTO.type;
+        offer.validUntil = offerDTO.validUntil;
+        offer.website = offerDTO.website;
+
+        offer.userId = userId;
+
+        return offer;
+    }
+
+    public Boolean addOffer(JobOfferDTO offerDTO, String userId){
+        return this.jobOfferStore.addOffer(this.createOfferDO(offerDTO, userId));
+    }
+
+    public Boolean addOffers(List<JobOfferDTO> offerDTOs, String userId){
+        List<JobOfferDO> offers = new ArrayList<JobOfferDO>();
+        for(JobOfferDTO offerDTO : offerDTOs){
+            offers.add(this.createOfferDO(offerDTO, userId));
+        }
+        return this.jobOfferStore.addOffers(offers);
+    }
 
     public List<JobOfferDO> searchText(String term){
         return this.jobOfferStore.getJobOffersText(term);

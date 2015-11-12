@@ -1,8 +1,10 @@
 package jfs.service.services;
 
 import com.google.gson.Gson;
+import jfs.data.dataobjects.UserDO;
 import jfs.data.dataobjects.enums.UserType;
-import jfs.service.transferobjects.LoginDTO;
+import jfs.service.transferobjects.AuthenticationDTO;
+import jfs.service.transferobjects.LoginResultDTO;
 import jfs.service.transferobjects.RegisterDTO;
 
 import javax.inject.Inject;
@@ -33,7 +35,8 @@ public class UserWebService
     }
 
     @POST @Path("/login") @Consumes("application/json") @Produces("application/json")
-    public String login(LoginDTO login){
-        return new Gson().toJson(this.service.loginUser(login.email, login.password));
+    public LoginResultDTO login(AuthenticationDTO login){
+        LoginResultDTO result = this.service.loginUser(login.email, login.password);
+        return result;
     }
 }

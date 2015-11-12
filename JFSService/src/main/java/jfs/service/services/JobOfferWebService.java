@@ -1,5 +1,7 @@
 package jfs.service.services;
 
+import jfs.service.transferobjects.CreateJobOfferDTO;
+import jfs.service.transferobjects.CreateJobOffersDTO;
 import jfs.service.transferobjects.JobOfferListDTO;
 import jfs.service.transferobjects.SearchDTO;
 
@@ -15,7 +17,29 @@ import javax.ws.rs.Produces;
 @Path("/offers")
 public class JobOfferWebService {
     @Inject
+    private SessionService sessionService;
+    @Inject
     private JobOfferService jobOfferService;
+
+    @POST
+    @Path("/add") @Consumes("application/json") @Produces("application/json")
+    public Boolean addOffer(CreateJobOfferDTO offerDTO){
+        if(offerDTO.companyId == sessionService.sessions.get(offerDTO.token)) {
+            return this.jobOfferService.addOffer(offerDTO.jobOffer, offerDTO.companyId);
+        } else {
+            return false;
+        }
+    }
+
+    @POST
+    @Path("/addmore") @Consumes("application/json") @Produces("application/json")
+    public Boolean addOffers(CreateJobOffersDTO offerDTO){
+        if(offerDTO.companyId == sessionService.sessions.get(offerDTO.token)) {
+            return this.jobOfferService.addOffers(offerDTO.jobOffers, offerDTO.companyId);
+        } else {
+            return false;
+        }
+    }
 
     @POST
     @Path("/search/text") @Consumes("application/json") @Produces("application/json")

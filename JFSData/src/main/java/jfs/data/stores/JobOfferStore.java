@@ -1,5 +1,6 @@
 package jfs.data.stores;
 
+import com.mongodb.MongoException;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.model.IndexOptions;
 import com.mongodb.client.model.Sorts;
@@ -31,9 +32,32 @@ public class JobOfferStore extends DataStore {
 
     public Boolean addOffer(JobOfferDO offer){
         if (offer != null) {
-            return this.insert(offer, offer.id);
+            if(offer.id == null){
+                return this.insert(offer);
+            }else{
+                return this.insert(offer, offer.id);
+            }
         } else {
             throw new NullPointerException("JobOfferDO offer parameter is null");
+        }
+    }
+
+    private <T> List<Document> createDocumentList(List<T> objects){
+        List<Document> docs = new ArrayList<Document>();
+        for(T object : objects){
+            docs.add(Document.parse(this.serializer.Serialize(object)));
+        }
+        return docs;
+    }
+
+    public Boolean addOffers(List<JobOfferDO> offers){
+        List<Document> docs = this.createDocumentList(offers);
+        try{
+            this.collection.insertMany(docs);
+            return true;
+        }
+        catch (MongoException ex){
+            return false;
         }
     }
 
