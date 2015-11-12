@@ -32,8 +32,8 @@
         }
         */
 
-        function Create(user) {
-            return $http.post('/service/users/register', user).then(handleSuccess, handleError('Error creating user'));
+        function Create(user, type) {
+            return $http.post('/service/users/register/' + type, user).then(handleSuccess, handleError('Error creating user'));
         }
 
         /*

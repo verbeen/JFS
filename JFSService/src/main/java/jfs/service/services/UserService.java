@@ -5,7 +5,6 @@ import jfs.data.dataobjects.enums.UserType;
 import jfs.data.stores.UserStore;
 
 import javax.ejb.Singleton;
-import javax.ejb.Stateless;
 
 /**
  * Created by lpuddu on 29-10-2015.
@@ -14,8 +13,8 @@ import javax.ejb.Stateless;
 public class UserService {
     private UserStore userStore = UserStore.store;
 
-    public Boolean registerStudent(String email, String password){
-        UserDO user = new UserDO(email, password, UserType.STUDENT);
+    public Boolean registerUser(String email, String password, UserType type){
+        UserDO user = new UserDO(email, password, type);
         return this.userStore.addUser(user);
     }
 

@@ -6,6 +6,6 @@ package jfs.data.serializers;
 public abstract class Serializer {
     public static Serializer DefaultSerializer = new SerializerGson();
 
-    public abstract Object DeSerialize(String raw, Class type);
+    public abstract <T> T DeSerialize(String raw, Class<T> type);
     public abstract String Serialize(Object obj);
 }

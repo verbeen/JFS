@@ -14,7 +14,7 @@
         function register() {
             vm.dataLoading = true;
             console.debug(vm.user);
-            UserService.Create(vm.user)
+            UserService.Create(vm.user, 'company')
                 .then(function (response) {
                     if (response) {
                         console.debug("Registration successful!");

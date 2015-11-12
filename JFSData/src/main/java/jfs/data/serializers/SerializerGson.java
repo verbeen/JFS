@@ -9,7 +9,7 @@ public class SerializerGson extends Serializer {
     private Gson gson = new Gson();
 
     @Override
-    public Object DeSerialize(String raw, Class type) {
+    public <T> T DeSerialize(String raw, Class<T> type) {
         return this.gson.fromJson(raw, type);
     }
 
