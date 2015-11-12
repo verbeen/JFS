@@ -42,6 +42,8 @@
                         <configuration>
                             <outputDirectory>deployments</outputDirectory>
                             <warName>service</warName>
+                            <source>1.8</source>
+                            <target>1.8</target>
                         </configuration>
                     </plugin>
                 </plugins>

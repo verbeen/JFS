@@ -10,8 +10,8 @@ import org.bson.Document;
  * Created by Hulk-A on 10.11.2015.
  */
 public class StudentProfileStore extends DataStore {
-    public StudentProfileStore(DataClient client) {
-        super(client, "studentProfiles");
+    public StudentProfileStore() {
+        super("studentProfiles");
     }
 
     public Boolean addStudentProfile(StudentProfileDO studentProfile){
@@ -24,7 +24,7 @@ public class StudentProfileStore extends DataStore {
 
     public StudentProfileDO getStudentProfile(String user_id){
         StudentProfileDO studentProfile = null;
-        Document doc = this.store.find(new Document("_id", user_id)).first();
+        Document doc = this.collection.find(new Document("_id", user_id)).first();
         if (doc != null) {
             studentProfile = (StudentProfileDO) new Gson().fromJson((doc).toJson(), StudentProfileDO.class);
             return studentProfile;

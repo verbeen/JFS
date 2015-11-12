@@ -4,12 +4,13 @@ import jfs.data.dataobjects.UserDO;
 import jfs.data.dataobjects.enums.UserType;
 import jfs.data.stores.UserStore;
 
+import javax.ejb.Singleton;
 import javax.ejb.Stateless;
 
 /**
  * Created by lpuddu on 29-10-2015.
  */
-@Stateless
+@Singleton
 public class UserService {
     private UserStore userStore = UserStore.store;
 
