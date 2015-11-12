@@ -33,6 +33,10 @@
                 templateUrl: 'app/authentication/register/authentication-register.html',
                 controller: 'RegisterController as vm'
             })
+            .when('/sample', {
+                templateUrl: 'app/sample/sample.html',
+                controller: 'SampleController as vm'
+            })
             .otherwise({redirectTo: '/'});
     }
 
