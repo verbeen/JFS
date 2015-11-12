@@ -1,5 +1,7 @@
 package jfs.data.dataobjects;
 
+import jfs.data.dataobjects.enums.JobType;
+
 import java.time.Duration;
 
 /**
@@ -16,4 +18,5 @@ public class JobOfferDO {
     public long validUntil;
     public String location;
     public String website;
+    public JobType type;
 }

@@ -2,8 +2,11 @@ package jfs.data.stores;
 
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.model.IndexOptions;
+import com.mongodb.client.model.Sorts;
+import javafx.util.Pair;
 import jfs.data.dataobjects.JobOfferDO;
 import jfs.data.dataobjects.UserDO;
+import org.bson.BSON;
 import org.bson.Document;
 
 import java.util.ArrayList;
@@ -45,6 +48,28 @@ public class JobOfferStore extends DataStore {
     public List<JobOfferDO> getJobOffersText(String term, int amount){
         List<JobOfferDO> offers = new ArrayList<JobOfferDO>();
         FindIterable<Document> results = this.collection.find(new Document("textSearch", term)).limit(amount);
+        for(Document doc : results){
+            offers.add(this.serializer.DeSerialize(doc.toJson(), JobOfferDO.class));
+        }
+        return offers;
+    }
+
+    public List<JobOfferDO> getJobOffersRecent(int amount){
+        List<JobOfferDO> offers = new ArrayList<JobOfferDO>();
+        FindIterable<Document> results = this.collection.find().sort(Sorts.orderBy(Sorts.ascending("validity"))).limit(amount);
+        for(Document doc : results){
+            offers.add(this.serializer.DeSerialize(doc.toJson(), JobOfferDO.class));
+        }
+        return offers;
+    }
+
+    public List<JobOfferDO> getJobOffers(List<Pair<String, Object>> pairs){
+        List<JobOfferDO> offers = new ArrayList<JobOfferDO>();
+        Document query = new Document();
+        for(Pair<String, Object> pair : pairs){
+            query.append(pair.getKey(), pair.getValue());
+        }
+        FindIterable<Document> results = this.collection.find(query);
         for(Document doc : results){
             offers.add(this.serializer.DeSerialize(doc.toJson(), JobOfferDO.class));
         }

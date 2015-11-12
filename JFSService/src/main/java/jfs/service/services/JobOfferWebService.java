@@ -1,8 +1,7 @@
 package jfs.service.services;
 
-import jfs.data.dataobjects.JobOfferDO;
-import jfs.data.stores.JobOfferStore;
 import jfs.service.transferobjects.JobOfferListDTO;
+import jfs.service.transferobjects.SearchDTO;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -19,10 +18,24 @@ public class JobOfferWebService {
     private JobOfferService jobOfferService;
 
     @POST
-    @Path("/text") @Consumes("application/json") @Produces("application/json")
-    public JobOfferListDTO quickSearch(String term){
+    @Path("/search/text") @Consumes("application/json") @Produces("application/json")
+    public JobOfferListDTO searchText(String term){
         JobOfferListDTO list = new JobOfferListDTO();
-        list.offers = this.jobOfferService.quickSearch(term);
+        list.offers = this.jobOfferService.searchText(term);
         return list;
+    }
+
+    @POST @Path("/search/recent") @Consumes("application/json") @Produces("application/json")
+    public JobOfferListDTO getRecent(int amount){
+        JobOfferListDTO list = new JobOfferListDTO();
+        list.offers = this.jobOfferService.searchRecent(amount);
+        return null;
+    }
+
+    @POST @Path("/search") @Consumes("application/json") @Produces("application/json")
+    public JobOfferListDTO search(SearchDTO searchDTO){
+        JobOfferListDTO list = new JobOfferListDTO();
+        list.offers = this.jobOfferService.search(searchDTO);
+        return null;
     }
 }
