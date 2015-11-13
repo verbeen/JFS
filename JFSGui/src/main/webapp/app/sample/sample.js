@@ -11,6 +11,12 @@
         that.testObject = "bla";
 
         $scope.sample = "sample";
+
+        $scope.sampleObjectForSelect = [
+            {"value":"Gear","label":"Gear"},
+            {"value":"Globe","label":"Globe"},
+            {"value":"Heart","label":"Heart"}
+        ];
     }
 
 })();
