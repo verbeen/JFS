@@ -3,7 +3,8 @@ package jfs.service.services;
 import jfs.data.dataobjects.UserDO;
 import jfs.data.dataobjects.enums.UserType;
 import jfs.data.stores.UserStore;
-import jfs.service.transferobjects.LoginResultDTO;
+import jfs.transferdata.transferobjects.LoginResultDTO;
+import jfs.transferdata.transferobjects.enums.UserTypeDTO;
 
 import javax.ejb.Singleton;
 import javax.inject.Inject;
@@ -29,6 +30,7 @@ public class UserService {
         if(user != null){
             result.isLoggedIn = true;
             result.token = UUID.randomUUID().toString();
+            result.type = UserTypeDTO.valueOf(user.type.name());
             this.sessionService.sessions.put(result.token, user.id);
         }else{
             result.isLoggedIn = false;

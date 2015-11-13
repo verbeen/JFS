@@ -1,4 +1,4 @@
-package jfs.service.transferobjects;
+package jfs.transferdata.transferobjects;
 
 /**
  * Created by lpuddu on 3-11-2015.

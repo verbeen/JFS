@@ -3,9 +3,9 @@ package jfs.service.services;
 import com.google.gson.Gson;
 import jfs.data.dataobjects.UserDO;
 import jfs.data.dataobjects.enums.UserType;
-import jfs.service.transferobjects.AuthenticationDTO;
-import jfs.service.transferobjects.LoginResultDTO;
-import jfs.service.transferobjects.RegisterDTO;
+import jfs.transferdata.transferobjects.AuthenticationDTO;
+import jfs.transferdata.transferobjects.LoginResultDTO;
+import jfs.transferdata.transferobjects.RegisterDTO;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;

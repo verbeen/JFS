@@ -2,9 +2,11 @@ package jfs.service.services;
 
 import javafx.util.Pair;
 import jfs.data.dataobjects.JobOfferDO;
+import jfs.data.dataobjects.enums.JobType;
 import jfs.data.stores.JobOfferStore;
-import jfs.service.transferobjects.JobOfferDTO;
-import jfs.service.transferobjects.SearchDTO;
+import jfs.transferdata.transferobjects.JobOfferDTO;
+import jfs.transferdata.transferobjects.SearchDTO;
+import jfs.transferdata.transferobjects.enums.JobTypeDTO;
 
 import javax.ejb.Singleton;
 import java.util.ArrayList;
@@ -26,8 +28,9 @@ public class JobOfferService {
         offer.location = offerDTO.location;
         offer.name = offerDTO.name;
         offer.task = offerDTO.task;
-        offer.type = offerDTO.type;
+        offer.type = JobType.valueOf(offerDTO.type.name());
         offer.validUntil = offerDTO.validUntil;
+        offer.startDate = offerDTO.startDate;
         offer.website = offerDTO.website;
 
         offer.userId = userId;
@@ -47,15 +50,17 @@ public class JobOfferService {
         return this.jobOfferStore.addOffers(offers);
     }
 
-    public List<JobOfferDO> searchText(String term){
-        return this.jobOfferStore.getJobOffersText(term);
+    public List<JobOfferDTO> searchText(String term){
+        List<JobOfferDO> offerDOs = this.jobOfferStore.getJobOffersText(term);
+        return this.createOfferDTOList(offerDOs);
     }
 
-    public List<JobOfferDO> searchRecent(int amount){
-        return this.jobOfferStore.getJobOffersRecent(amount);
+    public List<JobOfferDTO> searchRecent(int amount){
+        List<JobOfferDO> offerDOs = this.jobOfferStore.getJobOffersRecent(amount);
+        return this.createOfferDTOList(offerDOs);
     }
 
-    public List<JobOfferDO> search(SearchDTO searchDTO){
+    public List<JobOfferDTO> search(SearchDTO searchDTO){
         ArrayList<Pair<String, Object>> pairs = new ArrayList<Pair<String, Object>>();
         if(searchDTO.duration != 0){
             pairs.add(new Pair("duraction", searchDTO.duration));
@@ -67,8 +72,22 @@ public class JobOfferService {
             pairs.add(new Pair("validity", searchDTO.validity));
         }
         if(searchDTO.jobType != null){
-            pairs.add(new Pair("jobType", searchDTO.jobType));
+            pairs.add(new Pair("jobType", JobType.valueOf(searchDTO.jobType.name())));
         }
-        return this.jobOfferStore.getJobOffers(pairs);
+        List<JobOfferDO> doList = this.jobOfferStore.getJobOffers(pairs);
+        return this.createOfferDTOList(doList);
+    }
+
+    private List<JobOfferDTO> createOfferDTOList(List<JobOfferDO> offerDOs){
+        List<JobOfferDTO> offers = new ArrayList<JobOfferDTO>();
+        for(JobOfferDO offerDO : offerDOs){
+            JobOfferDTO offer = new JobOfferDTO(
+                    offerDO.name, offerDO.function, offerDO.description, offerDO.task,
+                    offerDO.duration, offerDO.validUntil, offerDO.startDate, offerDO.location,
+                    offerDO.website, JobTypeDTO.valueOf(offerDO.type.name())
+            );
+            offers.add(offer);
+        }
+        return offers;
     }
 }

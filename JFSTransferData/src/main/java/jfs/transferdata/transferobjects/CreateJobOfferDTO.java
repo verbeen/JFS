@@ -1,6 +1,4 @@
-package jfs.service.transferobjects;
-
-import jfs.data.dataobjects.JobOfferDO;
+package jfs.transferdata.transferobjects;
 
 /**
  * Created by lpuddu on 12-11-2015.

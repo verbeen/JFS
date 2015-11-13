@@ -32,22 +32,10 @@ public class JobOfferStore extends DataStore {
 
     public Boolean addOffer(JobOfferDO offer){
         if (offer != null) {
-            if(offer.id == null){
-                return this.insert(offer);
-            }else{
-                return this.insert(offer, offer.id);
-            }
+            return this.insert(offer, offer.id);
         } else {
             throw new NullPointerException("JobOfferDO offer parameter is null");
         }
-    }
-
-    private <T> List<Document> createDocumentList(List<T> objects){
-        List<Document> docs = new ArrayList<Document>();
-        for(T object : objects){
-            docs.add(Document.parse(this.serializer.Serialize(object)));
-        }
-        return docs;
     }
 
     public Boolean addOffers(List<JobOfferDO> offers){
