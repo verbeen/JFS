@@ -19,10 +19,11 @@
             return $http.post('/service/users/login', { email: email, password: password }).then(handleSuccess, handleError('Login not successful!'));
         }
 
-        function SetCredentials(email, password, token) {
+        function SetCredentials(email, password, userType, token) {
             $rootScope.globals = {
                 currentUser: {
                     username: email,
+                    userType: userType,
                     authdata: token
                 }
             };

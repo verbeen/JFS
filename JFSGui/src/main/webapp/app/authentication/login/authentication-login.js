@@ -24,7 +24,7 @@
                         if (response.data.isLoggedIn) {
                             // user is logged in
                             console.info("Login successful!");
-                            AuthenticationService.SetCredentials(vm.email, vm.password, response.data.token);
+                            AuthenticationService.SetCredentials(vm.email, vm.password, response.data.type, response.data.token);
                             $location.path('/');
                         } else {
                             // user is not logged in and backend returns false (e.g. user not found)
