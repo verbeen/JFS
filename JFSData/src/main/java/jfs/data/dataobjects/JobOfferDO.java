@@ -14,8 +14,9 @@ public class JobOfferDO {
     public String function;
     public String description;
     public String task;
-    public Duration duration;
+    public long duration;
     public long validUntil;
+    public long startDate;
     public String location;
     public String website;
     public JobType type;

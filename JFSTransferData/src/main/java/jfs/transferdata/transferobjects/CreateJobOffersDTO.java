@@ -1,4 +1,4 @@
-package jfs.service.transferobjects;
+package jfs.transferdata.transferobjects;
 
 import java.util.List;
 

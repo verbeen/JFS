@@ -6,6 +6,8 @@ import jfs.data.connections.DataClient;
 import jfs.data.serializers.Serializer;
 import org.bson.Document;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 
 /**
@@ -54,5 +56,13 @@ public abstract class DataStore {
             result = (T)this.serializer.DeSerialize(doc.toJson(), type);
         }
         return result;
+    }
+
+    protected <T> List<Document> createDocumentList(List<T> objects){
+        List<Document> docs = new ArrayList<Document>();
+        for(T object : objects){
+            docs.add(Document.parse(this.serializer.Serialize(object)));
+        }
+        return docs;
     }
 }
