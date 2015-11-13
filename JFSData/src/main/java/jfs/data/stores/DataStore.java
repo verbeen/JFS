@@ -45,6 +45,9 @@ public abstract class DataStore {
             }
         }
     }
+
+    //TODO public boolean replace(Object obj){}
+
     public Document getOneDocument(String key, Object value){
         return this.collection.find(new Document(key, value)).first();
     }

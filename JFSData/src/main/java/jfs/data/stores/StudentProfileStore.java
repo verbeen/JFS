@@ -31,4 +31,6 @@ public class StudentProfileStore extends DataStore {
         }
         return null;
     }
+
+    //TODO public StudentProfileDO editStudentProfile(String user_id, StudentProfileDO studentProfile){}
 }
