@@ -9,23 +9,30 @@ import org.bson.Document;
 import java.util.logging.Level;
 
 /**
+ * Mongocollection is thread safe, as well as the serializer. So this class is thread safe.
  * Created by lpuddu on 2-11-2015.
  */
 public abstract class DataStore {
-    protected MongoCollection<Document> store;
+    protected MongoCollection<Document> collection;
     protected Serializer serializer = Serializer.DefaultSerializer;
 
-    public DataStore(DataClient client, String dbName) {
-        this.store = client.getCollection(dbName);
+    public DataStore(String dbName) {
+        this.collection = DataClient.defaultClient.getCollection(dbName);
+    }
+
+    public boolean insert(Object obj){
+        return this.insert(obj, null);
     }
 
     public boolean insert(Object obj, Object id){
-
         Document doc = Document.parse(this.serializer.Serialize(obj));
-        doc.put("_id", id);
+
+        if(id != null) {
+            doc.put("_id", id);
+        }
 
         try {
-            this.store.insertOne(doc);
+            this.collection.insertOne(doc);
             return true;
         } catch(MongoWriteException ex) {
             if(ex.getError().getCode() == 11000){
@@ -35,5 +42,17 @@ public abstract class DataStore {
                 return false;
             }
         }
+    }
+    public Document getOneDocument(String key, Object value){
+        return this.collection.find(new Document(key, value)).first();
+    }
+
+    public <T> T getOneObject(String key, Object value, Class<T> type){
+        T result = null;
+        Document doc = this.getOneDocument(key, value);
+        if(doc != null){
+            result = (T)this.serializer.DeSerialize(doc.toJson(), type);
+        }
+        return result;
     }
 }
