@@ -53,7 +53,7 @@ public class JobOfferWebService {
     public JobOfferListDTO getRecent(int amount){
         JobOfferListDTO list = new JobOfferListDTO();
         list.offers = this.jobOfferService.searchRecent(amount);
-        return null;
+        return list;
     }
 
     @POST
@@ -61,6 +61,6 @@ public class JobOfferWebService {
     public JobOfferListDTO search(SearchDTO searchDTO){
         JobOfferListDTO list = new JobOfferListDTO();
         list.offers = this.jobOfferService.search(searchDTO);
-        return null;
+        return list;
     }
 }
