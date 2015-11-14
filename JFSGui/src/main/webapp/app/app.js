@@ -33,6 +33,10 @@
                 templateUrl: 'app/authentication/register/authentication-register.html',
                 controller: 'RegisterController as vm'
             })
+            .when('/administration/job/list', {
+                templateUrl: 'app/administration/job/list/administration-job-list.html',
+                controller: 'AdministrationJobListController as vm'
+            })
             .when('/sample', {
                 templateUrl: 'app/sample/sample.html',
                 controller: 'SampleController as vm'

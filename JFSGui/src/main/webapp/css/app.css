@@ -1,3 +1,9 @@
+@-moz-document url-prefix() {
+    fieldset {
+        display: table-cell;
+    }
+}
+
 #jfs-navbar .navbar-brand {
 	padding: 5px 20px 5px 10px;
 }
