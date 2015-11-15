@@ -3,15 +3,13 @@
 
     angular
         .module('app')
-        .controller('AdministrationJobListController', AdministrationJobListController);
+        .controller('AdministrationMembersListController', AdministrationMembersListController);
 
 
-    AdministrationJobListController.$inject = ['JobService', '$scope'];
-    function AdministrationJobListController(JobService, $scope) {
+    AdministrationMembersListController.$inject = ['JobService', '$scope'];
+    function AdministrationMembersListController(JobService, $scope) {
 
-        $scope.edit = function() {
-            console.log("edit()");
-        };
+
 
         $scope.remove = function() {
             console.log("remove()");
