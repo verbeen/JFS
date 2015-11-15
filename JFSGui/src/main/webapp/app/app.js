@@ -37,6 +37,10 @@
                 templateUrl: 'app/administration/job/list/administration-job-list.html',
                 controller: 'AdministrationJobListController as vm'
             })
+            .when('/administration/members/list', {
+                templateUrl: 'app/administration/members/list/administration-members-list.html',
+                controller: 'AdministrationMembersListController as vm'
+            })
             .when('/sample', {
                 templateUrl: 'app/sample/sample.html',
                 controller: 'SampleController as vm'
