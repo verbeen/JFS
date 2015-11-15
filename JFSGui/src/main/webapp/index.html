@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="vendor/angular-motion-0.4.2/angular-motion.min.css">
 
 	<link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="app/administration/job/list/administration-job-list.css">
 </head>
 <body>
     <!-- navigation -->
@@ -28,8 +29,9 @@
 
             <div class="collapse navbar-collapse" bs-collapse-target>
                 <ul class="nav navbar-nav">
-                    <li data-match-route="/job/list.*"><a href="#/job/list">Job offers</a></li>
-                    <li data-match-route="/authentication/register.*"><a href="#/authentication/register">Register as organization</a></li>
+                    <li data-match-route="^/job/list.*"><a href="#/job/list">Job offers</a></li>
+                    <li data-match-route="^/authentication/register.*"><a href="#/authentication/register">Register as organization</a></li>
+                    <li data-match-route="^/administration.*"><a href="#/administration/job/list">Admin</a></li>
                     <li><a href="#/authentication/logout">Logout</a></li>
                 </ul>
             </div>
@@ -62,5 +64,6 @@
 	<script type="text/javascript" src="app/authentication/login/authentication-login.js"></script>
 	<script type="text/javascript" src="app/authentication/logout/authentication-logout.js"></script>
 	<script type="text/javascript" src="app/authentication/register/authentication-register.js"></script>
+    <script type="text/javascript" src="app/administration/job/list/administration-job-list.js"></script>
 </body>
 </html>
