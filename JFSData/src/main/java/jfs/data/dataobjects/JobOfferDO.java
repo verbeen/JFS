@@ -4,12 +4,13 @@ import jfs.data.dataobjects.enums.JobType;
 import org.bson.BsonDocument;
 import org.bson.Document;
 
+import java.io.Serializable;
 import java.time.Duration;
 
 /**
  * Created by lpuddu on 10-11-2015.
  */
-public class JobOfferDO {
+public class JobOfferDO{
     public String id;
     public String userId;
     public String name;

@@ -1,9 +1,9 @@
 package jfs.data.stores;
 
 import com.google.gson.Gson;
-import jfs.data.connections.DataClient;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 import jfs.data.dataobjects.UserDO;
-import org.bson.Document;
 
 /**
  * Created by lpuddu on 29-10-2015.
@@ -17,7 +17,7 @@ public class UserStore extends DataStore {
 
     public Boolean addUser(UserDO user){
         if (user != null) {
-            return this.insert(user, user.id);
+            return this.insert(user, user.id) != null;
         } else {
             throw new NullPointerException("UserDO user parameter is null");
         }
@@ -25,9 +25,9 @@ public class UserStore extends DataStore {
 
     public UserDO getUser(String id, String password){
         UserDO user = null;
-        Document doc = this.collection.find(new Document("_id", id)).first();
+        DBObject doc = (DBObject)this.collection.find(new BasicDBObject("_id", id)).first();
         if (doc != null) {
-            user = (UserDO) new Gson().fromJson((doc).toJson(), UserDO.class);
+            user = (UserDO) new Gson().fromJson((doc).toString(), UserDO.class);
             if(user.password.equals(password)){
                 return user;
             }
@@ -35,3 +35,4 @@ public class UserStore extends DataStore {
         return null;
     }
 }
+

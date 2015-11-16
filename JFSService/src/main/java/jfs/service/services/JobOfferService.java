@@ -38,6 +38,12 @@ public class JobOfferService {
         return offer;
     }
 
+    public JobOfferDTO getById(String id){
+        JobOfferDO offerDO = this.jobOfferStore.getById(id);
+        JobOfferDTO offer = this.createOfferDTO(offerDO);
+        return offer;
+    }
+
     public Boolean addOffer(JobOfferDTO offerDTO, String userId){
         return this.jobOfferStore.addOffer(this.createOfferDO(offerDTO, userId));
     }
@@ -83,15 +89,18 @@ public class JobOfferService {
         return this.createOfferDTOList(doList);
     }
 
+    private JobOfferDTO createOfferDTO(JobOfferDO offerDO){
+        return new JobOfferDTO(
+                offerDO.id, offerDO.userId , offerDO.name, offerDO.function, offerDO.description,
+                offerDO.task, offerDO.duration, offerDO.validUntil, offerDO.startDate,
+                offerDO.location, offerDO.website, JobTypeDTO.valueOf(offerDO.type.name())
+        );
+    }
+
     private List<JobOfferDTO> createOfferDTOList(List<JobOfferDO> offerDOs){
         List<JobOfferDTO> offers = new ArrayList<JobOfferDTO>();
         for(JobOfferDO offerDO : offerDOs){
-            JobOfferDTO offer = new JobOfferDTO(
-                    offerDO.userId , offerDO.name, offerDO.function, offerDO.description, offerDO.task,
-                    offerDO.duration, offerDO.validUntil, offerDO.startDate, offerDO.location,
-                    offerDO.website, JobTypeDTO.valueOf(offerDO.type.name())
-            );
-            offers.add(offer);
+            offers.add(this.createOfferDTO(offerDO));
         }
         return offers;
     }

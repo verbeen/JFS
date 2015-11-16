@@ -9,6 +9,6 @@ import jfs.transferdata.transferobjects.enums.JobTypeDTO;
 public class SearchDTO {
     public String function;
     public long duration;
-    public long validity;
+    public long validity; //TODO don't care about validity
     public JobTypeDTO jobType;
 }
