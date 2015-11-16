@@ -17,7 +17,14 @@
         };
 
         $scope.jobSearch = {
-            "category": ["Administration","IT","Logistics"]
+            "type": [
+                { "value": "master_thesis", "label": "Master thesis" },
+                { "value": "bachelor_thesis", "label": "Bachelor thesis" },
+                { "value": "part_time", "label": "Part time" },
+                { "value": "full_time", "label": "Full time" },
+                { "value": "internship", "label": "Internship" },
+                { "value": "contract", "label": "Contract" }
+            ]
         };
 
         /*
