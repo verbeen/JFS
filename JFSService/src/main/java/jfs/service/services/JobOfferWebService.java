@@ -48,7 +48,7 @@ public class JobOfferWebService {
     public JobOfferListDTO getAllOffers(String token){
         if(token != null && token != "") {
             Session session = SessionService.sessions.get(token);
-            if (session != null && token.equals(session.userId) && session.type == UserTypeDTO.ADMIN) {
+            if (session != null && token.equals(session.userId)) {
                 JobOfferListDTO list = new JobOfferListDTO();
                 list.offers = this.jobOfferService.getAllOffers();
                 return list;
