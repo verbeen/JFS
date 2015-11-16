@@ -56,7 +56,7 @@ public class Start {
 
     private JobOfferDTO createJobOfferDTO(GitHubJobDTO githubJob){
         JobOfferDTO offer = new JobOfferDTO(
-                githubJob.title, githubJob.title, githubJob.description, githubJob.how_to_apply,
+                "", githubJob.company, githubJob.title, githubJob.title, githubJob.description, githubJob.how_to_apply,
                 this.getDuration(12), new GregorianCalendar().getTimeInMillis() + this.getDuration(4),
                 new GregorianCalendar().getTimeInMillis() + this.getDuration(6), githubJob.location,
                 githubJob.company_url, this.getType(githubJob.type)
