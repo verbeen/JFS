@@ -35,6 +35,15 @@ public class JobOfferStore extends DataStore {
         this.collection.createIndex(index, new IndexOptions().name("textSearch"));
     }
 
+    public List<JobOfferDO> getAllOffers(){
+        List<JobOfferDO> offers = new ArrayList<JobOfferDO>();
+        FindIterable<Document> results = this.collection.find();
+        for(Document doc : results){
+            offers.add(this.serializer.DeSerialize(doc.getString("_raw"), JobOfferDO.class));
+        }
+        return offers;
+    }
+
     public Boolean addOffer(JobOfferDO offer){
         if (offer != null) {
             return this.insert(offer, offer.id);

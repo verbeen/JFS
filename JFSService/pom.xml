@@ -32,7 +32,7 @@
 
     <profiles>
         <profile>
-            <id>openshift</id>
+            <userId>openshift</userId>
             <build>
                 <finalName>service</finalName>
                 <plugins>
@@ -50,7 +50,7 @@
             </build>
             <repositories>
                 <repository>
-                    <id>maven</id>
+                    <userId>maven</userId>
                     <name>maven central repository</name>
                     <url>http://repo1.maven.org/maven/</url>
                 </repository>
