@@ -1,233 +1,201 @@
-<br class="col-xs-12 col-xs-offset-0
-    col-sm-12 col-sm-offset-0
-    col-md-12 col-md-offset-0
-    col-lg-12 col-lg-offset-0">
-    <!--
-     <div class="clearfix" joboffer-create></div>
-     -->
-    <!--
-    <div class="list-group">
-        <a ng-repeat="job in jobs" ng-href="#/job/profile/{{job.id}}" class="list-group-item">{{ job.title }}</a>
-    </div>
-
-    -->
-<!-- Quick Search box-->
-
-
-    <div class="col-xs-12 col-xs-offset-0 col-md-6 col-md-offset-2">
-        <dl class="dl-horizontal">
-    <dt><h4>Quick Search</h4></dt>
-            <dd><input type="text" class="form-control" placeholder="Search here"></dd>
-        </dl>
-    </div>
-<!--
-    <button ng-click="foo();">Click me!</button>
-
---> </br></br></br>
-<!-- Search for Jobs and Location Text box -->
-
-<div class="form-group has-feedback col-xs-12 col-xs-offset-0 col-md-2 col-md-offset-3">
-
-    <div class="form-group">
-        <label for="functionQuickSearch" class="control-label">Function</label>
-        <div class="input-group">
-            <input type="text" id="functionQuickSearch" class="form-control" aria-label="Function search">
-            <div class="searchButton input-group-addon" ng-click="">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-            </div>
-        </div>
-    </div>
-
-
-</div>
-
-
-<div class="form-group has-feedback col-xs-12 col-xs-offset-0 col-md-2 col-md-offset-1">
-
-    <div class="form-group">
-        <label for="locationQuickSearch" class="control-label">Location</label>
-        <div class="input-group">
-            <input type="text" id="locationQuickSearch" class="form-control" aria-label="Location search">
-            <div class="searchButton input-group-addon" ng-click="">
-                <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
-            </div>
-        </div>
-    </div>
-
-
-</div>
-<!--new Template for the job listing -->
-
-
-<div class="row"><!--Container for the Left pane-->
-    <div class="col-xs-12 col-sm-12 col-md-12">
-
-        <div class="row">
-            <div class="col-xs-2 col-sm-2 col-md-2" style="box-shadow: 1px 0px 0px black">
-                <br>
-                <div class="row"><!--Start of the first row-->
-                <div class="col-xs-2 col-sm-5 col-md-5"  >
-                    <h6>&nbsp;&nbsp; Job Status</h6>
-                </div>
-                <div class="col-xs-2 col-sm-7 col-md-7" >
-                    <button aria-label="Select" type="button" class="btn btn-default btn-block" ng-model="selectedIcon" data-placeholder="Function" data-html="1"  bs-options="item1.value as item1.label for item1 in sampleObjectForFunction" bs-select>
-                        Action <span class="caret"></span>
-                    </button>
-                    </div>
-                </div><!--End of the first row-->
-                <div class="row"><!--Start of the second row-->
-                    <div class="col-xs-2 col-sm-5" >
-                        <h6>&nbsp;&nbsp; Salary</h6>
-                    </div>
-                    <div class="col-xs-2 col-sm-7" >
-                        <button aria-label="Select" type="button" class="btn btn-default btn-block" ng-model="selectedIcon" data-placeholder="Salary" data-html="1"  bs-options="item1.value as item1.label for item1 in sampleObjectForFunction" bs-select>
-                            Action <span class="caret"></span>
-                        </button>
-                    </div>
-                </div><!--End of the second row-->
-                <div class="row"><!--Start of the third row-->
-                    <div class="col-xs-2 col-sm-5" >
-                        <h6>&nbsp;&nbsp; Duration</h6>
-                    </div>
-                    <div class="col-xs-2 col-sm-7" >
-                        <button aria-label="Select" type="button" class="btn btn-default btn-block" ng-model="selectedIcon" data-placeholder="Duration" data-html="1"  bs-options="item1.value as item1.label for item1 in sampleObjectForFunction" bs-select>
-                            Action <span class="caret"></span>
-                        </button>
-                    </div>
-                </div><!--End of the third row-->
-                <div class="row"><!--Start of the fourth row-->
-                    <div class="col-xs-2 col-sm-5" >
-                        <h6>&nbsp;&nbsp; Posted date</h6>
-                    </div>
-                    <div class="col-xs-2 col-sm-7" >
-
-                        <div class='input-group date' id='datetimepicker1'>
-                            <input type='text' class="form-control" />
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
+<div class="row" style="padding-bottom: 4rem;">
+    <div class="col-md-8 col-md-offset-2" >
+        <form name="jobQuickSearchForm" class="form-horizontal" role="form">
+            <div class="form-group">
+                <label for="jobQuickSearch" class="col-md-2 control-label" >Quick search:</label>
+                <div class="col-md-10">
+                    <div class="input-group">
+                        <input type="text" id="jobQuickSearch" class="form-control" aria-label="Job quick search">
+                        <div class="searchButton input-group-addon" ng-click="">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                         </div>
                     </div>
-                </div><!--End of the fourth row-->
-                <div class="row"><!--Start of the fifth row-->
-                    <div class="col-xs-2 col-sm-5" >
-                        <h6>&nbsp;&nbsp; Company Name</h6>
-                    </div>
-                    <div class="col-xs-2 col-sm-7" >
-                        <input type="text" class="form-control" id="companyNameFilter" placeholder="Company Name"/>
-                    </div>
-                </div><!--End of the fifth row-->
-                <div class="row"><!--Start of the sixth row-->
-                    <div class="col-xs-2 col-sm-5" >
-                        <h6>&nbsp;&nbsp; Skill</h6>
-                    </div>
-                    <div class="col-xs-2 col-sm-7" >
-                        <input type="text" class="form-control" id="skillFilter" placeholder="Skill"/>
-                    </div>
-                </div><!--End of the sixth row-->
-
-
-
-
-            </div>
-            <div class="col-xs-6 col-sm-6 col-md-6">
-                </br>
-                <!--Container for the Center pane-->
-
-                <div class="container" ng-show="svalue">
-
-                    <div class="col-xs-12 col-xs-offset-0 col-sm-12 col-sm-offset-0 col-md-12 col-md-offset-0 ">
-
-
-                        <h3>Software Analyst Jobs in Germany</h3>
-                    </div>
-                    <div class="form-group has-feedback col-xs-6 col-xs-offset-0 col-md-6 col-md-offset-0 "  style="box-shadow: 0 0 5px black">
-                        <dl>
-                            <dt><H4>Software Developer Programmer</H4></dt>
-                            <dt><H5>Accenture Inc.</H5></dt>
-                            <dt><label class="control-label glyphicon glyphicon-map-marker " for="inputSuccess2">Berlin,Germany</label></dt>
-                            <dt><label class="control-label glyphicon glyphicon-folder-close " for="inputSuccess2">&nbsp;2 Years</label></dt>
-                            <dt><label class="control-label glyphicon glyphicon-euro " for="inputSuccess2">&nbsp;Not Disclosed</label></dt>
-                            <dt><label class="control-label glyphicon glyphicon-calendar " for="inputSuccess2">&nbsp;Post Date-10-Nov-2015</label></dt>
-
-                            <dt><H6>Skills : XML, HTML, XHTML, DHTML, CSS </H6></dt>
-
-                            <dt><H6>We have a very urgent requirement for Implementation of business
-                            communications activities, including writing, design and web related
-                            activities to promote co<u><b>[complete description wont be given]</b></u></H6></dt>
-                            <button type="button" class="btn btn-info">View Job</button>
-                        </dl>
-                    </div>
-
-
-                    <div class="form-group has-feedback col-xs-6 col-xs-offset-0 col-md-6 col-md-offset-0 "  style="box-shadow: 0 0 5px black">
-                        <dl>
-                            <dt><H4>Android Developer and Nerds </H4></dt>
-                            <dt><H5>Vishnu Inc.</H5></dt>
-                            <dt><label class="control-label glyphicon glyphicon-map-marker " for="inputSuccess2">Stuttgart,Germany</label></dt>
-                            <dt><label class="control-label glyphicon glyphicon-folder-close " for="inputSuccess2">&nbsp;1 Years</label></dt>
-                            <dt><label class="control-label glyphicon glyphicon-euro " for="inputSuccess2">&nbsp;100,000</label></dt>
-                            <dt><label class="control-label glyphicon glyphicon-calendar " for="inputSuccess2">&nbsp;Post Date-10-Oct-2015</label></dt>
-
-                            <dt><H6>Jquery, Javascript, HTML 5, CSS. </H6></dt>
-
-                            <dt><H6>Vishnu Inc. which is the biggest Inc. in the world is having a very urgent requirement for Implementation of business
-                            communications activities, including writing, design and web related
-                            activities to promote co<u><b>[complete description wont be given]</b></u></H6></dt>
-                            <button type="button" class="btn btn-info">View Job</button>
-                        </dl>
-                    </div>
-                    <!--TEsting place for the two rows -->
-                    <div class="form-group has-feedback col-xs-6 col-xs-offset-0 col-md-6 col-md-offset-0 "  style="box-shadow: 0 0 5px black">
-                        <dl>
-                            <dt><H4>Android Developer and Nerds </H4></dt>
-                            <dt><H5>Vishnu Inc.</H5></dt>
-                            <dt><label class="control-label glyphicon glyphicon-map-marker " for="inputSuccess2">Stuttgart,Germany</label></dt>
-                            <dt><label class="control-label glyphicon glyphicon-folder-close " for="inputSuccess2">&nbsp;1 Years</label></dt>
-                            <dt><label class="control-label glyphicon glyphicon-euro " for="inputSuccess2">&nbsp;100,000</label></dt>
-                            <dt><label class="control-label glyphicon glyphicon-calendar " for="inputSuccess2">&nbsp;Post Date-10-Oct-2015</label></dt>
-
-                            <dt><H6>Jquery, Javascript, HTML 5, CSS. </H6></dt>
-
-                            <dt><H6>Vishnu Inc. which is the biggest Inc. in the world is having a very urgent requirement for Implementation of business
-                            communications activities, including writing, design and web related
-                            activities to promote co<u><b>[complete description wont be given]</b></u></H6></dt>
-                            <button type="button" class="btn btn-info">View Job</button>
-                        </dl>
-                    </div>
-                    <div class="form-group has-feedback col-xs-6 col-xs-offset-0 col-md-6 col-md-offset-0 "  style="box-shadow: 0 0 5px black">
-                        <dl>
-                            <dt><H4>Android Developer and Nerds </H4></dt>
-                            <dt><H5>Vishnu Inc.</H5></dt>
-                            <dt><label class="control-label glyphicon glyphicon-map-marker " for="inputSuccess2">Stuttgart,Germany</label></dt>
-                            <dt><label class="control-label glyphicon glyphicon-folder-close " for="inputSuccess2">&nbsp;1 Years</label></dt>
-                            <dt><label class="control-label glyphicon glyphicon-euro " for="inputSuccess2">&nbsp;100,000</label></dt>
-                            <dt><label class="control-label glyphicon glyphicon-calendar " for="inputSuccess2">&nbsp;Post Date-10-Oct-2015</label></dt>
-
-                            <dt><H6>Jquery, Javascript, HTML 5, CSS. </H6></dt>
-
-                            <dt><H6>Vishnu Inc. which is the biggest Inc. in the world is having a very urgent requirement for Implementation of business
-                            communications activities, including writing, design and web related
-                            activities to promote co<u><b>[complete description wont be given]</b></u></H6></dt>
-                            <button type="button" class="btn btn-info">View Job</button>
-                        </dl>
-                    </div>
-
-
-
-
-
-
                 </div>
             </div>
+        </form>
+
+        <form name="jobFilterParametersForm" class="form-inline" role="form">
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text" class="form-control" ng-model="selectedJobLocation"
+                           bs-options="location for location in jobLocation" placeholder="Function" bs-typeahead>
+                    <div class="searchButton input-group-addon" ng-click="">
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text" class="form-control" ng-model="selectedJobLocation"
+                           bs-options="location for location in jobLocation" placeholder="Location" bs-typeahead>
+                    <div class="searchButton input-group-addon" ng-click="">
+                        <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<hr>
+<!-- Left Pane-->
+<div class="row">
+
+    <div class="col-md-3">
+
+        <form name="jobFilterParametersFormLeft" class="form-horizontal" role="form">
+            <div class="form-group">
+                <label for="jobFilterParamFunction" class="col-md-5 control-label">Job status:</label>
+                <div class="col-md-7">
+                    <button id="jobFilterParamFunction"
+                            aria-label="Select" type="button" class="btn btn-default form-control"
+                            ng-model="selectedFunction" data-placeholder="Job status" data-html="1"
+                            bs-options="item.value as item.label for item in sampleObjectForFunction" bs-select>
+                        Function <span class="caret"></span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="jobFilterParamFunction" class="col-md-5 control-label">Salary:</label>
+                <div class="col-md-7">
+                    <button id="jobFilterParamFunction"
+                            aria-label="Select" type="button" class="btn btn-default form-control"
+                            ng-model="selectedFunction" data-placeholder="Salary" data-html="1"
+                            bs-options="item.value as item.label for item in sampleObjectForFunction" bs-select>
+                        Function <span class="caret"></span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="jobFilterParamFunction" class="col-md-5 control-label">Duration:</label>
+                <div class="col-md-7">
+                    <button id="jobFilterParamFunction"
+                            aria-label="Select" type="button" class="btn btn-default form-control"
+                            ng-model="selectedFunction" data-placeholder="Duration" data-html="1"
+                            bs-options="item.value as item.label for item in sampleObjectForFunction" bs-select>
+                        Function <span class="caret"></span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="jobFilterParamFunction" class="col-md-5 control-label">Posted Date:</label>
+                <div class="col-md-7">
+                    <button id="jobFilterParamFunction"
+                            aria-label="Select" type="button" class="btn btn-default form-control"
+                            ng-model="selectedFunction" data-placeholder="Date" data-html="1"
+                            bs-options="item.value as item.label for item in sampleObjectForFunction" bs-select>
+                        Function <span class="caret"></span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="jobFilterParamFunction" class="col-md-5 control-label">Company:</label>
+                <div class="col-md-7">
+                    <div class="input-group">
+                        <input type="text" class="form-control" ng-model="selectedJobLocation"
+                                   bs-options="location for location in jobLocation" placeholder="Company Name" bs-typeahead>
+                        <div class="searchButton input-group-addon" ng-click="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="jobFilterParamFunction" class="col-md-5 control-label">Skill</label>
+                <div class="col-md-7">
+                    <div class="input-group">
+                        <input type="text" class="form-control" ng-model="selectedJobLocation"
+                               bs-options="location for location in jobLocation" placeholder="Skill" bs-typeahead>
+                        <div class="searchButton input-group-addon" ng-click="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+    <!-- center and right pane-->
+    <div class="col-md-9">
+
+        <div class="row">
+
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Android Developer and Nerds</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-unstyled">
+                            <li><span class="glyphicon glyphicon-briefcase"></span> Vishnu Inc.</li>
+                            <li><span class="glyphicon glyphicon-map-marker"></span> Stuttgart, Germany</li>
+                            <li><span class="glyphicon glyphicon-folder-close"></span> 1 Years</li>
+                            <li><span class="glyphicon glyphicon-euro"></span> 100,000</li>
+                            <li><span class="glyphicon glyphicon-calendar"></span> Post Date-10-Oct-2015</li>
+                            <li><span class="glyphicon glyphicon-book"></span> Jquery, Javascript, HTML 5, CSS., Jquery, Javascript, HTML 5, CSS.</li>
+                        </ul>
+                        <p>Vishnu Inc. which is the biggest Inc. in the world is having a very urgent requirement for Implementation of business
+                            communications activities, including writing, design and web related
+                            activities to promote co[complete description wont be given]
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Android Developer and Nerds</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-unstyled">
+                            <li><span class="glyphicon glyphicon-briefcase"></span> Vishnu Inc.</li>
+                            <li><span class="glyphicon glyphicon-map-marker"></span> Stuttgart, Germany</li>
+                            <li><span class="glyphicon glyphicon-folder-close"></span> 1 Years</li>
+                            <li><span class="glyphicon glyphicon-euro"></span> 100,000</li>
+                            <li><span class="glyphicon glyphicon-calendar"></span> Post Date-10-Oct-2015</li>
+                            <li><span class="glyphicon glyphicon-book"></span> Jquery, Javascript, HTML 5, CSS.</li>
+                        </ul>
+                        <p>Vishnu Inc. which is the biggest Inc. in the world is having a very urgent requirement for Implementation of business
+                            communications activities, including writing, design and web related
+                            activities to promote co[complete description wont be given]
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Android Developer and Nerds</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-unstyled">
+                            <li><span class="glyphicon glyphicon-briefcase"></span> Vishnu Inc.</li>
+                            <li><span class="glyphicon glyphicon-map-marker"></span> Stuttgart, Germany</li>
+                            <li><span class="glyphicon glyphicon-folder-close"></span> 1 Years</li>
+                            <li><span class="glyphicon glyphicon-euro"></span> 100,000</li>
+                            <li><span class="glyphicon glyphicon-calendar"></span> Post Date-10-Oct-2015</li>
+                            <li><span class="glyphicon glyphicon-book"></span> Jquery, Javascript, HTML 5, CSS.</li>
+                        </ul>
+                        <p>Vishnu Inc. which is the biggest Inc. in the world is having a very urgent requirement for Implementation of business
+                            communications activities, including writing, design and web related
+                            activities to promote co[complete description wont be given]
+                        </p>
+                    </div>
+                </div>
+            </div>
+
         </div>
+
     </div>
 </div>
 
 
 
-
-</div>
-
-
+<hr>
 
