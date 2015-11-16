@@ -50,7 +50,7 @@ public class JobOfferWebService {
 
     @POST
     @Path("/search/recent") @Consumes("application/json") @Produces("application/json")
-    public JobOfferListDTO getRecent(int amount){
+    public JobOfferListDTO getRecent(Integer amount){
         JobOfferListDTO list = new JobOfferListDTO();
         list.offers = this.jobOfferService.searchRecent(amount);
         return list;

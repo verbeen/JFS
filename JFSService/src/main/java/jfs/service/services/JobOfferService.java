@@ -82,7 +82,7 @@ public class JobOfferService {
         List<JobOfferDTO> offers = new ArrayList<JobOfferDTO>();
         for(JobOfferDO offerDO : offerDOs){
             JobOfferDTO offer = new JobOfferDTO(
-                    offerDO.name, offerDO.function, offerDO.description, offerDO.task,
+                    offerDO.userId , offerDO.name, offerDO.function, offerDO.description, offerDO.task,
                     offerDO.duration, offerDO.validUntil, offerDO.startDate, offerDO.location,
                     offerDO.website, JobTypeDTO.valueOf(offerDO.type.name())
             );

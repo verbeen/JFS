@@ -27,11 +27,13 @@ public abstract class DataStore {
     }
 
     public boolean insert(Object obj, Object id){
-        Document doc = Document.parse(this.serializer.Serialize(obj));
+        String json = this.serializer.Serialize(obj);
+        Document doc = Document.parse(json);
 
         if(id != null) {
             doc.put("_id", id);
         }
+        doc.put("_raw", json);
 
         try {
             this.collection.insertOne(doc);
