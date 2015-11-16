@@ -1,201 +1,206 @@
-<div class="row" style="padding-bottom: 4rem;">
-    <div class="col-md-8 col-md-offset-2" >
-        <form name="jobQuickSearchForm" class="form-horizontal" role="form">
-            <div class="form-group">
-                <label for="jobQuickSearch" class="col-md-2 control-label" >Quick search:</label>
-                <div class="col-md-10">
+<div id="jfsJobList">
+    <div class="row">
+        <div class="col-md-12" >
+            <form name="jobSearchForm" ng-submit="vm.search()" id="jobSearchForm" class="form-inline" role="form">
+                <!--
+                <div class="form-group">
                     <div class="input-group">
-                        <input type="text" id="jobQuickSearch" class="form-control" aria-label="Job quick search">
+                        <input type="text" id="jobQuickSearch" class="form-control"
+                               ng-model="selectedJobQuickSearch.searchTerm" aria-label="Job quick search">
                         <div class="searchButton input-group-addon" ng-click="">
                             <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                         </div>
                     </div>
                 </div>
-            </div>
-        </form>
+                -->
 
-        <form name="jobFilterParametersForm" class="form-inline" role="form">
-            <div class="form-group">
-                <div class="input-group">
-                    <input type="text" class="form-control" ng-model="selectedJobLocation"
-                           bs-options="location for location in jobLocation" placeholder="Function" bs-typeahead>
-                    <div class="searchButton input-group-addon" ng-click="">
-                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="input-group">
-                    <input type="text" class="form-control" ng-model="selectedJobLocation"
-                           bs-options="location for location in jobLocation" placeholder="Location" bs-typeahead>
-                    <div class="searchButton input-group-addon" ng-click="">
-                        <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-
-<hr>
-<!-- Left Pane-->
-<div class="row">
-
-    <div class="col-md-3">
-
-        <form name="jobFilterParametersFormLeft" class="form-horizontal" role="form">
-            <div class="form-group">
-                <label for="jobFilterParamFunction" class="col-md-5 control-label">Job status:</label>
-                <div class="col-md-7">
-                    <button id="jobFilterParamFunction"
-                            aria-label="Select" type="button" class="btn btn-default form-control"
-                            ng-model="selectedFunction" data-placeholder="Job status" data-html="1"
-                            bs-options="item.value as item.label for item in sampleObjectForFunction" bs-select>
-                        Function <span class="caret"></span>
-                    </button>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="jobFilterParamFunction" class="col-md-5 control-label">Salary:</label>
-                <div class="col-md-7">
-                    <button id="jobFilterParamFunction"
-                            aria-label="Select" type="button" class="btn btn-default form-control"
-                            ng-model="selectedFunction" data-placeholder="Salary" data-html="1"
-                            bs-options="item.value as item.label for item in sampleObjectForFunction" bs-select>
-                        Function <span class="caret"></span>
-                    </button>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="jobFilterParamFunction" class="col-md-5 control-label">Duration:</label>
-                <div class="col-md-7">
-                    <button id="jobFilterParamFunction"
-                            aria-label="Select" type="button" class="btn btn-default form-control"
-                            ng-model="selectedFunction" data-placeholder="Duration" data-html="1"
-                            bs-options="item.value as item.label for item in sampleObjectForFunction" bs-select>
-                        Function <span class="caret"></span>
-                    </button>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="jobFilterParamFunction" class="col-md-5 control-label">Posted Date:</label>
-                <div class="col-md-7">
-                    <button id="jobFilterParamFunction"
-                            aria-label="Select" type="button" class="btn btn-default form-control"
-                            ng-model="selectedFunction" data-placeholder="Date" data-html="1"
-                            bs-options="item.value as item.label for item in sampleObjectForFunction" bs-select>
-                        Function <span class="caret"></span>
-                    </button>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="jobFilterParamFunction" class="col-md-5 control-label">Company:</label>
-                <div class="col-md-7">
+                <div class="form-group">
+                    <label id="jobSearchLabel" class="control-label">Search:</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" ng-model="selectedJobLocation"
-                                   bs-options="location for location in jobLocation" placeholder="Company Name" bs-typeahead>
+                        <button aria-label="Select" type="button" class="btn btn-default form-control"
+                                ng-model="selectedJobSearch.category" data-placeholder="Category" data-html="1"
+                                bs-options="category for category in jobSearch.category" bs-select>
+                        </button>
                         <div class="searchButton input-group-addon" ng-click="">
+                            <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <label for="jobFilterParamFunction" class="col-md-5 control-label">Skill</label>
-                <div class="col-md-7">
+                <div class="form-group">
                     <div class="input-group">
-                        <input type="text" class="form-control" ng-model="selectedJobLocation"
-                               bs-options="location for location in jobLocation" placeholder="Skill" bs-typeahead>
+                        <input type="text" class="form-control" ng-model="selectedJobSearch.location" placeholder="Location">
                         <div class="searchButton input-group-addon" ng-click="">
+                            <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
                         </div>
                     </div>
                 </div>
-            </div>
 
-        </form>
-
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
     </div>
-    <!-- center and right pane-->
-    <div class="col-md-9">
 
-        <div class="row">
+    <hr />
 
-            <div class="col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Android Developer and Nerds</h3>
-                    </div>
-                    <div class="panel-body">
-                        <ul class="list-unstyled">
-                            <li><span class="glyphicon glyphicon-briefcase"></span> Vishnu Inc.</li>
-                            <li><span class="glyphicon glyphicon-map-marker"></span> Stuttgart, Germany</li>
-                            <li><span class="glyphicon glyphicon-folder-close"></span> 1 Years</li>
-                            <li><span class="glyphicon glyphicon-euro"></span> 100,000</li>
-                            <li><span class="glyphicon glyphicon-calendar"></span> Post Date-10-Oct-2015</li>
-                            <li><span class="glyphicon glyphicon-book"></span> Jquery, Javascript, HTML 5, CSS., Jquery, Javascript, HTML 5, CSS.</li>
-                        </ul>
-                        <p>Vishnu Inc. which is the biggest Inc. in the world is having a very urgent requirement for Implementation of business
-                            communications activities, including writing, design and web related
-                            activities to promote co[complete description wont be given]
-                        </p>
+    <i>Debug information:</i><br />
+    selectedJobSearch: {{ selectedJobSearch }}
+
+    <hr />
+
+    <div class="row">
+
+        <!--
+        <div class="col-md-3">
+
+            <form name="jobFilterParametersForm" id="jobFilterParametersForm" class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label for="jobFilterParamType" class="col-md-5 control-label">Type:</label>
+                    <div class="col-md-7">
+                        <button id="jobFilterParamType"
+                                aria-label="Select" type="button" class="btn btn-default form-control text-overflow"
+                                ng-model="selectedJobFilter.type" data-placeholder="Type" data-html="1"
+                                bs-options="item.value as item.label for item in jobFilter.type" bs-select>
+                        </button>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Android Developer and Nerds</h3>
-                    </div>
-                    <div class="panel-body">
-                        <ul class="list-unstyled">
-                            <li><span class="glyphicon glyphicon-briefcase"></span> Vishnu Inc.</li>
-                            <li><span class="glyphicon glyphicon-map-marker"></span> Stuttgart, Germany</li>
-                            <li><span class="glyphicon glyphicon-folder-close"></span> 1 Years</li>
-                            <li><span class="glyphicon glyphicon-euro"></span> 100,000</li>
-                            <li><span class="glyphicon glyphicon-calendar"></span> Post Date-10-Oct-2015</li>
-                            <li><span class="glyphicon glyphicon-book"></span> Jquery, Javascript, HTML 5, CSS.</li>
-                        </ul>
-                        <p>Vishnu Inc. which is the biggest Inc. in the world is having a very urgent requirement for Implementation of business
-                            communications activities, including writing, design and web related
-                            activities to promote co[complete description wont be given]
-                        </p>
-                    </div>
-                </div>
-            </div>
 
-            <div class="col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Android Developer and Nerds</h3>
-                    </div>
-                    <div class="panel-body">
-                        <ul class="list-unstyled">
-                            <li><span class="glyphicon glyphicon-briefcase"></span> Vishnu Inc.</li>
-                            <li><span class="glyphicon glyphicon-map-marker"></span> Stuttgart, Germany</li>
-                            <li><span class="glyphicon glyphicon-folder-close"></span> 1 Years</li>
-                            <li><span class="glyphicon glyphicon-euro"></span> 100,000</li>
-                            <li><span class="glyphicon glyphicon-calendar"></span> Post Date-10-Oct-2015</li>
-                            <li><span class="glyphicon glyphicon-book"></span> Jquery, Javascript, HTML 5, CSS.</li>
-                        </ul>
-                        <p>Vishnu Inc. which is the biggest Inc. in the world is having a very urgent requirement for Implementation of business
-                            communications activities, including writing, design and web related
-                            activities to promote co[complete description wont be given]
-                        </p>
+                <div class="form-group">
+                    <label for="jobFilterParamSalary" class="col-md-5 control-label">Salary:</label>
+                    <div class="col-md-7">
+                        <button id="jobFilterParamSalary"
+                                aria-label="Select" type="button" class="btn btn-default form-control text-overflow"
+                                ng-model="selectedJobFilter.salary" data-placeholder="Salary" data-html="1"
+                                bs-options="item.value as item.label for item in jobFilter.salary" bs-select>
+                        </button>
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label for="jobFilterParamDuration" class="col-md-5 control-label">Duration:</label>
+                    <div class="col-md-7">
+                        <button id="jobFilterParamDuration"
+                                aria-label="Select" type="button" class="btn btn-default form-control text-overflow"
+                                ng-model="selectedJobFilter.duration" data-placeholder="Duration" data-html="1"
+                                bs-options="item.value as item.label for item in jobFilter.duration" bs-select>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-class="{'has-error': datepickerForm.date.$invalid}">
+                    <label for="jobFilterParamPostedDate" class="col-md-5 control-label">Posted Date:</label>
+                    <div class="col-md-7">
+                        <div class="input-group">
+                            <input id="jobFilterParamPostedDate" type="text" class="form-control"
+                                   placeholder="Posted date" ng-model="selectedJobFilter.postedDate" bs-datepicker>
+                            <div class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="jobFilterParamCompany" class="col-md-5 control-label">Company:</label>
+                    <div class="col-md-7">
+                        <div class="input-group">
+                            <input id="jobFilterParamCompany"
+                                   type="text" class="form-control" ng-model="selectedJobFilter.company"
+                                   bs-options="location for location in jobFilter.company" placeholder="Company name" bs-typeahead>
+                            <div class="searchButton input-group-addon">
+                                <span class="glyphicon glyphicon-briefcase"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="jobFilterParamSkill" class="col-md-5 control-label">Skill:</label>
+                    <div class="col-md-7">
+                        <div class="input-group">
+                            <input id="jobFilterParamSkill"
+                                   type="text" class="form-control" ng-model="selectedJobFilter.skill"
+                                   bs-options="location for location in jobFilter.skill" placeholder="Skill" bs-typeahead>
+                            <div class="searchButton input-group-addon">
+                                <span class="glyphicon glyphicon-book"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+        -->
+        <div class="col-md-12">
+
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Android Developer and Nerds</h3>
+                        </div>
+                        <div class="panel-body">
+                            <ul class="list-unstyled jobOfferParameters">
+                                <li class="jobOfferCompany">Vishnu Inc.</li>
+                                <li class="jobOfferLocation">Stuttgart, Germany</li>
+                                <li class="jobOfferDuration">1 Year</li>
+                                <li class="jobOfferSalary">100,000</li>
+                                <li class="jobOfferPostedDate">10-Oct-2015</li>
+                                <li class="jobOfferSkill">Jquery, Javascript, HTML 5, CSS, Jquery, Javascript, HTML 5, CSS</li>
+                            </ul>
+                            <p>Vishnu Inc. which is the biggest Inc. in the world is having a very urgent requirement
+                                for Implementation of business communications activities, including writing, design
+                                and web related activities to promote co...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Android Developer and Nerds</h3>
+                        </div>
+                        <div class="panel-body">
+                            <ul class="list-unstyled jobOfferParameters">
+                                <li class="jobOfferCompany">Vishnu Inc.</li>
+                                <li class="jobOfferLocation">Stuttgart, Germany</li>
+                                <li class="jobOfferDuration">1 Year</li>
+                                <li class="jobOfferSalary">100,000</li>
+                                <li class="jobOfferPostedDate">10-Oct-2015</li>
+                                <li class="jobOfferSkill">Jquery, Javascript, HTML 5, CSS, Jquery, Javascript, HTML 5, CSS</li>
+                            </ul>
+                            <p>Vishnu Inc. which is the biggest Inc. in the world is having a very urgent requirement
+                                for Implementation of business communications activities, including writing, design
+                                and web related activities to promote co...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Android Developer and Nerds</h3>
+                        </div>
+                        <div class="panel-body">
+                            <ul class="list-unstyled jobOfferParameters">
+                                <li class="jobOfferCompany">Vishnu Inc.</li>
+                                <li class="jobOfferLocation">Stuttgart, Germany</li>
+                                <li class="jobOfferDuration">1 Year</li>
+                                <li class="jobOfferSalary">100,000</li>
+                                <li class="jobOfferPostedDate">10-Oct-2015</li>
+                                <li class="jobOfferSkill">Jquery, Javascript, HTML 5, CSS, Jquery, Javascript, HTML 5, CSS</li>
+                            </ul>
+                            <p>Vishnu Inc. which is the biggest Inc. in the world is having a very urgent requirement
+                                for Implementation of business communications activities, including writing, design
+                                and web related activities to promote co...</p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
         </div>
-
     </div>
 </div>
-
-
-
-<hr>
-

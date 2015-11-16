@@ -1,95 +1,97 @@
-<div class="row">
-    <div class="col-xs-12 col-xs-offset-0
-        col-sm-12 col-sm-offset-0
-        col-md-12 col-md-offset-0
-        col-lg-12 col-lg-offset-0">
-        <h2>Administer job offers</h2>
+<div id="jfsAdminJobList">
+    <div class="row">
+        <div class="col-xs-12 col-xs-offset-0
+            col-sm-12 col-sm-offset-0
+            col-md-12 col-md-offset-0
+            col-lg-12 col-lg-offset-0">
+            <h2>Administer job offers</h2>
 
-        <div id="jobFilterParameters">
-            <form name="jobQuickSearchForm" id="jobQuickSearchForm" class="form-inline" role="form">
-                <div class="form-group">
-                    <label for="jobQuickSearch" class="control-label">Quick search:</label>
-                    <div class="input-group">
-                        <input type="text" id="jobQuickSearch" class="form-control" aria-label="Job quick search">
-                        <div class="searchButton input-group-addon" ng-click="quicksearch();">
-                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+            <div id="jobFilterParameters">
+                <form name="jobQuickSearchForm" id="jobQuickSearchForm" class="form-inline" role="form">
+                    <div class="form-group">
+                        <label for="jobQuickSearch" class="control-label">Quick search:</label>
+                        <div class="input-group">
+                            <input type="text" id="jobQuickSearch" class="form-control" aria-label="Job quick search">
+                            <div class="searchButton input-group-addon" ng-click="quicksearch();">
+                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </form>
+                </form>
 
-            <form name="jobFilterParametersForm" class="form-inline" role="form">
-                <div class="form-group">
-                    <button aria-label="Select" type="button" class="btn btn-default form-control"
-                            ng-model="selectedFunction" data-placeholder="Function" data-html="1"
-                            bs-options="item.value as item.label for item in jobFunction" bs-select>
-                        Function <span class="caret"></span>
-                    </button>
-                </div>
+                <form name="jobFilterParametersForm" class="form-inline" role="form">
+                    <div class="form-group">
+                        <button aria-label="Select" type="button" class="btn btn-default form-control"
+                                ng-model="selectedFunction" data-placeholder="Function" data-html="1"
+                                bs-options="item.value as item.label for item in jobFunction" bs-select>
+                            Function <span class="caret"></span>
+                        </button>
+                    </div>
 
-                <div class="form-group">
-                    <button aria-label="Select" type="button" class="btn btn-default form-control"
-                            ng-model="selectedDuration" data-placeholder="Duration" data-html="1"
-                            bs-options="item.value as item.label for item in jobDuration" bs-select>
-                        Duration <span class="caret"></span>
-                    </button>
-                </div>
+                    <div class="form-group">
+                        <button aria-label="Select" type="button" class="btn btn-default form-control"
+                                ng-model="selectedDuration" data-placeholder="Duration" data-html="1"
+                                bs-options="item.value as item.label for item in jobDuration" bs-select>
+                            Duration <span class="caret"></span>
+                        </button>
+                    </div>
 
-                <div class="form-group">
-                    <input type="text" class="form-control" ng-model="selectedJobLocation"
-                           bs-options="location for location in jobLocation" placeholder="Location" bs-typeahead>
-                </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" ng-model="selectedJobLocation"
+                               bs-options="location for location in jobLocation" placeholder="Location" bs-typeahead>
+                    </div>
 
-                <div class="form-group" ng-class="{'has-error': datepickerForm.date.$invalid}">
-                   <div class="input-group">
-                       <input id="jobStartDate" type="text" class="form-control"
-                              placeholder="Start date" ng-model="jobStartDate" name="jobStartDate" bs-datepicker>
-                       <div class="input-group-addon">
-                           <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                    <div class="form-group" ng-class="{'has-error': datepickerForm.date.$invalid}">
+                       <div class="input-group">
+                           <input id="jobStartDate" type="text" class="form-control"
+                                  placeholder="Start date" ng-model="jobStartDate" name="jobStartDate" bs-datepicker>
+                           <div class="input-group-addon">
+                               <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                           </div>
                        </div>
-                   </div>
-                </div>
-            </form>
-        </div>
+                    </div>
+                </form>
+            </div>
 
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Function</th>
-                        <th>Location</th>
-                        <th>Type</th>
-                        <th>Company</th>
-                        <th>Duration</th>
-                        <th>Valid from</th>
-                        <th>Valid until</th>
-                        <th>Website</th>
-                        <th>&nbsp;</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="t in getTimes(10) track by $index">
-                        <td>Support Tools Engineering Manager</td>
-                        <td>Support Tools Engineering Manager</td>
-                        <td>Remote</td>
-                        <td>full_time</td>
-                        <td>GitHub</td>
-                        <td>6 months</td>
-                        <td>01.04.2016</td>
-                        <td>01.07.2016</td>
-                        <td>https://github.com/about/jobs</td>
-                        <td>
-                            <button ng-click="edit();" type="button" class="btn btn-default btn-xs jfs-adminButton">
-                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                            </button>
-                            <button ng-click="remove();" type="button" class="btn btn-default btn-xs jfs-adminButton">
-                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Function</th>
+                            <th>Location</th>
+                            <th>Type</th>
+                            <th>Company</th>
+                            <th>Duration</th>
+                            <th>Valid from</th>
+                            <th>Valid until</th>
+                            <th>Website</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="t in getTimes(10) track by $index">
+                            <td>Support Tools Engineering Manager</td>
+                            <td>Support Tools Engineering Manager</td>
+                            <td>Remote</td>
+                            <td>full_time</td>
+                            <td>GitHub</td>
+                            <td>6 months</td>
+                            <td>01.04.2016</td>
+                            <td>01.07.2016</td>
+                            <td>https://github.com/about/jobs</td>
+                            <td>
+                                <button ng-click="edit();" type="button" class="btn btn-default btn-xs jfs-adminButton">
+                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                </button>
+                                <button ng-click="remove();" type="button" class="btn btn-default btn-xs jfs-adminButton">
+                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

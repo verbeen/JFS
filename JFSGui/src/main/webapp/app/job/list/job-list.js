@@ -8,39 +8,38 @@
 
     JobListController.$inject = ['JobService', '$scope'];
     function JobListController(JobService, $scope) {
-        JobService.getAllJobs()
-            .then(function(data) {
-                $scope.jobs = data;
-                $scope.svalue = true;
-                $scope.sampleObjectForFunction = [
-                    {"value":"1Gear","label":"1Gear"},
-                    {"value":"1Globe","label":"1Globe"},
-                    {"value":"1Heart","label":"1Heart"}
-                ];
-                $scope.sampleObjectForDuration = [
-                    {"value":"2Gear","label":"2Gear"},
-                    {"value":"2Globe","label":"2Globe"},
-                    {"value":"2Heart","label":"2Heart"}
-                ];
-                $scope.sampleObjectForJobType = [
-                    {"value":"3Gear","label":"3Gear"},
-                    {"value":"3Globe","label":"3Globe"},
-                    {"value":"3Heart","label":"3Heart"}
-                ];
+        var vm = this;
 
+        vm.search = search;
 
-
-            });
-
-        $scope.foo = function() {
-            if($scope.svalue==false)
-            {
-                $scope.svalue=true;
-            }
-            else{
-                $scope.svalue = false;
-            }
-
+        function search() {
+            console.log($scope.selectedJobSearch);
         };
+
+        $scope.jobSearch = {
+            "category": ["Administration","IT","Logistics"]
+        };
+
+        /*
+        $scope.jobFilter = {
+            "type": [
+                { "value": "1", "label": "Part Time" },
+                { "value": "2", "label": "Full Time" },
+                { "value": "3", "label": "Master Thesis" }
+            ],
+            "salary": [
+                { "value": "s1", "label": "Less than 20" },
+                { "value": "s2", "label": "Between 20 and 40" },
+                { "value": "s3", "label": "More than 40" }
+            ],
+            "duration": [
+                { "value": "d1", "label": "Less than 6 month" },
+                { "value": "d2", "label": "Between 6 and 11 months" },
+                { "value": "d3", "label": "More than one year" }
+            ],
+            "company": ["Accenture","IBM","Google"],
+            "skill": ["CSS","Java","Angular JS"]
+        };
+        */
     }
 })();

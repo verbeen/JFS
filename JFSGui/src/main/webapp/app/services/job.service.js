@@ -17,7 +17,7 @@
         return service;
 
         function getAllJobs() {
-            return $http.get('data/job-list.json')
+            return $http.post('/service/offers/getall')
                 .then(handleSuccess, handleError('Error getting all jobs!'));
         }
 
