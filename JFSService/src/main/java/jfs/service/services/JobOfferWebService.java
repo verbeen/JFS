@@ -1,10 +1,9 @@
 package jfs.service.services;
 
 
-import jfs.transferdata.transferobjects.CreateJobOfferDTO;
-import jfs.transferdata.transferobjects.CreateJobOffersDTO;
-import jfs.transferdata.transferobjects.JobOfferListDTO;
-import jfs.transferdata.transferobjects.SearchDTO;
+import jfs.service.sessions.Session;
+import jfs.transferdata.transferobjects.*;
+import jfs.transferdata.transferobjects.enums.UserTypeDTO;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -23,21 +22,39 @@ public class JobOfferWebService {
     @POST
     @Path("/add") @Consumes("application/json") @Produces("application/json")
     public Boolean addOffer(CreateJobOfferDTO offerDTO){
-        if(offerDTO.companyId != null && offerDTO.companyId.equals(SessionService.sessions.get(offerDTO.token))) {
-            return this.jobOfferService.addOffer(offerDTO.jobOffer, offerDTO.companyId);
-        } else {
-            return false;
+        if(offerDTO.companyId != null) {
+            Session user = SessionService.sessions.get(offerDTO.token);
+            if (user != null && offerDTO.companyId.equals(user.userId) && user.type == UserTypeDTO.COMPANY) {
+                return this.jobOfferService.addOffer(offerDTO.jobOffer, offerDTO.companyId);
+            }
         }
+        return false;
     }
 
     @POST
     @Path("/addmore") @Consumes("application/json") @Produces("application/json")
     public Boolean addOffers(CreateJobOffersDTO offerDTO){
-        if(offerDTO.companyId != null && offerDTO.companyId.equals(SessionService.sessions.get(offerDTO.token))) {
-            return this.jobOfferService.addOffers(offerDTO.jobOffers, offerDTO.companyId);
-        } else {
-            return false;
+        if(offerDTO.companyId != null) {
+            Session session = SessionService.sessions.get(offerDTO.token);
+            if (session != null && offerDTO.companyId.equals(session.userId) && session.type == UserTypeDTO.COMPANY) {
+                return this.jobOfferService.addOffers(offerDTO.jobOffers, offerDTO.companyId);
+            }
         }
+        return false;
+    }
+
+    @POST
+    @Path("/getall") @Consumes("application/json") @Produces("application/json")
+    public JobOfferListDTO getAllOffers(String token){
+        if(token != null && token != "") {
+            Session session = SessionService.sessions.get(token);
+            if (session != null && token.equals(session.userId) && session.type == UserTypeDTO.ADMIN) {
+                JobOfferListDTO list = new JobOfferListDTO();
+                list.offers = this.jobOfferService.getAllOffers();
+                return list;
+            }
+        }
+        return null;
     }
 
     @POST
@@ -50,10 +67,10 @@ public class JobOfferWebService {
 
     @POST
     @Path("/search/recent") @Consumes("application/json") @Produces("application/json")
-    public JobOfferListDTO getRecent(int amount){
+    public JobOfferListDTO getRecent(Integer amount){
         JobOfferListDTO list = new JobOfferListDTO();
         list.offers = this.jobOfferService.searchRecent(amount);
-        return null;
+        return list;
     }
 
     @POST
@@ -61,6 +78,6 @@ public class JobOfferWebService {
     public JobOfferListDTO search(SearchDTO searchDTO){
         JobOfferListDTO list = new JobOfferListDTO();
         list.offers = this.jobOfferService.search(searchDTO);
-        return null;
+        return list;
     }
 }

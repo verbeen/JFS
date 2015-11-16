@@ -1,18 +1,23 @@
 package jfs.data.stores;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBDecoderFactory;
 import com.mongodb.MongoException;
 import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.IndexOptions;
 import com.mongodb.client.model.Sorts;
+import com.mongodb.util.JSON;
 import javafx.util.Pair;
+import jfs.data.connections.DataClient;
 import jfs.data.dataobjects.JobOfferDO;
-import jfs.data.dataobjects.UserDO;
-import org.bson.BSON;
+import org.bson.BsonDocument;
 import org.bson.Document;
+import org.bson.json.JsonMode;
+import org.bson.json.JsonWriterSettings;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by lpuddu on 12-11-2015.
@@ -28,6 +33,15 @@ public class JobOfferStore extends DataStore {
                                        .append("name", "text")
                                        .append("function", "text");
         this.collection.createIndex(index, new IndexOptions().name("textSearch"));
+    }
+
+    public List<JobOfferDO> getAllOffers(){
+        List<JobOfferDO> offers = new ArrayList<JobOfferDO>();
+        FindIterable<Document> results = this.collection.find();
+        for(Document doc : results){
+            offers.add(this.serializer.DeSerialize(doc.getString("_raw"), JobOfferDO.class));
+        }
+        return offers;
     }
 
     public Boolean addOffer(JobOfferDO offer){
@@ -61,7 +75,8 @@ public class JobOfferStore extends DataStore {
         List<JobOfferDO> offers = new ArrayList<JobOfferDO>();
         FindIterable<Document> results = this.collection.find(new Document("textSearch", term)).limit(amount);
         for(Document doc : results){
-            offers.add(this.serializer.DeSerialize(doc.toJson(), JobOfferDO.class));
+            //offers.add(this.serializer.DeSerialize(doc.toJson(), JobOfferDO.class));
+            offers.add(this.serializer.DeSerialize(doc.getString("_raw"), JobOfferDO.class));
         }
         return offers;
     }
@@ -70,7 +85,8 @@ public class JobOfferStore extends DataStore {
         List<JobOfferDO> offers = new ArrayList<JobOfferDO>();
         FindIterable<Document> results = this.collection.find().sort(Sorts.orderBy(Sorts.ascending("validity"))).limit(amount);
         for(Document doc : results){
-            offers.add(this.serializer.DeSerialize(doc.toJson(), JobOfferDO.class));
+            //offers.add(this.serializer.DeSerialize(doc.toJson(), JobOfferDO.class));
+            offers.add(this.serializer.DeSerialize(doc.getString("_raw"), JobOfferDO.class));
         }
         return offers;
     }
@@ -83,7 +99,8 @@ public class JobOfferStore extends DataStore {
         }
         FindIterable<Document> results = this.collection.find(query);
         for(Document doc : results){
-            offers.add(this.serializer.DeSerialize(doc.toJson(), JobOfferDO.class));
+            //offers.add(this.serializer.DeSerialize(doc.toJson(), JobOfferDO.class));
+            offers.add(this.serializer.DeSerialize(doc.getString("_raw"), JobOfferDO.class));
         }
         return offers;
     }

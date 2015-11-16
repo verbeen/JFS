@@ -60,6 +60,11 @@ public class JobOfferService {
         return this.createOfferDTOList(offerDOs);
     }
 
+    public List<JobOfferDTO> getAllOffers(){
+        List<JobOfferDO> offerDOs = this.jobOfferStore.getAllOffers();
+        return this.createOfferDTOList(offerDOs);
+    }
+
     public List<JobOfferDTO> search(SearchDTO searchDTO){
         ArrayList<Pair<String, Object>> pairs = new ArrayList<Pair<String, Object>>();
         if(searchDTO.duration != 0){
@@ -82,7 +87,7 @@ public class JobOfferService {
         List<JobOfferDTO> offers = new ArrayList<JobOfferDTO>();
         for(JobOfferDO offerDO : offerDOs){
             JobOfferDTO offer = new JobOfferDTO(
-                    offerDO.name, offerDO.function, offerDO.description, offerDO.task,
+                    offerDO.userId , offerDO.name, offerDO.function, offerDO.description, offerDO.task,
                     offerDO.duration, offerDO.validUntil, offerDO.startDate, offerDO.location,
                     offerDO.website, JobTypeDTO.valueOf(offerDO.type.name())
             );

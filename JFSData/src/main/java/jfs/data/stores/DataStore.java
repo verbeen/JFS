@@ -27,11 +27,13 @@ public abstract class DataStore {
     }
 
     public boolean insert(Object obj, Object id){
-        Document doc = Document.parse(this.serializer.Serialize(obj));
+        String json = this.serializer.Serialize(obj);
+        Document doc = Document.parse(json);
 
         if(id != null) {
             doc.put("_id", id);
         }
+        doc.put("_raw", json);
 
         try {
             this.collection.insertOne(doc);
@@ -45,6 +47,9 @@ public abstract class DataStore {
             }
         }
     }
+
+    //TODO public boolean replace(Object obj){}
+
     public Document getOneDocument(String key, Object value){
         return this.collection.find(new Document(key, value)).first();
     }
