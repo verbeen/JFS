@@ -12,6 +12,8 @@ import org.bson.Document;
  * Created by Hulk-A on 10.11.2015.
  */
 public class StudentProfileStore extends DataStore {
+    public static final StudentProfileStore store = new StudentProfileStore();
+
     public StudentProfileStore() {
         super("studentProfiles");
     }
