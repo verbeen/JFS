@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('app', ["ngRoute", "ngCookies", "mgcrea.ngStrap"])
+    angular.module('app', ["ngRoute", "ngCookies", "ngSanitize", "mgcrea.ngStrap"])
         .config(config)
         .run(run)
         .controller('HomeController', HomeController);
@@ -33,6 +33,18 @@
                 templateUrl: 'app/authentication/register/authentication-register.html',
                 controller: 'RegisterController as vm'
             })
+            .when('/administration/job/list', {
+                templateUrl: 'app/administration/job/list/administration-job-list.html',
+                controller: 'AdministrationJobListController as vm'
+            })
+            .when('/administration/members/list', {
+                templateUrl: 'app/administration/members/list/administration-members-list.html',
+                controller: 'AdministrationMembersListController as vm'
+            })
+            .when('/sample', {
+                templateUrl: 'app/sample/sample.html',
+                controller: 'SampleController as vm'
+            })
             .otherwise({redirectTo: '/'});
     }
 
@@ -59,5 +71,6 @@
     HomeController.$inject = ['$rootScope', '$scope'];
     function HomeController($rootScope, $scope) {
         $scope.username = $rootScope.globals.currentUser.username;
+        $scope.userType = $rootScope.globals.currentUser.userType;
     }
 })();

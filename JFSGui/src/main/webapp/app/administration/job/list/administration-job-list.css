@@ -1,0 +1,25 @@
+.jfs-adminButton.btn-xs {
+    line-height: 1;
+}
+
+#jobFilterParameters {
+    padding: 1rem 0;
+}
+
+#jobQuickSearchForm {
+    margin-bottom: 1rem;
+}
+
+#jobQuickSearchForm .searchButton:hover {
+    cursor: pointer;
+}
+
+@media (min-width: 768px) {
+    #jobQuickSearchForm label {
+        padding-right: 1rem;
+    }
+
+    #jobQuickSearchForm input {
+        width: 300px;
+    }
+}

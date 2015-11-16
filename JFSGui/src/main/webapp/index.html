@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="vendor/angular-motion-0.4.2/angular-motion.min.css">
 
 	<link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="app/administration/job/list/administration-job-list.css">
 </head>
 <body>
     <!-- navigation -->
@@ -28,8 +29,9 @@
 
             <div class="collapse navbar-collapse" bs-collapse-target>
                 <ul class="nav navbar-nav">
-                    <li data-match-route="/job/list.*"><a href="#/job/list">Job offers</a></li>
-                    <li data-match-route="/authentication/register.*"><a href="#/authentication/register">Register as organization</a></li>
+                    <li data-match-route="^/job/list.*"><a href="#/job/list">Job offers</a></li>
+                    <li data-match-route="^/authentication/register.*"><a href="#/authentication/register">Register as organization</a></li>
+                    <li data-match-route="^/administration.*"><a href="#/administration/job/list">Admin</a></li>
                     <li><a href="#/authentication/logout">Logout</a></li>
                 </ul>
             </div>
@@ -37,14 +39,15 @@
 	</nav>
 
     <!-- container where all html templates of components go -->
-	<div id="jfs-contentview" ng-view></div>
+	<div id="jfs-contentview" class="container-fluid" ng-view></div>
 
     <!-- angularjs libraries -->
 	<script type="text/javascript" src="vendor/angularjs-1.4.7/angular.min.js"></script>
 	<script type="text/javascript" src="vendor/angularjs-1.4.7/angular-route.min.js"></script>
 	<script type="text/javascript" src="vendor/angularjs-1.4.7/angular-cookies.min.js"></script>
-	<script type="text/javascript" src="vendor/angular-strap-2.3.2/angular-strap.min.js"></script>
-	<script type="text/javascript" src="vendor/angular-strap-2.3.2/angular-strap.tpl.min.js"></script>
+    <script type="text/javascript" src="vendor/angularjs-1.4.7/angular-sanitize.min.js"></script>
+	<script type="text/javascript" src="vendor/angular-strap-2.3.5/angular-strap.min.js"></script>
+	<script type="text/javascript" src="vendor/angular-strap-2.3.5/angular-strap.tpl.min.js"></script>
 
     <!-- entry point of app -->
 	<script type="text/javascript" src="app/app.js"></script>
@@ -55,10 +58,13 @@
 	<script type="text/javascript" src="app/services/job.service.js"></script>
 
 	<!-- components -->
+    <script type="text/javascript" src="app/sample/sample.js"></script>
 	<script type="text/javascript" src="app/job/list/job-list.js"></script>
     <script type="text/javascript" src="app/job/profile/job-profile.js"></script>
 	<script type="text/javascript" src="app/authentication/login/authentication-login.js"></script>
 	<script type="text/javascript" src="app/authentication/logout/authentication-logout.js"></script>
 	<script type="text/javascript" src="app/authentication/register/authentication-register.js"></script>
+    <script type="text/javascript" src="app/administration/job/list/administration-job-list.js"></script>
+    <script type="text/javascript" src="app/administration/job/list/administration-members-list.js"></script>
 </body>
 </html>
