@@ -37,9 +37,9 @@
                 templateUrl: 'app/administration/job/list/administration-job-list.html',
                 controller: 'AdministrationJobListController as vm'
             })
-            .when('/administration/members/list', {
-                templateUrl: 'app/administration/members/list/administration-members-list.html',
-                controller: 'AdministrationMembersListController as vm'
+            .when('/administration/user/list', {
+                templateUrl: 'app/administration/user/list/administration-user-list.html',
+                controller: 'AdministrationUserListController as vm'
             })
             .when('/sample', {
                 templateUrl: 'app/sample/sample.html',
@@ -52,9 +52,6 @@
     function run($rootScope, $location, $cookieStore, $http) {
         // keep user logged in after page refresh
         $rootScope.globals = $cookieStore.get('globals') || {};
-        if ($rootScope.globals.currentUser) {
-            $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
-        }
 
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
             // redirect to login page if not logged in and trying to access a restricted page

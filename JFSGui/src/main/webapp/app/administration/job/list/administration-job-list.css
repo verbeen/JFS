@@ -1,25 +1,25 @@
-.jfs-adminButton.btn-xs {
+#jfsAdminJobList .jfsAdminButton.btn-xs {
     line-height: 1;
 }
 
-#jobFilterParameters {
+#jfsAdminJobList #jobFilterParameters {
     padding: 1rem 0;
 }
 
-#jobQuickSearchForm {
+#jfsAdminJobList #jobQuickSearchForm {
     margin-bottom: 1rem;
 }
 
-#jobQuickSearchForm .searchButton:hover {
+#jfsAdminJobList #jobQuickSearchForm .searchButton:hover {
     cursor: pointer;
 }
 
 @media (min-width: 768px) {
-    #jobQuickSearchForm label {
+    #jfsAdminJobList #jobQuickSearchForm label {
         padding-right: 1rem;
     }
 
-    #jobQuickSearchForm input {
+    #jfsAdminJobList #jobQuickSearchForm input {
         width: 300px;
     }
 }
