@@ -76,7 +76,7 @@ public class JobOfferService {
         if(searchDTO.duration != 0){
             pairs.add(new Pair("duraction", searchDTO.duration));
         }
-        if(searchDTO.function != null || searchDTO.function != ""){
+        if(searchDTO.function != null && searchDTO.function != ""){
             pairs.add(new Pair("function", searchDTO.function));
         }
         if(searchDTO.validity != 0){
@@ -91,7 +91,7 @@ public class JobOfferService {
 
     private JobOfferDTO createOfferDTO(JobOfferDO offerDO){
         return new JobOfferDTO(
-                offerDO.id, offerDO.userId , offerDO.name, offerDO.function, offerDO.description,
+                offerDO._id, offerDO.userId , offerDO.name, offerDO.function, offerDO.description,
                 offerDO.task, offerDO.duration, offerDO.validUntil, offerDO.startDate,
                 offerDO.location, offerDO.website, JobTypeDTO.valueOf(offerDO.type.name())
         );

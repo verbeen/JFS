@@ -6,6 +6,7 @@ import com.mongodb.MongoWriteException;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.result.UpdateResult;
 import jfs.data.connections.DataClient;
+import jfs.data.dataobjects.DataObject;
 import jfs.data.serializers.Serializer;
 import org.bson.types.ObjectId;
 
@@ -24,28 +25,24 @@ public abstract class DataStore<T> {
         this.collection = DataClient.defaultClient.getCollection(dbName, DBObject.class);
     }
 
-    public String insert(Object obj){
+    public Boolean insert(DataObject obj){
         return this.insert(obj, null);
     }
 
-    public String insert(Object obj, Object id){
+    public Boolean insert(DataObject obj, String id){
         String json = this.serializer.Serialize(obj);
         DBObject doc = BasicDBObject.parse(json);
 
-        if(id != null) {
-            doc.put("_id", id);
-        }
-
         try {
             this.collection.insertOne(doc);
-            return doc.get("_id").toString();
+            return true;
         }
         catch(MongoWriteException ex) {
             if(ex.getError().getCode() == 11000){
-                return null;
+                return false;
             }else {
                 //Logger.getLogger(this.getClass()).log(Level.INFO, ex.getMessage(), ex);
-                return null;
+                return false;
             }
         }
     }

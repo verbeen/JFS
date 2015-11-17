@@ -1,17 +1,12 @@
 package jfs.data.dataobjects;
 
 import jfs.data.dataobjects.enums.JobType;
-import org.bson.BsonDocument;
-import org.bson.Document;
-
-import java.io.Serializable;
-import java.time.Duration;
+import org.bson.types.ObjectId;
 
 /**
  * Created by lpuddu on 10-11-2015.
  */
-public class JobOfferDO{
-    public String id;
+public class JobOfferDO extends DataObject{
     public String userId;
     public String name;
     public String function;
