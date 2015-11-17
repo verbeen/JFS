@@ -14,14 +14,11 @@ public class StudentProfileDO extends DataObject {
     used for logging in, but can be changed.
     organization: Recent organization(s) the student has worked at.
     address
-    skills: A list or description of all the skills the student possesses. //TODO could be done as a list though I prefer a description, let's discuss
+    skills: A list or description of all the skills the student possesses.
     experience
-
-    TODO Think about how and if we implement "blob" storage
     resume: A file containing the resume of the student. This can be uploaded by the student and is
     restricted to the PDF format
-
-    course_details
+    courseDetails
      */
 
     public String name;
@@ -30,9 +27,8 @@ public class StudentProfileDO extends DataObject {
     public String address;
     public String skills;
     public String experience;
-
-    public String course_details;
-
+    public String resume; //URL!
+    public String courseDetails;
 
     public StudentProfileDO() {
     }
@@ -41,17 +37,17 @@ public class StudentProfileDO extends DataObject {
     public StudentProfileDO(String user_id, String name) {
         super(user_id);
         this.name = name;
-
     }
 
-    public StudentProfileDO(String user_id, String name, String email, String organization, String address, String skills, String experience, String course_details) {
+    public StudentProfileDO(String user_id, String name, String email, String organization, String address, String skills, String experience, String resume, String courseDetails) {
         super(user_id);
         this.name = name;
-        this.email = email; //logic if empty or if set to user_id (default) or something else will be done in upper layers //TODO Delete altogether?
+        this.email = email;
         this.organization = organization;
         this.address = address;
         this.skills = skills;
         this.experience = experience;
-        this.course_details = course_details;
+        this.resume = resume;
+        this.courseDetails = courseDetails;
     }
 }
