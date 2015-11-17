@@ -19,7 +19,7 @@
                 templateUrl: 'app/job/list/job-list.html',
                 controller: 'JobListController as vm'
             })
-            .when('/job/profile/:id', {
+            .when('/job/profile', {
                 templateUrl: 'app/job/profile/job-profile.html',
                 controller: 'JobProfileController as vm'
             })
