@@ -6,17 +6,48 @@
         .controller('JobCreateController', JobCreateController);
 
 
-    JobCreateController.$inject = ['JobService', '$scope'];
-    function JobCreateController(JobService, $scope) {
+    JobCreateController.$inject = ['JobService', '$scope', '$rootScope'];
+    function JobCreateController(JobService, $scope, $rootScope) {
         var vm = this;
 
-        vm.search = search;
 
-        function search() {
-            console.log($scope.selectedJobSearch);
-        };
 
-        $scope.jobSearch = {
+        vm.create = create;
+
+        function create() {
+            console.log(vm.jobProfile);
+
+            var a = Date.parse(vm.jobProfile.durationFrom);
+            console.log(a);
+
+            var obj = {
+                "companyId": $rootScope.globals.currentUser.username,
+                "token": $rootScope.globals.currentUser.authdata,
+                "jobOffer": {
+                    "offerId":"",
+                    "companyId": $rootScope.globals.currentUser.username,
+                    "name": vm.jobProfile.jobName,
+                    "function": "",
+                    "description": vm.jobProfile.jobDescription,
+                    "task": vm.jobProfile.jobTask,
+                    "posted": "",
+                    "duration": "",
+                    "validUntil": Date.parse(vm.jobProfile.durationTo),
+                    "startDate": Date.parse(vm.jobProfile.durationFrom),
+                    "location": vm.jobProfile.location,
+                    "website": "",
+                    "type": vm.jobProfile.type
+                }
+            };
+
+            JobService.createJob(obj)
+                .then(function (response) {
+                    if (response.success) {
+                        console.log(response);
+                    }
+                });
+        }
+        vm.jobProfileParams = {
             "type": [
                 { "value": "master_thesis", "label": "Master thesis" },
                 { "value": "bachelor_thesis", "label": "Bachelor thesis" },
@@ -26,27 +57,5 @@
                 { "value": "contract", "label": "Contract" }
             ]
         };
-
-        /*
-         $scope.jobFilter = {
-         "type": [
-         { "value": "1", "label": "Part Time" },
-         { "value": "2", "label": "Full Time" },
-         { "value": "3", "label": "Master Thesis" }
-         ],
-         "salary": [
-         { "value": "s1", "label": "Less than 20" },
-         { "value": "s2", "label": "Between 20 and 40" },
-         { "value": "s3", "label": "More than 40" }
-         ],
-         "duration": [
-         { "value": "d1", "label": "Less than 6 month" },
-         { "value": "d2", "label": "Between 6 and 11 months" },
-         { "value": "d3", "label": "More than one year" }
-         ],
-         "company": ["Accenture","IBM","Google"],
-         "skill": ["CSS","Java","Angular JS"]
-         };
-         */
     }
 })();
