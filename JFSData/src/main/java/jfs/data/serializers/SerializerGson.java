@@ -9,12 +9,12 @@ public class SerializerGson extends Serializer {
     private Gson gson = new Gson();
 
     @Override
-    public <T> T DeSerialize(String raw, Class<T> type) {
+    public <T> T deSerialize(String raw, Class<T> type) {
         return this.gson.fromJson(raw, type);
     }
 
     @Override
-    public String Serialize(Object obj) {
+    public String serialize(Object obj) {
         return this.gson.toJson(obj);
     }
 }

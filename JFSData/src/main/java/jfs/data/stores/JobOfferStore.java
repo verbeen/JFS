@@ -102,6 +102,6 @@ public class JobOfferStore extends DataStore {
     }
 
     private JobOfferDO extractJobOffer(DBObject object){
-        return this.serializer.DeSerialize(object.toString(), JobOfferDO.class);
+        return this.serializer.deSerialize(object.toString(), JobOfferDO.class);
     }
 }
