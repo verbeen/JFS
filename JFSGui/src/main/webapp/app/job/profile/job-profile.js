@@ -5,12 +5,9 @@
         .module('app')
         .controller('JobProfileController', JobProfileController);
 
-    JobProfileController.$inject = ['JobService', '$scope'];
-    function JobProfileController(JobService, $scope) {
-        JobService.getJobProfile()
-            .then(function(data) {
-                $scope.jobProfile = data;
-            });
+    JobProfileController.$inject = ['$scope'];
+    function JobProfileController($scope) {
+
     }
 
 })();
