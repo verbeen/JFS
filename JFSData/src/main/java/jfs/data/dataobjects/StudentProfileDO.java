@@ -3,7 +3,7 @@ package jfs.data.dataobjects;
 /**
  * Created by lpuddu on 10-11-2015.
  */
-public class StudentProfileDO {
+public class StudentProfileDO extends DataObject {
 
     /*
     FROM DATA MODEL:
@@ -24,7 +24,6 @@ public class StudentProfileDO {
     course_details
      */
 
-    public String user_id;
     public String name;
     public String email;
     public String organization;
@@ -40,13 +39,13 @@ public class StudentProfileDO {
 
     //lightweight constructor
     public StudentProfileDO(String user_id, String name) {
-        this.user_id = user_id;
+        super(user_id);
         this.name = name;
 
     }
 
     public StudentProfileDO(String user_id, String name, String email, String organization, String address, String skills, String experience, String course_details) {
-        this.user_id = user_id;
+        super(user_id);
         this.name = name;
         this.email = email; //logic if empty or if set to user_id (default) or something else will be done in upper layers //TODO Delete altogether?
         this.organization = organization;
