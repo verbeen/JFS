@@ -13,6 +13,7 @@
         service.getJobProfile = getJobProfile;
         service.getRecentJobs = getRecentJobs;
         service.getJobsBySearchterm = getJobsBySearchterm;
+        service.createJob = createJob;
 
         return service;
 
@@ -34,6 +35,10 @@
         function getJobsBySearchterm(term) {
             return $http.post('/service/offers/search/text', term)
                 .then(handleSuccess, handleError('Error getting job offers by "' + term + '"!'));
+        }
+        function createJob(jobDetails) {
+            return $http.post('/service/offers/add', jobDetails)
+                .then(handleSuccess, handleError('Error adding job offers by "' + jobDetails + '"!'));
         }
 
         // private functions
