@@ -21,7 +21,7 @@ public class JobOfferWebService {
     public Boolean addOffer(CreateJobOfferDTO offerDTO){
         if(offerDTO.companyId != null) {
             Session session = SessionService.sessions.get(offerDTO.token);
-            if (session != null && offerDTO.companyId.equals(session.userId) && session.type == UserTypeDTO.COMPANY) {
+            if (session != null && session.type == UserTypeDTO.COMPANY) {
                 return this.jobOfferService.addOffer(offerDTO.jobOffer, offerDTO.companyId);
             }
         }
@@ -33,7 +33,7 @@ public class JobOfferWebService {
     public Boolean addOffers(CreateJobOffersDTO offerDTO){
         if(offerDTO.companyId != null) {
             Session session = SessionService.sessions.get(offerDTO.token);
-            if (session != null && offerDTO.companyId.equals(session.userId) && session.type == UserTypeDTO.COMPANY) {
+            if (session != null && session.type == UserTypeDTO.COMPANY) {
                 return this.jobOfferService.addOffers(offerDTO.jobOffers, offerDTO.companyId);
             }
         }
@@ -45,7 +45,7 @@ public class JobOfferWebService {
     public JobOfferListDTO getAllOffers(String token){
         if(token != null && token != "") {
             Session session = SessionService.sessions.get(token);
-            if (session != null && token.equals(session.userId)) {
+            if (session != null) {
                 JobOfferListDTO list = new JobOfferListDTO();
                 list.offers = this.jobOfferService.getAllOffers();
                 return list;

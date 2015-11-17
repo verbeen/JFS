@@ -40,13 +40,7 @@ public class JobOfferStore extends DataStore {
 
     public Boolean addOffer(JobOfferDO offer){
         if (offer != null) {
-            String id = this.insert(offer);
-            if(id != null){
-                offer.id = id;
-                return this.replace(id, offer);
-            }else{
-                return false;
-            }
+            return this.insert(offer);
         } else {
             throw new NullPointerException("JobOfferDO offer parameter is null");
         }

@@ -18,15 +18,15 @@ public class StudentProfileStore extends DataStore {
         super("studentProfiles");
     }
 
-    public Boolean addStudentProfile(StudentProfileDO studentProfile){
+    public Boolean addStudentProfile(StudentProfileDO studentProfile) {
         if (studentProfile != null) {
-            return this.insert(studentProfile, studentProfile.user_id) != null; //TODO does user_id has to be unique here? In that case the user_id which is userDO.id cannot be used
+            return this.insert(studentProfile, studentProfile._id) != null; //TODO does user_id has to be unique here? In that case the user_id which is userDO.id cannot be used
         } else {
             throw new NullPointerException("StudentProfileDO studentProfile parameter is null");
         }
     }
 
-    public StudentProfileDO getStudentProfile(String user_id){
+    public StudentProfileDO getStudentProfile(String user_id) {
         StudentProfileDO studentProfile = null;
         DBObject doc = (DBObject)this.collection.find(new BasicDBObject("_id", user_id)).first();
         if (doc != null) {

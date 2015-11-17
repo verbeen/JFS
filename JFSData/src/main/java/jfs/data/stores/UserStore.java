@@ -17,7 +17,7 @@ public class UserStore extends DataStore {
 
     public Boolean addUser(UserDO user){
         if (user != null) {
-            return this.insert(user, user.id) != null;
+            return this.insert(user, user._id) != null;
         } else {
             throw new NullPointerException("UserDO user parameter is null");
         }

@@ -32,7 +32,7 @@ public class UserService {
             result.isLoggedIn = true;
             result.token = UUID.randomUUID().toString();
             result.type = UserTypeDTO.valueOf(user.type.name());
-            this.sessionService.sessions.put(result.token, new Session(user.id, UserTypeDTO.valueOf(user.type.name())));
+            this.sessionService.sessions.put(result.token, new Session(user._id, UserTypeDTO.valueOf(user.type.name())));
         }else{
             result.isLoggedIn = false;
         }
