@@ -30,7 +30,7 @@ public abstract class DataStore<T> {
     }
 
     public Boolean insert(DataObject obj, String id){
-        String json = this.serializer.Serialize(obj);
+        String json = this.serializer.serialize(obj);
         DBObject doc = BasicDBObject.parse(json);
 
         try {
@@ -48,7 +48,7 @@ public abstract class DataStore<T> {
     }
 
     public <T> Boolean replace(String key, T value){
-        UpdateResult updateResult = this.collection.replaceOne(new BasicDBObject("_id", new ObjectId(key)), BasicDBObject.parse(this.serializer.Serialize(value)));
+        UpdateResult updateResult = this.collection.replaceOne(new BasicDBObject("_id", new ObjectId(key)), BasicDBObject.parse(this.serializer.serialize(value)));
         return updateResult.wasAcknowledged();
     }
 
@@ -62,7 +62,7 @@ public abstract class DataStore<T> {
         T result = null;
         DBObject doc = this.getOneDocument(key, value);
         if(doc != null){
-            result = (T)this.serializer.DeSerialize(doc.toString(), type);
+            result = (T)this.serializer.deSerialize(doc.toString(), type);
         }
         return result;
     }
@@ -70,7 +70,7 @@ public abstract class DataStore<T> {
     protected <T> List<DBObject> createDocumentList(List<T> objects){
         List<DBObject> docs = new ArrayList<DBObject>();
         for(T object : objects){
-            docs.add(BasicDBObject.parse(this.serializer.Serialize(object)));
+            docs.add(BasicDBObject.parse(this.serializer.serialize(object)));
         }
         return docs;
     }
