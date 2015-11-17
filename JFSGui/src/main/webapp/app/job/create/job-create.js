@@ -1,12 +1,52 @@
-/*
-angular.module("jobofferList")
-    .directive("jobofferCreate", [function() {
-        return {
-            templateUrl: 'app/modules/joboffer/list/create/joboffer-create.html',
-            restrict: 'A',
-            link: function($scope, $element, $attrs) {
-                console.log('blub');
-            }
+(function () {
+    'use strict';
+
+    angular
+        .module('app')
+        .controller('JobCreateController', JobCreateController);
+
+
+    JobCreateController.$inject = ['JobService', '$scope'];
+    function JobCreateController(JobService, $scope) {
+        var vm = this;
+
+        vm.search = search;
+
+        function search() {
+            console.log($scope.selectedJobSearch);
         };
-    }]);
-*/
+
+        $scope.jobSearch = {
+            "type": [
+                { "value": "master_thesis", "label": "Master thesis" },
+                { "value": "bachelor_thesis", "label": "Bachelor thesis" },
+                { "value": "part_time", "label": "Part time" },
+                { "value": "full_time", "label": "Full time" },
+                { "value": "internship", "label": "Internship" },
+                { "value": "contract", "label": "Contract" }
+            ]
+        };
+
+        /*
+         $scope.jobFilter = {
+         "type": [
+         { "value": "1", "label": "Part Time" },
+         { "value": "2", "label": "Full Time" },
+         { "value": "3", "label": "Master Thesis" }
+         ],
+         "salary": [
+         { "value": "s1", "label": "Less than 20" },
+         { "value": "s2", "label": "Between 20 and 40" },
+         { "value": "s3", "label": "More than 40" }
+         ],
+         "duration": [
+         { "value": "d1", "label": "Less than 6 month" },
+         { "value": "d2", "label": "Between 6 and 11 months" },
+         { "value": "d3", "label": "More than one year" }
+         ],
+         "company": ["Accenture","IBM","Google"],
+         "skill": ["CSS","Java","Angular JS"]
+         };
+         */
+    }
+})();

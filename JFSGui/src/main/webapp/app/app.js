@@ -45,6 +45,10 @@
                 templateUrl: 'app/sample/sample.html',
                 controller: 'SampleController as vm'
             })
+            .when('/job/create', {
+                templateUrl: 'app/job/create/job-create.html',
+                controller: 'JobCreateController as vm'
+            })
             .otherwise({redirectTo: '/'});
     }
 
