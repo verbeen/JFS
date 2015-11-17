@@ -134,9 +134,8 @@
         -->
         <div class="col-md-12">
 
-            <div class="row">
-
-                <div class="col-sm-6 col-md-4" ng-repeat="offer in offers">
+            <div masonry class="row">
+                <div class="masonry-brick col-sm-6 col-md-4" ng-repeat="offer in offers">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">{{ offer.name }}</h3>
@@ -150,11 +149,10 @@
                                 <li class="jobOfferStartDate">{{ offer.startDate | date:'yyyy-MM-dd' }}</li>
                                 <!--<li class="jobOfferSkill">Jquery, Javascript, HTML 5, CSS, Jquery, Javascript, HTML 5, CSS</li>-->
                             </ul>
-                            <p>{{ offer.description | htmlToPlainText | limitTo: 150 }}...</p>
+                            <p>{{ offer.description | htmlToPlainText | limitTo: 200 }}...</p>
                         </div>
                     </div>
                 </div>
-
             </div>
 
         </div>
