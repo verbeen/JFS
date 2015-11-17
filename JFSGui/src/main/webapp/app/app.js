@@ -69,5 +69,6 @@
     function HomeController($rootScope, $scope) {
         $scope.username = $rootScope.globals.currentUser.username;
         $scope.userType = $rootScope.globals.currentUser.userType;
+        $scope.token = $rootScope.globals.currentUser.authdata;
     }
 })();
