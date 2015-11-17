@@ -5,24 +5,54 @@
         .module('app')
         .controller('JobListController', JobListController);
 
-
     JobListController.$inject = ['JobService', '$scope'];
     function JobListController(JobService, $scope) {
         var vm = this;
+
+        vm.dataLoading = false;
 
         JobService.getRecentJobs(20)
             .then(function(response) {
                 if (response.success) {
                     $scope.offers = response.data.offers;
                 } else {
-                    console.debug(response);
+                    console.error(response);
                 }
             });
 
         vm.search = search;
 
         function search() {
-            console.log($scope.selectedJobSearch);
+            vm.dataLoading = true;
+
+            if (!vm.selectedJobSearch) {
+                vm.selectedJobSearch = {};
+            }
+
+            JobService.getJobsBySearch(vm.selectedJobSearch)
+                .then(function(response) {
+                    vm.noResults = {};
+                    vm.noResults.info = false;
+                    vm.noResults.error = false;
+                    if (response.success) {
+                        if (response.data.offers.length > 0) {
+                            $scope.offers = response.data.offers;
+                        } else {
+                            $scope.offers = [];
+                            vm.noResults.info = true;
+                            vm.noResults.title = "No results!";
+                            vm.noResults.text = "No job offers found. Please change your search parameters.";
+                        }
+                        vm.dataLoading = false;
+                    } else {
+                        console.error(response);
+                        $scope.offers = [];
+                        vm.noResults.error = true;
+                        vm.noResults.title = "An error occurred!";
+                        vm.noResults.text = "Please try again later.";
+                        vm.dataLoading = false;
+                    }
+                });
         };
 
         $scope.jobSearch = {

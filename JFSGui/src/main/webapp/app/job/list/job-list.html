@@ -18,7 +18,7 @@
                     <label id="jobSearchLabel" class="control-label">Search:</label>
                     <div class="input-group">
                         <button aria-label="Select" type="button" class="btn btn-default form-control"
-                                ng-model="selectedJobSearch.type" data-placeholder="Type" data-html="1"
+                                ng-model="vm.selectedJobSearch.type" data-placeholder="Type" data-html="1"
                                 bs-options="type.value as type.label for type in jobSearch.type" bs-select>
                         </button>
                         <div class="searchButton input-group-addon" ng-click="">
@@ -29,7 +29,7 @@
 
                 <div class="form-group">
                     <div class="input-group">
-                        <input type="text" class="form-control" ng-model="selectedJobSearch.location" placeholder="Location">
+                        <input type="text" class="form-control" ng-model="vm.selectedJobSearch.location" placeholder="Location">
                         <div class="searchButton input-group-addon" ng-click="">
                             <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
                         </div>
@@ -37,14 +37,15 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary">Search</button>
+
+                <div ng-if="vm.dataLoading" class="form-group">
+                    <div class="loadingAnimation">
+                    </div>
+                </div>
+
             </form>
         </div>
     </div>
-
-    <hr />
-
-    <i>Debug information:</i><br />
-    selectedJobSearch: {{ selectedJobSearch }}
 
     <hr />
 
@@ -133,6 +134,15 @@
         </div>
         -->
         <div class="col-md-12">
+
+            <div ng-if="vm.noResults.info || vm.noResults.error" class="panel" ng-class="{ 'panel-info': vm.noResults.info, 'panel-danger': vm.noResults.error }">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{ vm.noResults.title }}</h3>
+                </div>
+                <div class="panel-body">
+                    {{ vm.noResults.text }}
+                </div>
+            </div>
 
             <div masonry class="row">
                 <div class="masonry-brick col-sm-6 col-md-4" ng-repeat="offer in offers">
