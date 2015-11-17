@@ -1,10 +1,12 @@
 (function () {
     'use strict';
 
-    angular.module('app', ["ngRoute", "ngCookies", "ngSanitize", "mgcrea.ngStrap"])
+    angular.module('app', ["ngRoute", "ngCookies", "ngSanitize", "mgcrea.ngStrap", "wu.masonry"])
         .config(config)
         .run(run)
-        .controller('HomeController', HomeController);
+        .controller('HomeController', HomeController)
+        .filter('duration', DurationFilter)
+        .filter('htmlToPlainText', HtmlToPlainTextFilter);
 
     config.$inject = ['$routeProvider'];
     function config($routeProvider, $rootScope) {
@@ -73,5 +75,27 @@
     function HomeController($rootScope, $scope) {
         $scope.username = $rootScope.globals.currentUser.username;
         $scope.userType = $rootScope.globals.currentUser.userType;
+        $scope.token = $rootScope.globals.currentUser.authdata;
+    }
+
+    DurationFilter.$inject = [];
+    function DurationFilter() {
+        return function(millseconds) {
+            var days = Math.floor(millseconds / 1000 / 3600 / 24);
+
+            if (days < 31) {
+                return days + " days";
+            } else {
+                var months = days / 30;
+                return months + " months";
+            }
+        }
+    }
+
+    HtmlToPlainTextFilter.$inject = [];
+    function HtmlToPlainTextFilter() {
+        return function(text) {
+            return  text ? String(text).replace(/<[^>]+>/gm, '') : '';
+        };
     }
 })();

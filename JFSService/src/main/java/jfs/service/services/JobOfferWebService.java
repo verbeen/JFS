@@ -6,10 +6,7 @@ import jfs.transferdata.transferobjects.*;
 import jfs.transferdata.transferobjects.enums.UserTypeDTO;
 
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 
 /**
  * Created by lpuddu on 12-11-2015.
@@ -23,8 +20,8 @@ public class JobOfferWebService {
     @Path("/add") @Consumes("application/json") @Produces("application/json")
     public Boolean addOffer(CreateJobOfferDTO offerDTO){
         if(offerDTO.companyId != null) {
-            Session user = SessionService.sessions.get(offerDTO.token);
-            if (user != null && offerDTO.companyId.equals(user.userId) && user.type == UserTypeDTO.COMPANY) {
+            Session session = SessionService.sessions.get(offerDTO.token);
+            if (session != null && offerDTO.companyId.equals(session.userId) && session.type == UserTypeDTO.COMPANY) {
                 return this.jobOfferService.addOffer(offerDTO.jobOffer, offerDTO.companyId);
             }
         }
@@ -48,7 +45,7 @@ public class JobOfferWebService {
     public JobOfferListDTO getAllOffers(String token){
         if(token != null && token != "") {
             Session session = SessionService.sessions.get(token);
-            if (session != null && token.equals(session.userId) && session.type == UserTypeDTO.ADMIN) {
+            if (session != null && token.equals(session.userId)) {
                 JobOfferListDTO list = new JobOfferListDTO();
                 list.offers = this.jobOfferService.getAllOffers();
                 return list;
@@ -79,5 +76,11 @@ public class JobOfferWebService {
         JobOfferListDTO list = new JobOfferListDTO();
         list.offers = this.jobOfferService.search(searchDTO);
         return list;
+    }
+
+    @GET
+    @Path("{id}")
+    public JobOfferDTO getById(@PathParam("id") String id){
+        return this.jobOfferService.getById(id);
     }
 }

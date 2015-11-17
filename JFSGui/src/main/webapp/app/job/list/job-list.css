@@ -51,7 +51,7 @@
     content: "\20ac";
 }
 
-#jfsJobList .jobOfferParameters .jobOfferPostedDate:before {
+#jfsJobList .jobOfferParameters .jobOfferStartDate:before {
     content: "\e109";
 }
 

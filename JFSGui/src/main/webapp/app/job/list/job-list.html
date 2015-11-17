@@ -134,71 +134,25 @@
         -->
         <div class="col-md-12">
 
-            <div class="row">
-
-                <div class="col-md-4">
+            <div masonry class="row">
+                <div class="masonry-brick col-sm-6 col-md-4" ng-repeat="offer in offers">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Android Developer and Nerds</h3>
+                            <h3 class="panel-title">{{ offer.name }}</h3>
                         </div>
                         <div class="panel-body">
                             <ul class="list-unstyled jobOfferParameters">
-                                <li class="jobOfferCompany">Vishnu Inc.</li>
-                                <li class="jobOfferLocation">Stuttgart, Germany</li>
-                                <li class="jobOfferDuration">1 Year</li>
-                                <li class="jobOfferSalary">100,000</li>
-                                <li class="jobOfferPostedDate">10-Oct-2015</li>
-                                <li class="jobOfferSkill">Jquery, Javascript, HTML 5, CSS, Jquery, Javascript, HTML 5, CSS</li>
+                                <li class="jobOfferCompany">{{ offer.companyId }}</li>
+                                <li class="jobOfferLocation">{{ offer.location }}</li>
+                                <li class="jobOfferDuration">{{ offer.duration | duration }}</li>
+                                <!--<li class="jobOfferSalary">100,000</li>-->
+                                <li class="jobOfferStartDate">{{ offer.startDate | date:'yyyy-MM-dd' }}</li>
+                                <!--<li class="jobOfferSkill">Jquery, Javascript, HTML 5, CSS, Jquery, Javascript, HTML 5, CSS</li>-->
                             </ul>
-                            <p>Vishnu Inc. which is the biggest Inc. in the world is having a very urgent requirement
-                                for Implementation of business communications activities, including writing, design
-                                and web related activities to promote co...</p>
+                            <p>{{ offer.description | htmlToPlainText | limitTo: 200 }}...</p>
                         </div>
                     </div>
                 </div>
-
-                <div class="col-md-4">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Android Developer and Nerds</h3>
-                        </div>
-                        <div class="panel-body">
-                            <ul class="list-unstyled jobOfferParameters">
-                                <li class="jobOfferCompany">Vishnu Inc.</li>
-                                <li class="jobOfferLocation">Stuttgart, Germany</li>
-                                <li class="jobOfferDuration">1 Year</li>
-                                <li class="jobOfferSalary">100,000</li>
-                                <li class="jobOfferPostedDate">10-Oct-2015</li>
-                                <li class="jobOfferSkill">Jquery, Javascript, HTML 5, CSS, Jquery, Javascript, HTML 5, CSS</li>
-                            </ul>
-                            <p>Vishnu Inc. which is the biggest Inc. in the world is having a very urgent requirement
-                                for Implementation of business communications activities, including writing, design
-                                and web related activities to promote co...</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Android Developer and Nerds</h3>
-                        </div>
-                        <div class="panel-body">
-                            <ul class="list-unstyled jobOfferParameters">
-                                <li class="jobOfferCompany">Vishnu Inc.</li>
-                                <li class="jobOfferLocation">Stuttgart, Germany</li>
-                                <li class="jobOfferDuration">1 Year</li>
-                                <li class="jobOfferSalary">100,000</li>
-                                <li class="jobOfferPostedDate">10-Oct-2015</li>
-                                <li class="jobOfferSkill">Jquery, Javascript, HTML 5, CSS, Jquery, Javascript, HTML 5, CSS</li>
-                            </ul>
-                            <p>Vishnu Inc. which is the biggest Inc. in the world is having a very urgent requirement
-                                for Implementation of business communications activities, including writing, design
-                                and web related activities to promote co...</p>
-                        </div>
-                    </div>
-                </div>
-
             </div>
 
         </div>

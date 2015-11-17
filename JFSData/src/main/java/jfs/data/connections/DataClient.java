@@ -3,6 +3,7 @@ package jfs.data.connections;
 import com.mongodb.*;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.CreateCollectionOptions;
 
 import java.net.UnknownHostException;
 
@@ -11,6 +12,7 @@ import java.net.UnknownHostException;
  */
 public class DataClient {
     public static DataClient defaultClient = new DataClient("jfs");
+
     private MongoDatabase database;
 
     public DataClient(String databaseName)
@@ -26,14 +28,14 @@ public class DataClient {
         this.database = client.getDatabase(databaseName);
     }
 
-    public MongoCollection getCollection(String name)
+    public <T> MongoCollection<T> getCollection(String name, Class<T> docType)
     {
-        MongoCollection collection = this.database.getCollection(name);
+        MongoCollection collection = this.database.getCollection(name, docType);
 
         if(collection == null)
         {
             this.database.createCollection(name);
-            collection = this.database.getCollection(name);
+            collection = this.database.getCollection(name, docType);
         }
 
         return collection;
