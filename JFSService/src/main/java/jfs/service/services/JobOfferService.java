@@ -1,8 +1,8 @@
 package jfs.service.services;
 
-import javafx.util.Pair;
 import jfs.data.dataobjects.JobOfferDO;
 import jfs.data.dataobjects.enums.JobType;
+import jfs.data.dataobjects.helpers.Pair;
 import jfs.data.stores.JobOfferStore;
 import jfs.transferdata.transferobjects.JobOfferDTO;
 import jfs.transferdata.transferobjects.SearchDTO;
@@ -73,17 +73,11 @@ public class JobOfferService {
 
     public List<JobOfferDTO> search(SearchDTO searchDTO){
         ArrayList<Pair<String, Object>> pairs = new ArrayList<Pair<String, Object>>();
-        if(searchDTO.duration != 0){
-            pairs.add(new Pair("duraction", searchDTO.duration));
+        if(searchDTO.location != null && !"".equals(searchDTO.location)){
+            pairs.add(new Pair("location", searchDTO.location));
         }
-        if(searchDTO.function != null && searchDTO.function != ""){
-            pairs.add(new Pair("function", searchDTO.function));
-        }
-        if(searchDTO.validity != 0){
-            pairs.add(new Pair("validity", searchDTO.validity));
-        }
-        if(searchDTO.jobType != null){
-            pairs.add(new Pair("jobType", JobType.valueOf(searchDTO.jobType.name())));
+        if(searchDTO.type != null){
+            pairs.add(new Pair("type", searchDTO.type.name()));
         }
         List<JobOfferDO> doList = this.jobOfferStore.getJobOffers(pairs);
         return this.createOfferDTOList(doList);
