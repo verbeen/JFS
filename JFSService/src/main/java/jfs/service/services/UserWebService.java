@@ -4,10 +4,7 @@ import com.google.gson.Gson;
 import jfs.data.dataobjects.UserDO;
 import jfs.data.dataobjects.enums.UserType;
 import jfs.service.sessions.Session;
-import jfs.transferdata.transferobjects.AuthenticationDTO;
-import jfs.transferdata.transferobjects.LoginResultDTO;
-import jfs.transferdata.transferobjects.RegisterDTO;
-import jfs.transferdata.transferobjects.UserDTO;
+import jfs.transferdata.transferobjects.*;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -38,9 +35,9 @@ public class UserWebService
     }
 
     @POST @Path("/register/admin") @Consumes("application/json") @Produces("application/json")
-    public Boolean registerAdmin(RegisterDTO register, String token){
+    public Boolean registerAdmin(RegisterAdminDTO register){
         Boolean result = false;
-        if("ligljkbkjgbewrjgbewrgljewbgbwgbthbjrtbjrjkywrtn".equals(token)){
+        if("ligljkbkjgbewrjgbewrgljewbgbwgbthbjrtbjrjkywrtn".equals(register.token)){
             result = this.service.registerUser(register.email, register.password, UserType.ADMIN);
         }
         return result;
