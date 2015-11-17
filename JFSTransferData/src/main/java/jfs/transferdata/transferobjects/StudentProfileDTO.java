@@ -18,13 +18,6 @@ public class StudentProfileDTO {
     public StudentProfileDTO() {
     }
 
-    //lightweight constructor
-    public StudentProfileDTO(String userId, String name) {
-        this.userId = userId;
-        this.name = name;
-
-    }
-
     public StudentProfileDTO(String userId, String name, String email, String organization, String address, String skills, String experience, String resume, String courseDetails) {
         this.userId = userId;
         this.name = name;

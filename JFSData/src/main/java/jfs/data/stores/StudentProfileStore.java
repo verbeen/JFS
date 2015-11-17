@@ -31,9 +31,8 @@ public class StudentProfileStore extends DataStore {
         DBObject doc = (DBObject)this.collection.find(new BasicDBObject("_id", user_id)).first();
         if (doc != null) {
             studentProfile = (StudentProfileDO) new Gson().fromJson((doc).toString(), StudentProfileDO.class);
-            return studentProfile;
         }
-        return null;
+        return studentProfile;
     }
 
     //TODO public StudentProfileDO editStudentProfile(String user_id, StudentProfileDO studentProfile){}
