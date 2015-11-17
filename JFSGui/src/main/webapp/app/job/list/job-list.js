@@ -10,6 +10,15 @@
     function JobListController(JobService, $scope) {
         var vm = this;
 
+        JobService.getRecentJobs(20)
+            .then(function(response) {
+                if (response.success) {
+                    $scope.offers = response.data.offers;
+                } else {
+                    console.debug(response);
+                }
+            });
+
         vm.search = search;
 
         function search() {
