@@ -20,7 +20,7 @@ public class StudentProfileStore extends DataStore {
 
     public Boolean addStudentProfile(StudentProfileDO studentProfile) {
         if (studentProfile != null) {
-            return this.insert(studentProfile, studentProfile._id) != null; //TODO does user_id has to be unique here? In that case the user_id which is userDO.id cannot be used
+            return this.insert(studentProfile, studentProfile._id) != null;
         } else {
             throw new NullPointerException("StudentProfileDO studentProfile parameter is null");
         }
@@ -35,6 +35,4 @@ public class StudentProfileStore extends DataStore {
         }
         return null;
     }
-
-    //TODO public StudentProfileDO editStudentProfile(String user_id, StudentProfileDO studentProfile){}
 }
