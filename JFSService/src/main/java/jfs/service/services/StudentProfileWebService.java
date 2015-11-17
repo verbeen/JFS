@@ -29,6 +29,5 @@ public class StudentProfileWebService {
         return result;
     }
 
-    //TODO get
     //TODO update
 }

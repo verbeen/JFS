@@ -36,6 +36,5 @@ public class StudentProfileService {
         return createStudentDTO(this.studentProfileStore.getStudentProfile(userId));
     }
 
-    //TODO get
     //TODO update
 }
