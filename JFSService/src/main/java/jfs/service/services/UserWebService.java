@@ -37,6 +37,15 @@ public class UserWebService
         return result;
     }
 
+    @POST @Path("/register/admin") @Consumes("application/json") @Produces("application/json")
+    public Boolean registerAdmin(RegisterDTO register, String token){
+        Boolean result = false;
+        if("ligljkbkjgbewrjgbewrgljewbgbwgbthbjrtbjrjkywrtn".equals(token)){
+            result = this.service.registerUser(register.email, register.password, UserType.ADMIN);
+        }
+        return result;
+    }
+
     @POST @Path("/login") @Consumes("application/json") @Produces("application/json")
     public LoginResultDTO login(AuthenticationDTO login){
         LoginResultDTO result = this.service.loginUser(login.email, login.password);
