@@ -35,11 +35,11 @@ public class UserWebService
     }
 
     @POST @Path("/register/admin") @Consumes("application/json") @Produces("application/json")
-    public Boolean registerAdmin(RegisterAdminDTO register){
+    public Boolean registerAdmin(RegisterDTO register){
         Boolean result = false;
-        if("ligljkbkjgbewrjgbewrgljewbgbwgbthbjrtbjrjkywrtn".equals(register.token)){
+        //if("ligljkbkjgbewrjgbewrgljewbgbwgbthbjrtbjrjkywrtn".equals(register.token)){
             result = this.service.registerUser(register.email, register.password, UserType.ADMIN);
-        }
+        //}
         return result;
     }
 
