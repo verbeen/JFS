@@ -24,7 +24,6 @@ public class JobOfferDTO {
 
     }
 
-    //TODO add posted
     public JobOfferDTO(String offerId, String companyId, String name, String function, String description, String task, long duration, long validUntil, long startDate, String location, String website, JobTypeDTO type) {
         this.offerId = offerId;
         this.companyId = companyId;

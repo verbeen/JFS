@@ -52,8 +52,6 @@ public abstract class DataStore<T> {
         return updateResult.wasAcknowledged();
     }
 
-    //TODO public boolean replace(Object obj){}
-
     public DBObject getOneDocument(String key, Object value){
         return this.collection.find(new BasicDBObject(key, value)).first();
     }

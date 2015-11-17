@@ -33,12 +33,6 @@ public class StudentProfileDO extends DataObject {
     public StudentProfileDO() {
     }
 
-    //lightweight constructor
-    public StudentProfileDO(String user_id, String name) {
-        super(user_id);
-        this.name = name;
-    }
-
     public StudentProfileDO(String user_id, String name, String email, String organization, String address, String skills, String experience, String resume, String courseDetails) {
         super(user_id);
         this.name = name;

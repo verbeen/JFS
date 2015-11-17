@@ -6,8 +6,8 @@ import com.mongodb.MongoException;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.model.IndexOptions;
 import com.mongodb.client.model.Sorts;
-import javafx.util.Pair;
 import jfs.data.dataobjects.JobOfferDO;
+import jfs.data.dataobjects.helpers.Pair;
 import org.bson.Document;
 
 import java.util.ArrayList;
@@ -81,7 +81,7 @@ public class JobOfferStore extends DataStore {
 
     public List<JobOfferDO> getJobOffersRecent(int amount){
         List<JobOfferDO> offers = new ArrayList<JobOfferDO>();
-        FindIterable<DBObject> results = this.collection.find().sort(Sorts.orderBy(Sorts.ascending("validity"))).limit(amount);
+        FindIterable<DBObject> results = this.collection.find().sort(Sorts.descending("_id")).limit(amount);
         for(DBObject obj : results){
             offers.add(this.extractJobOffer(obj));
         }
@@ -92,7 +92,7 @@ public class JobOfferStore extends DataStore {
         List<JobOfferDO> offers = new ArrayList<JobOfferDO>();
         Document query = new Document();
         for(Pair<String, Object> pair : pairs){
-            query.append(pair.getKey(), pair.getValue());
+            query.append(pair.key, pair.value);
         }
         FindIterable<DBObject> results = this.collection.find(query);
         for(DBObject obj : results){
