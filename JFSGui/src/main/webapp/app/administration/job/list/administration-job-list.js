@@ -5,60 +5,103 @@
         .module('app')
         .controller('AdministrationJobListController', AdministrationJobListController);
 
-    AdministrationJobListController.$inject = ['JobService', '$scope'];
-    function AdministrationJobListController(JobService, $scope) {
+    AdministrationJobListController.$inject = ['JobService', '$scope', '$rootScope'];
+    function AdministrationJobListController(JobService, $scope, $rootScope) {
+        // method declarations
+        $scope.edit = edit;
+        $scope.getAll = getAll;
+        $scope.remove = remove;
+        $scope.search = search;
 
-        $scope.edit = function() {
+        // gets executed on initial load
+        (function initController() {
+            $scope.dataLoading = false;
+
+            $scope.jobSearch = {
+                "type": [
+                    { "value": "master_thesis", "label": "Master thesis" },
+                    { "value": "bachelor_thesis", "label": "Bachelor thesis" },
+                    { "value": "part_time", "label": "Part time" },
+                    { "value": "full_time", "label": "Full time" },
+                    { "value": "internship", "label": "Internship" },
+                    { "value": "contract", "label": "Contract" }
+                ]
+            };
+
+            $scope.getAll();
+        })();
+
+        function edit() {
             console.log("edit()");
         };
 
-        $scope.remove = function() {
+        function remove() {
             console.log("remove()");
         };
 
-        $scope.getTimes = function(n) {
-            return new Array(n);
+        function search() {
+            $scope.dataLoading = true;
+
+            if (!$scope.selectedJobSearch) {
+                $scope.selectedJobSearch = {};
+            }
+
+            JobService.getJobsBySearch($scope.selectedJobSearch)
+                .then(function(response) {
+                    $scope.noResults = {};
+                    $scope.noResults.info = false;
+                    $scope.noResults.error = false;
+                    if (response.success) {
+                        if (response.data.offers.length > 0) {
+                            $scope.offers = response.data.offers;
+                        } else {
+                            $scope.offers = [];
+                            $scope.noResults.info = true;
+                            $scope.noResults.title = "No results!";
+                            $scope.noResults.text = "No job offers found. Please change your search parameters.";
+                        }
+                        $scope.dataLoading = false;
+                    } else {
+                        console.error(response);
+                        $scope.offers = [];
+                        $scope.noResults.error = true;
+                        $scope.noResults.title = "An error occurred!";
+                        $scope.noResults.text = "Please try again later.";
+                        $scope.dataLoading = false;
+                    }
+                });
         };
 
-        $scope.quicksearch = function() {
-            console.log("quicksearch()");
+        function getAll() {
+            $scope.dataLoading = true;
+
+            JobService.getAllJobs($rootScope.globals.currentUser.authdata)
+                .then(function(response) {
+
+                    console.log(response);
+
+                    $scope.noResults = {};
+                    $scope.noResults.info = false;
+                    $scope.noResults.error = false;
+                    if (response.success) {
+                        if (response.data.offers.length > 0) {
+                            $scope.offers = response.data.offers;
+                        } else {
+                            $scope.offers = [];
+                            $scope.noResults.info = true;
+                            $scope.noResults.title = "No results!";
+                            $scope.noResults.text = "No job offers found. Please change your search parameters.";
+                        }
+                        $scope.dataLoading = false;
+                    } else {
+                        console.error(response);
+                        $scope.offers = [];
+                        $scope.noResults.error = true;
+                        $scope.noResults.title = "An error occurred!";
+                        $scope.noResults.text = "Please try again later.";
+                        $scope.dataLoading = false;
+                    }
+                });
         };
-
-        $scope.jobFunction = [
-            { "value": "Developer", "label": "Developer" },
-            { "value": "Designer", "label": "Designer" },
-            { "value": "Project Manager", "label": "Project Manager" }
-        ];
-
-        $scope.jobDuration = [
-            { "value": "1month", "label": "One month" },
-            { "value": "2months", "label": "Two months" },
-            { "value": "3months", "label": "Three months" },
-            { "value": "6months", "label": "Six months" }
-        ];
-
-        $scope.jobLocation = ["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut",
-            "Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky",
-            "Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri",
-            "Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Dakota",
-            "North Carolina","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina",
-            "South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia",
-            "Wisconsin","Wyoming"];
-
-        /*
-        var amount = 5;
-
-        JobService.getRecentJobs(amount)
-            .then(function (response) {
-                console.debug(response);
-            });
-
-        var searchterm = "Apple";
-
-        JobService.getJobsBySearchterm(searchterm)
-            .then(function (response) {
-               console.debug(response);
-            });
-        */
     }
 })();

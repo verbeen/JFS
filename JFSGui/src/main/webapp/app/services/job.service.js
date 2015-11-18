@@ -17,8 +17,8 @@
 
         return service;
 
-        function getAllJobs() {
-            return $http.post('/service/offers/getall')
+        function getAllJobs(token) {
+            return $http.post('/service/offers/getall', token)
                 .then(handleSuccess, handleError('Error getting all jobs!'));
         }
 
@@ -36,6 +36,7 @@
             return $http.post('/service/offers/search', searchParams)
                 .then(handleSuccess, handleError('Error getting job offers by "' + searchParams + '"!'));
         }
+
         function createJob(jobDetails) {
             return $http.post('/service/offers/add', jobDetails)
                 .then(handleSuccess, handleError('Error adding job offers by "' + jobDetails + '"!'));
