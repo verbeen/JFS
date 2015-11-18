@@ -24,7 +24,8 @@
                 currentUser: {
                     username: email,
                     userType: userType,
-                    authdata: token
+                    authdata: token,
+                    loggedIn: true
                 }
             };
 
@@ -32,7 +33,15 @@
         }
 
         function ClearCredentials() {
-            $rootScope.globals = {};
+            console.log("ClearCredentials");
+            $rootScope.globals = {
+                currentUser: {
+                    username: "",
+                    userType: "",
+                    authdata: "",
+                    loggedIn: false
+                }
+            };
             $cookieStore.remove('globals');
         }
 

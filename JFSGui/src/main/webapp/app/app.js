@@ -56,19 +56,37 @@
             .otherwise({redirectTo: '/'});
     }
 
-    run.$inject = ['$rootScope', '$location', '$cookieStore', '$http'];
-    function run($rootScope, $location, $cookieStore, $http) {
+    run.$inject = ['$rootScope', '$location', '$cookieStore'];
+    function run($rootScope, $location, $cookieStore) {
         // keep user logged in after page refresh
         $rootScope.globals = $cookieStore.get('globals') || {};
 
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
-            // redirect to login page if not logged in and trying to access a restricted page
-            var loggedIn = $rootScope.globals.currentUser;
+            if ($rootScope.globals.currentUser == undefined) {
+                $rootScope.globals = {
+                    currentUser: {
+                        username: "",
+                        userType: "",
+                        authdata: "",
+                        loggedIn: false
+                    }
+                };
+            }
 
-            if ($location.path() == '/authentication/register' && !loggedIn) {
+            // redirect to login page if not logged in and trying to access a restricted page
+            var currentUser = $rootScope.globals.currentUser;
+            var currentPath = $location.path();
+            var loggedIn = $rootScope.globals.currentUser.loggedIn;
+
+            if (currentPath == '/authentication/register' && !loggedIn) {
                 $location.path('/authentication/register');
-            } else if ($location.path() != '/authentication/login' && !loggedIn) {
+            } else if (currentPath != '/authentication/login' && !loggedIn) {
                 $location.path('/authentication/login');
+            }
+
+            if (currentPath.indexOf('/administration/') > -1 && currentUser.userType != 'ADMIN') {
+                console.error("No access!");
+                $location.path('/');
             }
         });
     }

@@ -15,33 +15,7 @@
     <link rel="stylesheet" href="app/job/create/job-create.css">
 </head>
 <body>
-    <!-- navigation -->
-	<nav id="jfs-navbar" class="navbar navbar-default" role="navigation" bs-navbar>
-        <div class="container-fluid" bs-collapse start-collapsed="true">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#/">
-                    <img alt="JfS work.study.innovate" id="brandlogo" class="img-responsive" src="img/logo_jfs-slogan.png">
-                </a>
-                <button type="button" class="navbar-toggle" bs-collapse-toggle>
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
-
-            <div class="collapse navbar-collapse" bs-collapse-target>
-                <ul class="nav navbar-nav">
-                    <li data-match-route="^/job/list.*"><a href="#/job/list">Job offers</a></li>
-                    <li data-match-route="^/job/create.*"><a href="#/job/create">Create Job</a></li>
-                    <li data-match-route="^/job/profile.*"><a href="#/job/profile">Job profile</a></li>
-                    <li data-match-route="^/administration/job/list.*"><a href="#/administration/job/list">Admin job offers</a></li>
-                    <li data-match-route="^/administration/user/list.*"><a href="#/administration/user/list">Admin Users</a></li>
-                    <li><a href="#/authentication/logout">Logout</a></li>
-                </ul>
-            </div>
-        </div>
-	</nav>
+    <navigation></navigation>
 
     <!-- container where all html templates of components go -->
 	<div id="jfs-contentview" class="container-fluid" ng-view></div>
@@ -76,5 +50,6 @@
     <script type="text/javascript" src="app/administration/job/list/administration-job-list.js"></script>
     <script type="text/javascript" src="app/administration/user/list/administration-user-list.js"></script>
     <script type="text/javascript" src="app/job/create/job-create.js"></script>
+    <script type="text/javascript" src="app/directive/navigation/directive-navigation.js"></script>
 </body>
 </html>
