@@ -28,7 +28,7 @@
                 ]
             };
 
-            $scope.getAll();
+            getAll();
         })();
 
         function edit() {
@@ -77,9 +77,6 @@
 
             JobService.getAllJobs($rootScope.globals.currentUser.authdata)
                 .then(function(response) {
-
-                    console.log(response);
-
                     $scope.noResults = {};
                     $scope.noResults.info = false;
                     $scope.noResults.error = false;
