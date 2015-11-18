@@ -7,36 +7,35 @@
 
     AdministrationUserListController.$inject = ['UserService', '$scope', '$rootScope'];
     function AdministrationUserListController(UserService, $scope, $rootScope) {
-        var vm = this;
+        var token = $rootScope.globals.currentUser.authdata;
 
-        $scope.getTimes = function(n) {
-            return new Array(n);
+        $scope.remove = function() {
+            console.log("remove()");
         };
 
-        vm.remove = function() {
-                    };
-
-        UserService.getAllUsers($rootScope.globals.currentUser.authdata)
+        UserService.getAllUsers(token)
             .then(function(response) {
+                $scope.noResults = {};
+                $scope.noResults.info = false;
+                $scope.noResults.error = false;
                 if (response.success) {
-                    $scope.users = response.data;
+                    if (response.data.length > 0) {
+                        $scope.users = response.data;
+                    } else {
+                        $scope.users = [];
+                        $scope.noResults.info = true;
+                        $scope.noResults.title = "No results!";
+                        $scope.noResults.text = "No users found.";
+                    }
+                    $scope.dataLoading = false;
                 } else {
                     console.error(response);
+                    $scope.users = [];
+                    $scope.noResults.error = true;
+                    $scope.noResults.title = "An error occurred!";
+                    $scope.noResults.text = "Please try again later.";
+                    $scope.dataLoading = false;
                 }
             });
-
-/*
-        function getAllUsers(UserService, $Scope, $rootScope){
-
-            UserService.getAllUsers($rootScope.globals.currentUser.authdata)
-                .then(function (response) {
-                    if (response.success) {
-                        console.log("inside function");
-                        console.log(response);
-
-                    }
-                });
-        }*/
-
     }
 })();
