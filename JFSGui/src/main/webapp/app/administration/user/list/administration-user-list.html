@@ -1,6 +1,7 @@
 <div id="jfsAdminUserList">
     <div class="row">
-        <form name="jobSearchForm" ng-submit="vm.search()" id="userSearchForm" class="form-inline" role="form">
+
+        <form name="jobSearchForm" ng-submit="vm.search()" id="userSearchForm" class="form-inline" role="form" ng-hide="true">
             <div class="form-group">
                 <label id="jobSearchLabel" class="control-label">Search:</label>
                 <div class="input-group">
@@ -10,8 +11,7 @@
                     </div>
                 </div>
             </div>
-
-            <div class="form-group">
+            <div class="form-group" >
                 <div class="input-group">
                     <input type="text" class="form-control" ng-model="" placeholder="User Type">
                     <div class="searchButton input-group-addon" ng-click="">
@@ -19,18 +19,16 @@
                     </div>
                 </div>
             </div>
-
             <button type="submit" class="btn btn-primary">Search</button>
-
             <div ng-if="vm.dataLoading" class="form-group">
                 <div class="loadingAnimation">
                 </div>
             </div>
-
         </form>
+
         <div class="col-md-8">
             <form name="form" role="form">
-                <div class="col-md-12">
+                <div class="col-md-8">
                     <h2>Manage Members</h2>
 
                     <div class="table-responsive">
@@ -38,7 +36,6 @@
                             <thead>
                                 <tr>
                                     <th>User Name</th>
-                                    <th>Email</th>
                                     <th>User Type</th>
                                     <th>&nbsp;</th>
                                 </tr>
@@ -46,10 +43,9 @@
                             <tbody>
                                 <tr ng-repeat="user in users">
                                     <td>{{user.userId}}</td>
-                                    <td>{{user.userId}}@vishnusr.com</td>
                                     <td>{{user.type}}</td>
                                     <td>
-                                        <button ng-click="vm.remove();" type="button" class="btn btn-default btn-xs jfsAdminButton">
+                                        <button ng-click="vm.remove();" ng-hide="true"  type="button" class="btn btn-default btn-xs jfsAdminButton">
                                             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                         </button>
                                     </td>

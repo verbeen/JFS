@@ -14,15 +14,12 @@
         };
 
         vm.remove = function() {
-            console.log("remove()");
-        };
+                    };
 
         UserService.getAllUsers($rootScope.globals.currentUser.authdata)
             .then(function(response) {
                 if (response.success) {
                     $scope.users = response.data;
-                    console.log("inside if block");
-                    console.log($scope.users);
                 } else {
                     console.error(response);
                 }
