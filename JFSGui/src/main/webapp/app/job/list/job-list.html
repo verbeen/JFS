@@ -135,12 +135,9 @@
         -->
         <div class="col-md-12">
 
-            <div ng-if="vm.noResults.info || vm.noResults.error" class="panel" ng-class="{ 'panel-info': vm.noResults.info, 'panel-danger': vm.noResults.error }">
-                <div class="panel-heading">
-                    <h3 class="panel-title">{{ vm.noResults.title }}</h3>
-                </div>
-                <div class="panel-body">
-                    {{ vm.noResults.text }}
+            <div ng-if="vm.noResults.info || vm.noResults.error">
+                <div class="alert" ng-class="{ 'alert-info': vm.noResults.info, 'alert-danger': vm.noResults.error }">
+                    <strong>{{ vm.noResults.title }}</strong> {{ vm.noResults.text }}
                 </div>
             </div>
 
