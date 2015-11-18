@@ -7,63 +7,87 @@
 
     JobListController.$inject = ['JobService', '$scope'];
     function JobListController(JobService, $scope) {
-        var vm = this;
+        // method declarations
+        $scope.search = search;
 
-        vm.dataLoading = false;
+        // gets executed on initial load
+        (function initController() {
+            $scope.dataLoading = false;
 
-        JobService.getRecentJobs(20)
-            .then(function(response) {
-                if (response.success) {
-                    $scope.offers = response.data.offers;
-                } else {
-                    console.error(response);
-                }
-            });
+            $scope.jobSearch = {
+                "type": [
+                    { "value": "master_thesis", "label": "Master thesis" },
+                    { "value": "bachelor_thesis", "label": "Bachelor thesis" },
+                    { "value": "part_time", "label": "Part time" },
+                    { "value": "full_time", "label": "Full time" },
+                    { "value": "internship", "label": "Internship" },
+                    { "value": "contract", "label": "Contract" }
+                ]
+            };
 
-        vm.search = search;
+            getRecentJobs();
+        })();
 
-        function search() {
-            vm.dataLoading = true;
+        function getRecentJobs() {
+            $scope.dataLoading = true;
 
-            if (!vm.selectedJobSearch) {
-                vm.selectedJobSearch = {};
-            }
-
-            JobService.getJobsBySearch(vm.selectedJobSearch)
+            JobService.getRecentJobs(30)
                 .then(function(response) {
-                    vm.noResults = {};
-                    vm.noResults.info = false;
-                    vm.noResults.error = false;
+                    $scope.noResults = {};
+                    $scope.noResults.info = false;
+                    $scope.noResults.error = false;
                     if (response.success) {
                         if (response.data.offers.length > 0) {
                             $scope.offers = response.data.offers;
                         } else {
                             $scope.offers = [];
-                            vm.noResults.info = true;
-                            vm.noResults.title = "No results!";
-                            vm.noResults.text = "No job offers found. Please change your search parameters.";
+                            $scope.noResults.info = true;
+                            $scope.noResults.title = "No results!";
+                            $scope.noResults.text = "No job offers found. Please change your search parameters.";
                         }
-                        vm.dataLoading = false;
+                        $scope.dataLoading = false;
                     } else {
                         console.error(response);
                         $scope.offers = [];
-                        vm.noResults.error = true;
-                        vm.noResults.title = "An error occurred!";
-                        vm.noResults.text = "Please try again later.";
-                        vm.dataLoading = false;
+                        $scope.noResults.error = true;
+                        $scope.noResults.title = "An error occurred!";
+                        $scope.noResults.text = "Please try again later.";
+                        $scope.dataLoading = false;
                     }
                 });
-        };
+        }
 
-        $scope.jobSearch = {
-            "type": [
-                { "value": "master_thesis", "label": "Master thesis" },
-                { "value": "bachelor_thesis", "label": "Bachelor thesis" },
-                { "value": "part_time", "label": "Part time" },
-                { "value": "full_time", "label": "Full time" },
-                { "value": "internship", "label": "Internship" },
-                { "value": "contract", "label": "Contract" }
-            ]
+        function search() {
+            $scope.dataLoading = true;
+
+            if (!$scope.selectedJobSearch) {
+                $scope.selectedJobSearch = {};
+            }
+
+            JobService.getJobsBySearch(vm.selectedJobSearch)
+                .then(function(response) {
+                    $scope.noResults = {};
+                    $scope.noResults.info = false;
+                    $scope.noResults.error = false;
+                    if (response.success) {
+                        if (response.data.offers.length > 0) {
+                            $scope.offers = response.data.offers;
+                        } else {
+                            $scope.offers = [];
+                            $scope.noResults.info = true;
+                            $scope.noResults.title = "No results!";
+                            $scope.noResults.text = "No job offers found. Please change your search parameters.";
+                        }
+                        $scope.dataLoading = false;
+                    } else {
+                        console.error(response);
+                        $scope.offers = [];
+                        $scope.noResults.error = true;
+                        $scope.noResults.title = "An error occurred!";
+                        $scope.noResults.text = "Please try again later.";
+                        $scope.dataLoading = false;
+                    }
+                });
         };
 
         /*

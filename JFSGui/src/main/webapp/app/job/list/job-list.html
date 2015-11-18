@@ -1,7 +1,7 @@
 <div id="jfsJobList">
     <div class="row">
         <div class="col-md-12" >
-            <form name="jobSearchForm" ng-submit="vm.search()" id="jobSearchForm" class="form-inline" role="form">
+            <form name="jobSearchForm" ng-submit="search()" id="jobSearchForm" class="form-inline" role="form">
                 <!--
                 <div class="form-group">
                     <div class="input-group">
@@ -18,10 +18,10 @@
                     <label id="jobSearchLabel" class="control-label">Search:</label>
                     <div class="input-group">
                         <button aria-label="Select" type="button" class="btn btn-default form-control"
-                                ng-model="vm.selectedJobSearch.type" data-placeholder="Type" data-html="1"
+                                ng-model="selectedJobSearch.type" data-placeholder="Type" data-html="1"
                                 bs-options="type.value as type.label for type in jobSearch.type" bs-select>
                         </button>
-                        <div class="searchButton input-group-addon" ng-click="">
+                        <div class="searchButton input-group-addon">
                             <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
                         </div>
                     </div>
@@ -29,8 +29,8 @@
 
                 <div class="form-group">
                     <div class="input-group">
-                        <input type="text" class="form-control" ng-model="vm.selectedJobSearch.location" placeholder="Location">
-                        <div class="searchButton input-group-addon" ng-click="">
+                        <input type="text" class="form-control" ng-model="selectedJobSearch.location" placeholder="Location">
+                        <div class="searchButton input-group-addon">
                             <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
                         </div>
                     </div>
@@ -38,7 +38,7 @@
 
                 <button type="submit" class="btn btn-primary">Search</button>
 
-                <div ng-if="vm.dataLoading" class="form-group">
+                <div ng-if="dataLoading" class="form-group">
                     <div class="loadingAnimation">
                     </div>
                 </div>
@@ -135,14 +135,14 @@
         -->
         <div class="col-md-12">
 
-            <div ng-if="vm.noResults.info || vm.noResults.error">
-                <div class="alert" ng-class="{ 'alert-info': vm.noResults.info, 'alert-danger': vm.noResults.error }">
-                    <strong>{{ vm.noResults.title }}</strong> {{ vm.noResults.text }}
+            <div ng-if="noResults.info || noResults.error">
+                <div class="alert" ng-class="{ 'alert-info': noResults.info, 'alert-danger': noResults.error }">
+                    <strong>{{ noResults.title }}</strong> {{ noResults.text }}
                 </div>
             </div>
 
-            <div masonry class="row">
-                <div class="masonry-brick col-sm-6 col-md-4" ng-repeat="offer in offers">
+            <div masonry class="row" masonry-options="{ percentPosition: true }">
+                <div class="masonry-brick col-xs-12 col-sm-6 col-md-4" ng-repeat="offer in offers">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">{{ offer.name }}</h3>
