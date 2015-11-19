@@ -35,11 +35,12 @@ public class Start {
         for(int i = 0; i < 6; i++){
             GitHubJobDTO[] jobs = this.doGithubCall(i);
             for(GitHubJobDTO job : jobs){
+                job.company = job.company.toLowerCase().replace(" ", ".") + "@jfs.com";
                 String token = this.tokens.get(job.company);
                 if(token == null || token == ""){
                     this.createCompany(job.company);
                     token = this.loginCompany(job.company);
-                    this.tokens.put(job.company, token);
+                    this.tokens.put(job.company , token);
                 }
                 CreateJobOfferDTO createOffer = new CreateJobOfferDTO();
                 createOffer.companyId = job.company;
