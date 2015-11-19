@@ -3,17 +3,15 @@ package jfs.datagenerator;
 import com.google.gson.Gson;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import com.sun.istack.internal.logging.Logger;
+import jfs.datagenerator.transferobjects.GitHubJobDTO;
 import jfs.transferdata.transferobjects.*;
 import jfs.transferdata.transferobjects.enums.JobTypeDTO;
-import jfs.datagenerator.transferobjects.GitHubJobDTO;
-import jfs.transferdata.transferobjects.enums.ResultTypeDTO;
 
-import javax.swing.*;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by lpuddu on 13-11-2015.
@@ -117,7 +115,7 @@ public class Start {
             result = new Gson().fromJson(json, returnType);
         }
         catch(UnirestException ex){
-            Logger.getLogger(Start.class).log(Level.SEVERE, ex.getMessage(), ex);
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, ex.getMessage(), ex);
         }
         return result;
     }
@@ -131,7 +129,7 @@ public class Start {
             result = new Gson().fromJson(json, GitHubJobDTO[].class);
         }
         catch(UnirestException ex){
-            Logger.getLogger(Start.class).log(Level.SEVERE, ex.getMessage(), ex);
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, ex.getMessage(), ex);
         }
         return result;
     }
