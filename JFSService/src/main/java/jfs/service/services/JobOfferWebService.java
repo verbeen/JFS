@@ -3,6 +3,7 @@ package jfs.service.services;
 
 import jfs.service.sessions.Session;
 import jfs.transferdata.transferobjects.*;
+import jfs.transferdata.transferobjects.enums.ResultTypeDTO;
 import jfs.transferdata.transferobjects.enums.UserTypeDTO;
 
 import javax.inject.Inject;
@@ -18,14 +19,30 @@ public class JobOfferWebService {
 
     @POST
     @Path("/add") @Consumes("application/json") @Produces("application/json")
-    public Boolean addOffer(CreateJobOfferDTO offerDTO){
+    public ActionResultDTO addOffer(CreateJobOfferDTO offerDTO){
+        ActionResultDTO result = new ActionResultDTO();
         if(offerDTO.companyId != null) {
             Session session = SessionService.sessions.get(offerDTO.token);
-            if (session != null && session.type == UserTypeDTO.COMPANY) {
-                return this.jobOfferService.addOffer(offerDTO.jobOffer, offerDTO.companyId);
+            if(session == null){
+                result.type = ResultTypeDTO.not_logged_in;
             }
+            else if (session.type != UserTypeDTO.COMPANY) {
+                result.type = ResultTypeDTO.wrong_user_type;
+            }
+            else{
+                result.hasSucceeded = this.jobOfferService.addOffer(offerDTO.jobOffer, offerDTO.companyId);
+                if(result.hasSucceeded){
+                    result.type = ResultTypeDTO.success;
+                }else{
+                    result.type = ResultTypeDTO.data_error;
+                }
+            }
+            /*if (session != null && session.type == UserTypeDTO.COMPANY) {
+                return this.jobOfferService.addOffer(offerDTO.jobOffer, offerDTO.companyId);
+            }*/
         }
-        return false;
+        //return false;
+        return result;
     }
 
     @POST
