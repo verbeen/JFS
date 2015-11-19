@@ -8,6 +8,7 @@ import jfs.transferdata.transferobjects.enums.JobTypeDTO;
 public class JobOfferDTO {
     public String offerId;
     public String companyId;
+    public String contactEmail;
     public String name;
     public String function;
     public String description;
@@ -23,9 +24,10 @@ public class JobOfferDTO {
 
     }
 
-    public JobOfferDTO(String offerId, String companyId, String name, String function, String description, String task, long duration, long validUntil, long startDate, String location, String website, JobTypeDTO type) {
+    public JobOfferDTO(String offerId, String companyId, String contactEmail, String name, String function, String description, String task, long duration, long validUntil, long startDate, String location, String website, JobTypeDTO type) {
         this.offerId = offerId;
         this.companyId = companyId;
+        this.contactEmail = contactEmail;
         this.name = name;
         this.function = function;
         this.description = description;

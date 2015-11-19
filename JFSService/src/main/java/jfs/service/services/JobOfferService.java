@@ -31,6 +31,7 @@ public class JobOfferService {
         offer.type = JobType.valueOf(offerDTO.type.name());
         offer.validUntil = offerDTO.validUntil;
         offer.startDate = offerDTO.startDate;
+        offer.contactEmail = offerDTO.contactEmail;
         offer.website = offerDTO.website;
 
         offer.userId = userId;
@@ -85,7 +86,7 @@ public class JobOfferService {
 
     private JobOfferDTO createOfferDTO(JobOfferDO offerDO){
         return new JobOfferDTO(
-                offerDO._id, offerDO.userId , offerDO.name, offerDO.function, offerDO.description,
+                offerDO._id, offerDO.userId, offerDO.contactEmail, offerDO.name, offerDO.function, offerDO.description,
                 offerDO.task, offerDO.duration, offerDO.validUntil, offerDO.startDate,
                 offerDO.location, offerDO.website, JobTypeDTO.valueOf(offerDO.type.name())
         );
