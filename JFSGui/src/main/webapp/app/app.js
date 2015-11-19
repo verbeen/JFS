@@ -7,6 +7,7 @@
         .controller('HomeController', HomeController)
         .filter('duration', DurationFilter)
         .filter('htmlToPlainText', HtmlToPlainTextFilter)
+        .filter('dateCheckedZero', DateCheckedZeroFilter)
         .directive('showErrors', ShowErrorsDirective)
         .directive('minLength', BsSelectValidationDirective);
 
@@ -107,6 +108,10 @@
     DurationFilter.$inject = [];
     function DurationFilter() {
         return function(millseconds) {
+            if (millseconds == 0) {
+                return "∞";
+            }
+
             var days = Math.floor(millseconds / 1000 / 3600 / 24);
 
             if (days < 31) {
@@ -116,6 +121,17 @@
                 return months + " months";
             }
         }
+    }
+
+    DateCheckedZeroFilter.$inject = ['$filter'];
+    function DateCheckedZeroFilter($filter) {
+        return function (dateString, format) {
+            if (dateString == 0) {
+                return "n/a";
+            } else {
+                return $filter('date')(dateString, format.toString());
+            }
+        };
     }
 
     HtmlToPlainTextFilter.$inject = [];

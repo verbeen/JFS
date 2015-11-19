@@ -65,13 +65,11 @@
                 "companyId": $rootScope.globals.currentUser.username,
                 "token": $rootScope.globals.currentUser.authdata,
                 "jobOffer": {
-                    "offerId":"",
                     "companyId": $rootScope.globals.currentUser.username,
                     "name": $scope.jobProfile.jobName,
                     "function": "",
                     "description": $scope.jobProfile.jobDescription,
                     "task": $scope.jobProfile.jobTask,
-                    "posted": "",
                     "duration": $scope.jobProfile.duration,
                     "validUntil": Date.parse($scope.jobProfile.validTilldate),
                     "startDate": Date.parse($scope.jobProfile.startDate),
