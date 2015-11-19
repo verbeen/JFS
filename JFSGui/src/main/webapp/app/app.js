@@ -51,6 +51,11 @@
                 templateUrl: 'app/job/create/job-create.html',
                 controller: 'JobCreateController as vm'
             })
+
+            .when('/compamy', {
+                templateUrl: 'app/company/company_profile.html',
+                controller: 'CompanyProfileController as vm'
+            })
             .otherwise({redirectTo: '/'});
     }
 
