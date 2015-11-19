@@ -16,4 +16,14 @@
         <module>JFSDataGenerator</module>
         <module>JFSTransferData</module>
     </modules>
+
+    <profiles>
+        <profile>
+            <id>openshift</id>
+            <modules>
+                <module>JFSGui</module>
+                <module>JFSService</module>
+            </modules>
+        </profile>
+    </profiles>
 </project>
