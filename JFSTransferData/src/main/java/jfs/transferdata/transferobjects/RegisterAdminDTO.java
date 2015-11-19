@@ -1,9 +1,10 @@
-package jfs.service.transferobjects;
+package jfs.transferdata.transferobjects;
 
 /**
  * Created by lpuddu on 3-11-2015.
  */
-public class LoginDTO {
+public class RegisterAdminDTO {
     public String email;
     public String password;
+    public String token;
 }
