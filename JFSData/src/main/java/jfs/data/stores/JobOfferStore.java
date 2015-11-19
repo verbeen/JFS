@@ -21,12 +21,12 @@ public class JobOfferStore extends DataStore {
 
     public JobOfferStore(){
         super("joboffers");
-        Document index = new Document().append("location", "text")
+        /*Document index = new Document().append("location", "text")
                                        .append("function", "text")
                                        .append("description", "text")
                                        .append("name", "text")
                                        .append("function", "text");
-        this.collection.createIndex(index, new IndexOptions().name("textSearch"));
+        this.collection.createIndex(index, new IndexOptions().name("textSearch"));*/
     }
 
     public List<JobOfferDO> getAllOffers(){
