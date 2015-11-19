@@ -75,6 +75,7 @@
                     "startDate": Date.parse($scope.jobProfile.startDate),
                     "location": $scope.jobProfile.location,
                     "website": "",
+                    "contactEmail": $scope.jobProfile.jobContactEmail,
                     "type": $scope.jobProfile.type
                 }
             };
