@@ -7,7 +7,9 @@ import com.sun.istack.internal.logging.Logger;
 import jfs.transferdata.transferobjects.*;
 import jfs.transferdata.transferobjects.enums.JobTypeDTO;
 import jfs.datagenerator.transferobjects.GitHubJobDTO;
+import jfs.transferdata.transferobjects.enums.ResultTypeDTO;
 
+import javax.swing.*;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Random;
@@ -87,12 +89,12 @@ public class Start {
     }
 
     private void addOffer(CreateJobOfferDTO offerDTO){
-        Boolean result = this.doJFSCall(this.addOfferPATH, offerDTO, Boolean.class);
+        ActionResultDTO result = this.doJFSCall(this.addOfferPATH, offerDTO, ActionResultDTO.class);
 
     }
 
     private void addOffers(CreateJobOffersDTO offersDTO){
-        Boolean result = this.doJFSCall(this.addOffersPATH, offersDTO, Boolean.class);
+        LoginResultDTO result = this.doJFSCall(this.addOffersPATH, offersDTO, LoginResultDTO.class);
     }
 
     private String loginCompany(String email){
