@@ -13,7 +13,5 @@
         <module>JFSGui</module>
         <module>JFSService</module>
         <module>JFSData</module>
-        <module>JFSDataGenerator</module>
-        <module>JFSTransferData</module>
     </modules>
 </project>

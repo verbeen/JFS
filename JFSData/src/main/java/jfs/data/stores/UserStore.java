@@ -1,27 +1,22 @@
 package jfs.data.stores;
 
 import com.google.gson.Gson;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
-import com.mongodb.client.FindIterable;
+import jfs.data.connections.DataClient;
 import jfs.data.dataobjects.UserDO;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.bson.Document;
 
 /**
  * Created by lpuddu on 29-10-2015.
  */
 public class UserStore extends DataStore {
-    public static final UserStore store = new UserStore();
 
-    private UserStore() {
-        super("users");
+    public UserStore(DataClient client) {
+        super(client, "users");
     }
 
     public Boolean addUser(UserDO user){
         if (user != null) {
-            return this.insert(user, user._id) != null;
+            return this.insert(user, user.id);
         } else {
             throw new NullPointerException("UserDO user parameter is null");
         }
@@ -29,23 +24,13 @@ public class UserStore extends DataStore {
 
     public UserDO getUser(String id, String password){
         UserDO user = null;
-        DBObject doc = (DBObject)this.collection.find(new BasicDBObject("_id", id)).first();
+        Document doc = this.store.find(new Document("_id", id)).first();
         if (doc != null) {
-            user = (UserDO) new Gson().fromJson((doc).toString(), UserDO.class);
+            user = (UserDO) new Gson().fromJson((doc).toJson(), UserDO.class);
             if(user.password.equals(password)){
                 return user;
             }
         }
         return null;
     }
-
-    public List<UserDO> getAllUsers(){
-        List<UserDO> users = new ArrayList<UserDO>();
-        FindIterable<DBObject> results = this.collection.find();
-        for(DBObject obj : results){
-            users.add(this.serializer.deSerialize(obj.toString(), UserDO.class));
-        }
-        return users;
-    }
 }
-

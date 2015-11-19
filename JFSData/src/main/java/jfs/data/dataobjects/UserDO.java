@@ -7,14 +7,15 @@ import java.io.Serializable;
 /**
  * Created by lpuddu on 29-10-2015.
  */
-public class UserDO extends DataObject {
+public class UserDO {
+    public String id;
     public String password;
     public UserType type;
 
     public UserDO() {}
 
     public UserDO(String id, String password, UserType type) {
-        super(id);
+        this.id = id;
         this.password = password;
         this.type = type;
     }
