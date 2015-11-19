@@ -92,7 +92,12 @@
             }
 
             if (currentPath.indexOf('/administration/') > -1 && currentUser.userType != 'ADMIN') {
-                console.error("No access!");
+                console.warn("No access!");
+                $location.path('/');
+            }
+
+            if (currentPath.indexOf('/job/create') > -1 && currentUser.userType != 'COMPANY') {
+                console.warn("No access!");
                 $location.path('/');
             }
         });
