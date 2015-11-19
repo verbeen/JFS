@@ -1,13 +1,45 @@
-<div class="col-xs-12 col-xs-offset-0
-    col-sm-12 col-sm-offset-0
-    col-md-12 col-md-offset-0
-    col-lg-12 col-lg-offset-0">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">{{ jobProfile.title }}</h3>
+<div id="jfsJobProfile" class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <h2>{{ jobOffer.name }}</h2>
+        <hr />
+
+        <div ng-if="noResults.info || noResults.error">
+            <div class="alert" ng-class="{ 'alert-info': noResults.info, 'alert-danger': noResults.error }">
+                <strong>{{ noResults.title }}</strong> {{ noResults.text }}
+            </div>
         </div>
-        <div class="panel-body">
-            {{ jobProfile.description }}
-        </div>
+
+        <dl ng-if="!noResults.info && !noResults.error" class="dl-horizontal">
+            <dt>Job type</dt>
+            <dd>{{ jobOffer.type }}</dd>
+
+            <dt>Job description</dt>
+            <dd>{{ jobOffer.description | htmlToPlainText }}</dd>
+
+            <dt>Job task</dt>
+            <dd>{{ jobOffer.task | htmlToPlainText }}</dd>
+
+            <dt>Valid till date</dt>
+            <dd>{{ jobOffer.validUntil | dateCheckedZero: 'yyyy-MM-dd' }}</dd>
+
+            <dt>Duration</dt>
+            <dd>{{ jobOffer.duration | duration }}</dd>
+
+            <dt>Start date</dt>
+            <dd>{{ jobOffer.startDate | dateCheckedZero: 'yyyy-MM-dd' }}</dd>
+
+            <dt>Location</dt>
+            <dd>{{ jobOffer.location }}</dd>
+
+            <dt>Contact Email</dt>
+            <dd>{{ jobOffer.contactEmail }}</dd>
+
+            <dt>Website</dt>
+            <dd><a href="{{ jobOffer.website }}" target="_blank">{{ jobOffer.website }}</a></dd>
+        </dl>
+
+        <hr>
+
+        <a class="btn btn-primary" href="mailto:{{ jobOffer.contactEmail }}" role="button">Apply</a>
     </div>
 </div>

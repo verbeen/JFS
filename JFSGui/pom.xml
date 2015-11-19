@@ -28,6 +28,8 @@
                         <configuration>
                             <outputDirectory>deployments</outputDirectory>
                             <warName>jfs</warName>
+                            <source>1.8</source>
+                            <target>1.8</target>
                         </configuration>
                     </plugin>
                 </plugins>

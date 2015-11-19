@@ -18,17 +18,27 @@
 
         function login() {
             vm.dataLoading = true;
-            AuthenticationService.Login(vm.email, vm.password, function (response) {
-                if (response) {
-                    console.debug("User logged in!");
-                    AuthenticationService.SetCredentials(vm.email, vm.password);
-                    $location.path('/');
-                } else {
-                    console.error("Error logging in!");
-                    vm.error = "Error logging in!";
-                    vm.dataLoading = false;
-                }
-            });
+            AuthenticationService.Login(vm.email, vm.password)
+                .then(function (response) {
+                    if (response.success) {
+                        if (response.data.isLoggedIn) {
+                            // user is logged in
+                            console.info("Login successful!");
+                            AuthenticationService.SetCredentials(vm.email, vm.password, response.data.type, response.data.token);
+                            $location.path('/');
+                        } else {
+                            // user is not logged in and backend returns false (e.g. user not found)
+                            console.info("Login not successful!");
+                            vm.error = "Login not successful!";
+                            vm.dataLoading = false;
+                        }
+                    } else {
+                        // backend service is not reachable (e.g. database down)
+                        console.error(response.message);
+                        vm.error = response.message;
+                        vm.dataLoading = false;
+                    }
+                });
         };
     }
 })();

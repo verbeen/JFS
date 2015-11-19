@@ -11,8 +11,15 @@
 
         (function logout() {
             console.log("remove cookie");
+            $rootScope.globals = {
+                currentUser: {
+                    username: "",
+                    userType: "",
+                    authdata: "",
+                    loggedIn: false
+                }
+            };
             $cookieStore.remove('globals');
-            $rootScope.globals = {};
             $location.path('/authentication/logout');
         })();
     }
