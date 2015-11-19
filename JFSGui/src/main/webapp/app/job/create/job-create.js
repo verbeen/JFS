@@ -74,7 +74,7 @@
                     "validUntil": Date.parse($scope.jobProfile.validTilldate),
                     "startDate": Date.parse($scope.jobProfile.startDate),
                     "location": $scope.jobProfile.location,
-                    "website": "",
+                    "website": $scope.jobProfile.jobWebsite,
                     "contactEmail": $scope.jobProfile.jobContactEmail,
                     "type": $scope.jobProfile.type
                 }
