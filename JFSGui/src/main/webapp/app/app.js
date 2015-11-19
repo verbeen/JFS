@@ -84,9 +84,13 @@
             var currentPath = $location.path();
             var loggedIn = $rootScope.globals.currentUser.loggedIn;
 
-            if (currentPath == '/authentication/register' && !loggedIn) {
-                $location.path('/authentication/register');
-            } else if (currentPath != '/authentication/login' && !loggedIn) {
+            var allowedPages = [
+                '/authentication/register',
+                '/authentication/login',
+                '/job/list'
+            ];
+
+            if(!loggedIn && allowedPages.indexOf(currentPath) == -1){
                 $location.path('/authentication/login');
             }
 
