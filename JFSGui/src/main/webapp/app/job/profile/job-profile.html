@@ -1,41 +1,38 @@
 <div id="jfsJobProfile" class="row">
     <div class="col-md-8 col-md-offset-2">
-        <h2>Job profile</h2>
+        <h2>{{ jobOffer.name }}</h2>
         <hr />
 
-        <dl class="dl-horizontal">
-            <dt>Job name</dt>
-            <dd>java</dd>
+        <div ng-if="noResults.info || noResults.error">
+            <div class="alert" ng-class="{ 'alert-info': noResults.info, 'alert-danger': noResults.error }">
+                <strong>{{ noResults.title }}</strong> {{ noResults.text }}
+            </div>
+        </div>
 
+        <dl ng-if="!noResults.info && !noResults.error" class="dl-horizontal">
             <dt>Job type</dt>
-            <dd>Part Time</dd>
+            <dd>{{jobOffer.type}}</dd>
 
             <dt>Job description</dt>
-            <dd>Programming Knowledge</dd>
+            <dd>{{jobOffer.description | htmlToPlainText}}</dd>
 
             <dt>Job task</dt>
-            <dd>Programmer</dd>
+            <dd>{{jobOffer.task | htmlToPlainText}}</dd>
 
             <dt>Valid till date</dt>
-            <dd>12/12/1015</dd>
+            <dd>{{jobOffer.ValidUntil | date:'yyyy-MM-dd'}}</dd>
 
-            <dt>Duration from</dt>
-            <dd>12/11/1015</dd>
+            <dt>Duration</dt>
+            <dd>{{jobOffer.duration | duration}}</dd>
 
-            <dt>Duration to</dt>
-            <dd>12/12/1016</dd>
+            <dt>Start date</dt>
+            <dd>{{jobOffer.startDate | date:'yyyy-MM-dd'}}</dd>
 
             <dt>Location</dt>
-            <dd>Germany</dd>
+            <dd>{{jobOffer.location}}</dd>
 
-            <dt>Address</dt>
-            <dd>#33, xxx, stuttgart</dd>
-
-            <dt>Contact person</dt>
-            <dd>xyz</dd>
-
-            <dt>Email</dt>
-            <dd>xyz@gmail.com</dd>
+            <dt>Website</dt>
+            <dd><a href="{{jobOffer.website}}" target="_blank">{{jobOffer.website}}</a></dd>
         </dl>
     </div>
 </div>

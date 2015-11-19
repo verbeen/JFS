@@ -64,7 +64,7 @@
                 $scope.selectedJobSearch = {};
             }
 
-            JobService.getJobsBySearch(vm.selectedJobSearch)
+            JobService.getJobsBySearch($scope.selectedJobSearch)
                 .then(function(response) {
                     $scope.noResults = {};
                     $scope.noResults.info = false;
