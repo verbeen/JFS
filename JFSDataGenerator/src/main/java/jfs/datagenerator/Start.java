@@ -19,7 +19,9 @@ import java.util.logging.Logger;
 public class Start {
     private String githubApiUrl = "https://jobs.github.com/positions.json?description=&location=&page=";
 
-    private String apiURL = "http://localhost:8080/service";
+    //private String apiURL = "http://localhost:8080/service";
+    private String apiURL = "http://server-devforstudents.rhcloud.com/service";
+    //private String apiURL = "http://server-jobsforstudents.rhcloud.com/service";
     private String addCompanyPATH = "/users/register/company";
     private String addOffersPATH = "/offers/addmore";
     private String addOfferPATH = "/offers/add";
