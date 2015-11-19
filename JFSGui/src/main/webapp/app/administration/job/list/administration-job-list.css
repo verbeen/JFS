@@ -2,24 +2,10 @@
     line-height: 1;
 }
 
-#jfsAdminJobList #jobFilterParameters {
-    padding: 1rem 0;
+#jfsAdminJobList #jobSearchLabel {
+    margin-right: 1rem;
 }
 
-#jfsAdminJobList #jobQuickSearchForm {
-    margin-bottom: 1rem;
-}
-
-#jfsAdminJobList #jobQuickSearchForm .searchButton:hover {
-    cursor: pointer;
-}
-
-@media (min-width: 768px) {
-    #jfsAdminJobList #jobQuickSearchForm label {
-        padding-right: 1rem;
-    }
-
-    #jfsAdminJobList #jobQuickSearchForm input {
-        width: 300px;
-    }
+#jfsAdminJobList #jobSearchForm .form-group {
+    margin-right: 1rem;
 }

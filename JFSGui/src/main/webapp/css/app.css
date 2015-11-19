@@ -12,6 +12,44 @@
     margin-right: auto;
 }
 
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+
+.loadingAnimation {
+    width: 20px;
+    height: 20px;
+    display: block;
+    margin-left: 1rem;
+    -webkit-animation: spin 3s linear infinite;
+    -moz-animation: spin 3s linear infinite;
+    animation: spin 3s linear infinite;
+}
+
+.loadingAnimation:before {
+    font-family: 'Glyphicons Halflings';
+    color: #555;
+    position: relative;
+    display: inline-block;
+    font-style: normal;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1;
+    content: "\e030";
+}
+
+.loadingAnimationWrapper {
+    display: inline-block;
+    position: relative;
+    width: 20px;
+    height: 20px;
+}
+
+.loadingAnimationWrapper .loadingAnimation {
+    position: absolute;
+    top: 7px;
+    margin-left: 0;
+}
 
 /* navbar */
 

@@ -10,11 +10,17 @@
         var service = {};
 
         service.Create = Create;
+        service.getAllUsers = getAllUsers;
 
         return service;
 
         function Create(user) {
-            return $http.post('/service/users/register/' + user.type, user.authentication).then(handleSuccess, handleError('Registration not successful!'));
+            return $http.post('/service/users/register/' + user.type, user.authentication)
+                .then(handleSuccess, handleError('Registration not successful!'));
+        }
+        function getAllUsers(token) {
+            return $http.post('/service/users/all/', token)
+                .then(handleSuccess, handleError('Got all jobs "' + token + '"!'));
         }
 
         // private functions

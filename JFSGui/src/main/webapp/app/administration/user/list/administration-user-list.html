@@ -1,44 +1,55 @@
 <div id="jfsAdminUserList">
     <div class="row">
-        <div class="col-md-12">
-            <h2>Manage Members</h2>
-            <div class="table-responsive">
+        <div class="col-md-8 col-md-offset-2">
+            <h2>Manage users</h2>
+            <hr>
+
+            <form ng-hide="true" name="userSearchForm" ng-submit="search()" id="userSearchForm" class="form-inline" role="form">
+                <div class="form-group">
+                    <label id="userSearchLabel" class="control-label">Search:</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" ng-model="userSearch.username" placeholder="Username">
+                        <div class="searchButton input-group-addon">
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" >
+                    <div class="input-group">
+                        <input type="text" class="form-control" ng-model="userSearch.userType" placeholder="User type">
+                        <div class="searchButton input-group-addon">
+                            <span class="glyphicon glyphicon-random" aria-hidden="true"></span>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Search</button>
+                <div ng-if="dataLoading" class="form-group">
+                    <div class="loadingAnimation">
+                    </div>
+                </div>
+            </form>
+
+            <div ng-if="noResults.info || noResults.error">
+                <div class="alert" ng-class="{ 'alert-info': noResults.info, 'alert-danger': noResults.error }">
+                    <strong>{{ noResults.title }}</strong> {{ noResults.text }}
+                </div>
+            </div>
+
+            <div ng-if="!noResults.info && !noResults.error" class="table-responsive">
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>User name</th>
-                            <th>Email</th>
-                            <th>User type</th>
-                            <th>&nbsp;</th>
+                            <th>User Name</th>
+                            <th>User Type</th>
+                            <th ng-hide="true">&nbsp;</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="t in getTimes(5) track by $index">
-                            <td>Vishnu</td>
-                            <td>mailme@vishnusr.com</td>
-                            <td>Company</td>
-                            <td>
-                                <button ng-click="vm.remove();" type="button" class="btn btn-default btn-xs jfsAdminButton">
-                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr ng-repeat="t in getTimes(5) track by $index">
-                            <td>Spider Man</td>
-                            <td>mailme@vishnusr.com</td>
-                            <td>Company</td>
-                            <td>
-                                <button ng-click="vm.remove();" type="button" class="btn btn-default btn-xs jfsAdminButton">
-                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr ng-repeat="t in getTimes(5) track by $index">
-                            <td>Hulk</td>
-                            <td>mailme@vishnusr.com</td>
-                            <td>Student</td>
-                            <td>
-                                <button ng-click="vm.remove();" type="button" class="btn btn-default btn-xs jfsAdminButton">
+                        <tr ng-repeat="user in users">
+                            <td>{{ user.userId }}</td>
+                            <td>{{ user.type }}</td>
+                            <td ng-hide="true">
+                                <button ng-click="remove();" type="button" class="btn btn-default btn-xs jfsAdminButton">
                                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                 </button>
                             </td>
@@ -46,6 +57,7 @@
                     </tbody>
                 </table>
             </div>
+
         </div>
     </div>
 </div>

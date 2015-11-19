@@ -12,6 +12,14 @@
     margin-right: 1rem;
 }
 
+#jfsJobList .masonry-brick {
+    display: none;
+}
+
+#jfsJobList .masonry-brick.loaded {
+    display: block;
+}
+
 /*
 #jfsJobList #jobFilterParametersForm .control-label {
     text-align: left;

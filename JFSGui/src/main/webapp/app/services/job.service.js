@@ -12,12 +12,13 @@
         service.getAllJobs = getAllJobs;
         service.getJobProfile = getJobProfile;
         service.getRecentJobs = getRecentJobs;
-        service.getJobsBySearchterm = getJobsBySearchterm;
+        service.getJobsBySearch = getJobsBySearch;
+        service.createJob = createJob;
 
         return service;
 
-        function getAllJobs() {
-            return $http.post('/service/offers/getall')
+        function getAllJobs(token) {
+            return $http.post('/service/offers/getall', token)
                 .then(handleSuccess, handleError('Error getting all jobs!'));
         }
 
@@ -31,9 +32,14 @@
                 .then(handleSuccess, handleError('Error getting most recent job offers!'));
         }
 
-        function getJobsBySearchterm(term) {
-            return $http.post('/service/offers/search/text', term)
-                .then(handleSuccess, handleError('Error getting job offers by "' + term + '"!'));
+        function getJobsBySearch(searchParams) {
+            return $http.post('/service/offers/search', searchParams)
+                .then(handleSuccess, handleError('Error getting job offers by "' + searchParams + '"!'));
+        }
+
+        function createJob(jobDetails) {
+            return $http.post('/service/offers/add', jobDetails)
+                .then(handleSuccess, handleError('Error adding job offers by "' + jobDetails + '"!'));
         }
 
         // private functions

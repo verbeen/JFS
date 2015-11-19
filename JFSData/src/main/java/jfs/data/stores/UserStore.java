@@ -3,7 +3,11 @@ package jfs.data.stores;
 import com.google.gson.Gson;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import com.mongodb.client.FindIterable;
 import jfs.data.dataobjects.UserDO;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by lpuddu on 29-10-2015.
@@ -33,6 +37,15 @@ public class UserStore extends DataStore {
             }
         }
         return null;
+    }
+
+    public List<UserDO> getAllUsers(){
+        List<UserDO> users = new ArrayList<UserDO>();
+        FindIterable<DBObject> results = this.collection.find();
+        for(DBObject obj : results){
+            users.add(this.serializer.deSerialize(obj.toString(), UserDO.class));
+        }
+        return users;
     }
 }
 

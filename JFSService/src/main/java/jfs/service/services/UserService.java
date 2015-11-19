@@ -5,10 +5,13 @@ import jfs.data.dataobjects.enums.UserType;
 import jfs.data.stores.UserStore;
 import jfs.transferdata.transferobjects.LoginResultDTO;
 import jfs.service.sessions.Session;
+import jfs.transferdata.transferobjects.UserDTO;
 import jfs.transferdata.transferobjects.enums.UserTypeDTO;
 
 import javax.ejb.Singleton;
 import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -37,5 +40,19 @@ public class UserService {
             result.isLoggedIn = false;
         }
         return result;
+    }
+
+    public List<UserDTO> getAllUsers(){
+        List<UserDTO> users = new ArrayList<UserDTO>();
+        for(UserDO userDO : this.userStore.getAllUsers()){
+            users.add(this.createUserDTO(userDO));
+        }
+        return users;
+    }
+
+    private UserDTO createUserDTO(UserDO userDO){
+        return new UserDTO(
+                userDO._id, UserTypeDTO.valueOf(userDO.type.name())
+        );
     }
 }
