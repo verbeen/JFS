@@ -30,7 +30,9 @@
                          $scope.isStudent = false;
                          $scope.isCompany = true;
                      } else {
-                         console.warn("Unknown user type!");
+                         $scope.isAdmin = false;
+                         $scope.isStudent = false;
+                         $scope.isCompany = false;
                      }
                 }, true);
             }
