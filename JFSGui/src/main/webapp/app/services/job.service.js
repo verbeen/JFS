@@ -22,8 +22,8 @@
                 .then(handleSuccess, handleError('Error getting all jobs!'));
         }
 
-        function getJobProfile() {
-            return $http.get('data/job-profile.json')
+        function getJobProfile(offerId) {
+            return $http.get('/service/offers/' + offerId)
                 .then(handleSuccess, handleError('Error getting job profile!'));
         }
 

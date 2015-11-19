@@ -10,8 +10,8 @@
         .directive('showErrors', ShowErrorsDirective)
         .directive('minLength', BsSelectValidationDirective);
 
-    config.$inject = ['$routeProvider'];
-    function config($routeProvider, $rootScope) {
+    config.$inject = ['$routeProvider', '$locationProvider'];
+    function config($routeProvider, $locationProvider, $rootScope) {
         $routeProvider
             .when('/', {
                 templateUrl: 'app/home.html',
@@ -21,7 +21,7 @@
                 templateUrl: 'app/job/list/job-list.html',
                 controller: 'JobListController as vm'
             })
-            .when('/job/profile', {
+            .when('/job/profile/:offerId', {
                 templateUrl: 'app/job/profile/job-profile.html',
                 controller: 'JobProfileController as vm'
             })
@@ -58,6 +58,8 @@
                 controller: 'CompanyProfileController as vm'
             })
             .otherwise({redirectTo: '/'});
+
+            //$locationProvider.html5Mode(true);
     }
 
     run.$inject = ['$rootScope', '$location', '$cookieStore'];
