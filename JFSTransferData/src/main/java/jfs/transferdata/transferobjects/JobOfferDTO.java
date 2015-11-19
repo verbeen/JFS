@@ -12,7 +12,6 @@ public class JobOfferDTO {
     public String function;
     public String description;
     public String task;
-    public long posted;
     public long duration;
     public long validUntil;
     public long startDate;
