@@ -2,13 +2,21 @@
     <div class="col-md-8 col-md-offset-2">
         <h2>Create a new job offer</h2>
         <hr>
-        <form class="form-horizontal" ng-submit="vm.create()" role="form" name="formCreateJob" ng-show="vm.responseMessage.showForm" novalidate>
+
+        <div ng-if="responseMessage.success || responseMessage.error">
+            <div class="alert" ng-class="{ 'alert-success': responseMessage.success, 'alert-danger': responseMessage.error }">
+                {{ responseMessage.text }}
+            </div>
+            <button class="btn btn-primary" ng-click="initializeNewJobOffer()">New job offer</button>
+        </div>
+
+        <form class="form-horizontal" ng-submit="create()" role="form" name="formCreateJob" ng-show="responseMessage.showForm" novalidate>
 
             <div class="form-group" show-errors>
                 <label for="jobName" class="col-sm-3 col-md-3 control-label">Job Name *</label>
                 <div class="col-sm-9 col-md-9">
                     <input type="text" id="jobName" class="form-control" name="jobName"
-                           ng-model="vm.jobProfile.jobName" placeholder="Job Name" required>
+                           ng-model="jobProfile.jobName" placeholder="Job Name" required>
                 </div>
             </div>
 
@@ -17,8 +25,8 @@
                 <div class="col-sm-7 col-md-7">
                     <div class="input-group">
                         <button type="button" id="jobType" class="btn btn-default form-control" name="jobType"
-                                ng-model="vm.jobProfile.type" data-placeholder="Type" data-html="1" aria-label="Select"
-                                bs-options="type.value as type.label for type in vm.jobProfileParams.type" bs-select min-length="1">
+                                ng-model="jobProfile.type" data-placeholder="Type" data-html="1" aria-label="Select"
+                                bs-options="type.value as type.label for type in jobProfileParams.type" bs-select min-length="1">
                         </button>
                         <div class="searchButton input-group-addon" >
                             <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
@@ -31,7 +39,7 @@
                 <label for="jobDescription" class="col-sm-3 col-md-3 control-label">Job Description *</label>
                 <div class="col-sm-9 col-md-9">
                     <textarea id="jobDescription" class="form-control" name="jobDescription" rows="3"
-                              ng-model="vm.jobProfile.jobDescription" placeholder="Job Description" required></textarea>
+                              ng-model="jobProfile.jobDescription" placeholder="Job Description" required></textarea>
                 </div>
             </div>
 
@@ -39,7 +47,7 @@
                 <label for="jobTask" class="col-sm-3 col-md-3 control-label">Job Task</label>
                 <div class="col-sm-9 col-md-9">
                     <textarea id="jobTask" class="form-control" rows="3" name="jobTask"
-                              ng-model="vm.jobProfile.jobTask" placeholder="Job Task"></textarea>
+                              ng-model="jobProfile.jobTask" placeholder="Job Task"></textarea>
                 </div>
             </div>
 
@@ -48,7 +56,7 @@
                 <div class="col-sm-7 col-md-7">
                     <div class="input-group">
                         <input type="text" id="jobCreateValidTillDate" class="form-control" name="jobCreateValidTillDate"
-                               ng-model="vm.jobProfile.validTilldate" placeholder="Valid Till Date" bs-datepicker>
+                               ng-model="jobProfile.validTilldate" placeholder="Valid Till Date" bs-datepicker>
                         <div class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
                         </div>
@@ -57,11 +65,11 @@
             </div>
 
             <div class="form-group" show-errors>
-                <label for="jobCreateDurationFrom" class="col-sm-3 col-md-3 control-label">Duration From</label>
+                <label for="jobCreateStartDate" class="col-sm-3 col-md-3 control-label">Start Date</label>
                 <div class="col-sm-7 col-md-7">
                     <div class="input-group">
-                        <input type="text" id="jobCreateDurationFrom" class="form-control" name="jobCreateDurationFrom"
-                               ng-model="vm.jobProfile.durationFrom" placeholder="Duration From" bs-datepicker>
+                        <input type="text" id="jobCreateStartDate" class="form-control" name="jobCreateStartDate"
+                               ng-model="jobProfile.startDate" placeholder="Start Date" bs-datepicker>
                         <div class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
                         </div>
@@ -69,13 +77,15 @@
                 </div>
             </div>
 
-            <div class="form-group" show-errors>
-                <label for="jobCreateDurationTo" class="col-sm-3 col-md-3 control-label">Duration To</label>
+            <div class="form-group">
+                <label for="jobCreateDuration" class="col-sm-3 col-md-3 control-label">Duration</label>
                 <div class="col-sm-7 col-md-7">
                     <div class="input-group">
-                        <input type="text" id="jobCreateDurationTo" class="form-control" name="jobCreateDurationTo"
-                               ng-model="vm.jobProfile.durationTo" placeholder="Duration To" bs-datepicker>
-                        <div class="input-group-addon">
+                        <button type="button" id="jobCreateDuration" class="btn btn-default form-control" name="jobCreateDuration"
+                                ng-model="jobProfile.duration" data-placeholder="Duration" data-html="1" aria-label="Select"
+                                bs-options="duration.value as duration.label for duration in jobProfileParams.duration" bs-select>
+                        </button>
+                        <div class="searchButton input-group-addon">
                             <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
                         </div>
                     </div>
@@ -86,7 +96,7 @@
                 <label for="jobCreateLocation" class="col-sm-3 col-md-3 control-label">Location</label>
                 <div class="col-sm-9 col-md-9">
                     <input type="text" id="jobCreateLocation" class="form-control" name="jobCreateLocation"
-                           ng-model="vm.jobProfile.location" placeholder="Location">
+                           ng-model="jobProfile.location" placeholder="Location">
                 </div>
             </div>
 
@@ -94,7 +104,7 @@
                 <label for="jobAddress" class="col-sm-3 col-md-3 control-label">Address</label>
                 <div class="col-sm-9 col-md-9">
                     <textarea id="jobAddress" class="form-control" name="jobAddress" rows="3"
-                              ng-model="vm.jobProfile.address" placeholder="Address"></textarea>
+                              ng-model="jobProfile.address" placeholder="Address"></textarea>
                 </div>
             </div>
 
@@ -102,7 +112,7 @@
                 <label for="jobContactPerson" class="col-sm-3 col-md-3 control-label">Contact Person</label>
                 <div class="col-sm-9 col-md-9">
                     <input type="text" id="jobContactPerson" class="form-control" name="jobContactPerson"
-                           ng-model="vm.jobProfile.contactPerson" placeholder="Contact Person">
+                           ng-model="jobProfile.contactPerson" placeholder="Contact Person">
                 </div>
             </div>
 
@@ -110,7 +120,7 @@
                 <label for="jobContactemail" class="col-sm-3 col-md-3 control-label">Email</label>
                 <div class="col-sm-9 col-md-9">
                     <input type="email" id="jobContactemail" class="form-control" name="jobContactemail"
-                           ng-model="vm.jobProfile.email" placeholder="example@domain.com">
+                           ng-model="jobProfile.email" placeholder="example@domain.com">
                 </div>
             </div>
 
@@ -118,20 +128,13 @@
 
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">Create job offer</button>
-                <button class="btn btn-link" ng-click="vm.reset()">Reset</button>
-                <div ng-if="vm.dataLoading" class="loadingAnimationWrapper">
+                <button class="btn btn-link" ng-click="reset()">Reset</button>
+                <div ng-if="dataLoading" class="loadingAnimationWrapper">
                     <div class="loadingAnimation">
                     </div>
                 </div>
             </div>
 
         </form>
-
-        <div ng-if="vm.responseMessage.success || vm.responseMessage.error">
-            <div class="alert" ng-class="{ 'alert-success': vm.responseMessage.success, 'alert-danger': vm.responseMessage.error }">
-                {{ vm.responseMessage.text }}
-            </div>
-            <button class="btn btn-primary" ng-click="vm.initializeNewJobOffer()">New job offer</button>
-        </div>
     </div>
 </div>

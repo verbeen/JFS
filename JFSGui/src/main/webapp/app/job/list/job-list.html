@@ -153,7 +153,7 @@
                                 <li class="jobOfferLocation">{{ offer.location }}</li>
                                 <li class="jobOfferDuration">{{ offer.duration | duration }}</li>
                                 <!--<li class="jobOfferSalary">100,000</li>-->
-                                <li class="jobOfferStartDate">{{ offer.startDate | date:'yyyy-MM-dd' }}</li>
+                                <li class="jobOfferStartDate">{{ offer.startDate | dateCheckedZero: 'yyyy-MM-dd' }}</li>
                                 <!--<li class="jobOfferSkill">Jquery, Javascript, HTML 5, CSS, Jquery, Javascript, HTML 5, CSS</li>-->
                             </ul>
                             <p>{{ offer.description | htmlToPlainText | limitTo: 200 }}...</p>

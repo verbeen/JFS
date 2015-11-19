@@ -19,8 +19,18 @@
 
                      if ($rootScope.globals.currentUser.userType == 'ADMIN') {
                          $scope.isAdmin = true;
-                     } else {
+                         $scope.isStudent = false;
+                         $scope.isCompany = false;
+                     } else if ($rootScope.globals.currentUser.userType == 'STUDENT') {
                          $scope.isAdmin = false;
+                         $scope.isStudent = true;
+                         $scope.isCompany = false;
+                     } else if ($rootScope.globals.currentUser.userType == 'COMPANY') {
+                         $scope.isAdmin = false;
+                         $scope.isStudent = false;
+                         $scope.isCompany = true;
+                     } else {
+                         console.warn("Unknown user type!");
                      }
                 }, true);
             }

@@ -7,6 +7,7 @@
         .controller('HomeController', HomeController)
         .filter('duration', DurationFilter)
         .filter('htmlToPlainText', HtmlToPlainTextFilter)
+        .filter('dateCheckedZero', DateCheckedZeroFilter)
         .directive('showErrors', ShowErrorsDirective)
         .directive('minLength', BsSelectValidationDirective);
 
@@ -95,7 +96,12 @@
             }
 
             if (currentPath.indexOf('/administration/') > -1 && currentUser.userType != 'ADMIN') {
-                console.error("No access!");
+                console.warn("No access!");
+                $location.path('/');
+            }
+
+            if (currentPath.indexOf('/job/create') > -1 && currentUser.userType != 'COMPANY') {
+                console.warn("No access!");
                 $location.path('/');
             }
         });
@@ -111,6 +117,10 @@
     DurationFilter.$inject = [];
     function DurationFilter() {
         return function(millseconds) {
+            if (millseconds == 0) {
+                return "∞";
+            }
+
             var days = Math.floor(millseconds / 1000 / 3600 / 24);
 
             if (days < 31) {
@@ -120,6 +130,17 @@
                 return months + " months";
             }
         }
+    }
+
+    DateCheckedZeroFilter.$inject = ['$filter'];
+    function DateCheckedZeroFilter($filter) {
+        return function (dateString, format) {
+            if (dateString == 0) {
+                return "n/a";
+            } else {
+                return $filter('date')(dateString, format.toString());
+            }
+        };
     }
 
     HtmlToPlainTextFilter.$inject = [];

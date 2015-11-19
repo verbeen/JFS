@@ -11,28 +11,28 @@
 
         <dl ng-if="!noResults.info && !noResults.error" class="dl-horizontal">
             <dt>Job type</dt>
-            <dd>{{jobOffer.type}}</dd>
+            <dd>{{ jobOffer.type }}</dd>
 
             <dt>Job description</dt>
-            <dd>{{jobOffer.description | htmlToPlainText}}</dd>
+            <dd>{{ jobOffer.description | htmlToPlainText }}</dd>
 
             <dt>Job task</dt>
-            <dd>{{jobOffer.task | htmlToPlainText}}</dd>
+            <dd>{{ jobOffer.task | htmlToPlainText }}</dd>
 
             <dt>Valid till date</dt>
-            <dd>{{jobOffer.ValidUntil | date:'yyyy-MM-dd'}}</dd>
+            <dd>{{ jobOffer.ValidUntil | dateCheckedZero: 'yyyy-MM-dd' }}</dd>
 
             <dt>Duration</dt>
-            <dd>{{jobOffer.duration | duration}}</dd>
+            <dd>{{ jobOffer.duration | duration }}</dd>
 
             <dt>Start date</dt>
-            <dd>{{jobOffer.startDate | date:'yyyy-MM-dd'}}</dd>
+            <dd>{{ jobOffer.startDate | dateCheckedZero: 'yyyy-MM-dd' }}</dd>
 
             <dt>Location</dt>
-            <dd>{{jobOffer.location}}</dd>
+            <dd>{{ jobOffer.location }}</dd>
 
             <dt>Website</dt>
-            <dd><a href="{{jobOffer.website}}" target="_blank">{{jobOffer.website}}</a></dd>
+            <dd><a href="{{ jobOffer.website }}" target="_blank">{{ jobOffer.website }}</a></dd>
         </dl>
     </div>
 </div>

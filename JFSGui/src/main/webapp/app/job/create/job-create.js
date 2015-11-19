@@ -7,9 +7,7 @@
 
     JobCreateController.$inject = ['JobService', '$scope', '$rootScope'];
     function JobCreateController(JobService, $scope, $rootScope) {
-        var vm = this;
-
-        vm.jobProfileParams = {
+        $scope.jobProfileParams = {
             "type": [
                 { "value": "master_thesis", "label": "Master thesis" },
                 { "value": "bachelor_thesis", "label": "Bachelor thesis" },
@@ -17,34 +15,49 @@
                 { "value": "full_time", "label": "Full time" },
                 { "value": "internship", "label": "Internship" },
                 { "value": "contract", "label": "Contract" }
+            ],
+            "duration": [
+                { "value": (1 * 30 * 24 * 3600 * 1000), "label": "1 month" },
+                { "value": (2 * 30 * 24 * 3600 * 1000), "label": "2 months" },
+                { "value": (3 * 30 * 24 * 3600 * 1000), "label": "3 months" },
+                { "value": (4 * 30 * 24 * 3600 * 1000), "label": "4 months" },
+                { "value": (5 * 30 * 24 * 3600 * 1000), "label": "5 months" },
+                { "value": (6 * 30 * 24 * 3600 * 1000), "label": "6 months" },
+                { "value": (7 * 30 * 24 * 3600 * 1000), "label": "7 months" },
+                { "value": (8 * 30 * 24 * 3600 * 1000), "label": "8 months" },
+                { "value": (9 * 30 * 24 * 3600 * 1000), "label": "9 months" },
+                { "value": (10 * 30 * 24 * 3600 * 1000), "label": "10 months" },
+                { "value": (11 * 30 * 24 * 3600 * 1000), "label": "11 months" },
+                { "value": (12 * 30 * 24 * 3600 * 1000), "label": "12 months" },
+                { "value": 0, "label": "infinite" }
             ]
         };
 
-        vm.initializeNewJobOffer = initializeNewJobOffer;
-        vm.create = create;
-        vm.reset = reset;
+        $scope.initializeNewJobOffer = initializeNewJobOffer;
+        $scope.create = create;
+        $scope.reset = reset;
 
         // gets executed on initial load
         (function initController() {
             // reset job create view
-            vm.initializeNewJobOffer();
+            initializeNewJobOffer();
         })();
 
         function initializeNewJobOffer() {
-            vm.responseMessage = {};
-            vm.responseMessage.showForm = true;
-            vm.responseMessage.success = false;
-            vm.responseMessage.error = false;
-            vm.reset();
+            $scope.responseMessage = {};
+            $scope.responseMessage.showForm = true;
+            $scope.responseMessage.success = false;
+            $scope.responseMessage.error = false;
+            $scope.reset();
         }
 
         function create() {
-            vm.dataLoading = true;
+            $scope.dataLoading = true;
 
             $scope.$broadcast('show-errors-check-validity');
 
             if ($scope.formCreateJob.$invalid) {
-                vm.dataLoading = false;
+                $scope.dataLoading = false;
                 return;
             }
 
@@ -52,42 +65,40 @@
                 "companyId": $rootScope.globals.currentUser.username,
                 "token": $rootScope.globals.currentUser.authdata,
                 "jobOffer": {
-                    "offerId":"",
                     "companyId": $rootScope.globals.currentUser.username,
-                    "name": vm.jobProfile.jobName,
+                    "name": $scope.jobProfile.jobName,
                     "function": "",
-                    "description": vm.jobProfile.jobDescription,
-                    "task": vm.jobProfile.jobTask,
-                    "posted": "",
-                    "duration": "",
-                    "validUntil": Date.parse(vm.jobProfile.durationTo),
-                    "startDate": Date.parse(vm.jobProfile.durationFrom),
-                    "location": vm.jobProfile.location,
+                    "description": $scope.jobProfile.jobDescription,
+                    "task": $scope.jobProfile.jobTask,
+                    "duration": $scope.jobProfile.duration,
+                    "validUntil": Date.parse($scope.jobProfile.validTilldate),
+                    "startDate": Date.parse($scope.jobProfile.startDate),
+                    "location": $scope.jobProfile.location,
                     "website": "",
-                    "type": vm.jobProfile.type
+                    "type": $scope.jobProfile.type
                 }
             };
 
             JobService.createJob(obj)
                 .then(function (response) {
-                    vm.responseMessage.showForm = false;
+                    $scope.responseMessage.showForm = false;
                     if (response.success) {
                         console.info("Job offer created!");
-                        vm.responseMessage.success = true;
-                        vm.responseMessage.text = "Your job offer has been successfully created.";
-                        vm.dataLoading = false;
+                        $scope.responseMessage.success = true;
+                        $scope.responseMessage.text = "Your job offer has been successfully created.";
+                        $scope.dataLoading = false;
                     } else {
                         // backend service is not reachable (e.g. database down)
                         console.error(response.message);
-                        vm.responseMessage.error = true;
-                        vm.responseMessage.text = "An error occurred while creating your job offer.";
-                        vm.dataLoading = false;
+                        $scope.responseMessage.error = true;
+                        $scope.responseMessage.text = "An error occurred while creating your job offer.";
+                        $scope.dataLoading = false;
                     }
                 });
         }
 
         function reset() {
-            vm.jobProfile = {
+            $scope.jobProfile = {
                 "jobName": "",
                 "type": "",
                 "jobDescription": "",

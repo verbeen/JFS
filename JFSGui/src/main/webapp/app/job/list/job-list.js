@@ -16,6 +16,7 @@
 
             $scope.jobSearch = {
                 "type": [
+                    { "value": "", "label": "All" },
                     { "value": "master_thesis", "label": "Master thesis" },
                     { "value": "bachelor_thesis", "label": "Bachelor thesis" },
                     { "value": "part_time", "label": "Part time" },
@@ -60,7 +61,9 @@
         function search() {
             $scope.dataLoading = true;
 
-            if (!$scope.selectedJobSearch) {
+            if (!$scope.selectedJobSearch
+                || $scope.selectedJobSearch.type == ""
+                || $scope.selectedJobSearch.location == "") {
                 $scope.selectedJobSearch = {};
             }
 

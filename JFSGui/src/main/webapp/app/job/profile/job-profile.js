@@ -33,11 +33,6 @@
                     $scope.noResults.text = "Please try again later.";
                     $scope.dataLoading = false;
                 }
-
-
-
             });
-
     }
-
 })();
