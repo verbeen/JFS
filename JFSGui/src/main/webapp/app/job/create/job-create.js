@@ -105,12 +105,11 @@
                 "jobDescription": "",
                 "jobTask": "",
                 "validTilldate": "",
-                "durationFrom": "",
-                "durationTo": "",
+                "startDate": "",
+                "duration": "",
                 "location": "",
-                "address": "",
-                "contactPerson": "",
-                "email": ""
+                "jobWebsite": "",
+                "jobContactEmail": ""
             };
             $scope.$broadcast('show-errors-reset');
         }
