@@ -32,7 +32,7 @@
             <dd>{{ jobOffer.location }}</dd>
 
             <dt>Contact Email</dt>
-            <dd>{{ jobOffer.contactEmail }}</dd>
+            <dd><a href="mailto:{{ jobOffer.contactEmail }}">{{ jobOffer.contactEmail }}</a></dd>
 
             <dt>Website</dt>
             <dd><a href="{{ jobOffer.website }}" target="_blank">{{ jobOffer.website }}</a></dd>
