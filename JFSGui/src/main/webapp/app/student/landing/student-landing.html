@@ -1,0 +1,96 @@
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+
+
+<div class="col-md-12">
+    <div class="col-md-1">
+        <!--Left pane-->
+    </div>
+    <div class = "col-md-11">  <!--Main pane is divided here to get a small right pane inside the main one-->
+        <div class = "col-md-9"><!--This is the landing page pane-->
+           {{5+5}}
+
+           <h3>Recently added Jobs</h3>
+
+            <!--the code for the job list-->
+
+                <div ng-if="noResults.info || noResults.error">
+                    <div class="alert" ng-class="{ 'alert-info': noResults.info, 'alert-danger': noResults.error }">
+                        <strong>{{ noResults.title }}</strong> {{ noResults.text }}
+                    </div>
+                </div>
+
+                <div masonry class="row" masonry-options="{ percentPosition: true }">
+                    <div class="masonry-brick col-xs-12 col-sm-6 col-md-4" ng-repeat="offer in offers">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><a href="#/job/profile/{{offer.offerId}}">{{ offer.name }}</a></h3>
+                            </div>
+                            <div class="panel-body">
+                                <ul class="list-unstyled jobOfferParameters">
+                                    <li class="jobOfferCompany">{{ offer.companyId }}</li>
+                                    <li class="jobOfferLocation">{{ offer.location }}</li>
+                                    <li class="jobOfferDuration">{{ offer.duration | duration }}</li>
+                                    <!--<li class="jobOfferSalary">100,000</li>-->
+                                    <li class="jobOfferStartDate">{{ offer.startDate | dateCheckedZero: 'yyyy-MM-dd' }}</li>
+                                    <!--<li class="jobOfferSkill">Jquery, Javascript, HTML 5, CSS, Jquery, Javascript, HTML 5, CSS</li>-->
+                                </ul>
+                                <p>{{ offer.description | htmlToPlainText | limitTo: 50 }}...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+        </div>
+        <div class = "col-md-2"><!--This is the landing right pane(inside main box)-->
+
+            <button type="button" class="btn  btn-primary" data-animation="am-fade-and-scale" data-placement="center" data-toggle="modal"
+                    data-target="#myModal" >Notifications <span class="badge">{{noNotification}}</span>
+            </button>
+            <br>
+            <br>
+
+            <form action="#/student/notification">
+                <input type="submit" class="btn  btn-info" value="Manage Notification">
+            </form>
+           <!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>-->
+
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Job Notifications</h4>
+                        </div>
+                        <div class="modal-body">
+                        <p><a href="https://server-jobsforstudents.rhcloud.com/#/job/profile/56543676330164dc9fae63a1"> Job 1</a></p>
+                        <br><p><a href="https://server-jobsforstudents.rhcloud.com/#/job/profile/56543676330164dc9fae63a1"> Job 2</a></p>
+                        <br><p><a href="https://server-jobsforstudents.rhcloud.com/#/job/profile/56543676330164dc9fae63a1"> Job 3</a></p>
+                        <br><p><a href="https://server-jobsforstudents.rhcloud.com/#/job/profile/56543676330164dc9fae63a1"> Job 4</a></p>
+                        <br><p><a href="https://server-jobsforstudents.rhcloud.com/#/job/profile/56543676330164dc9fae63a1"> Job 5</a></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+        </div>
