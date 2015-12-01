@@ -46,7 +46,6 @@ public class StudentSubscriptionsWebService {
         return this.studentSubscriptionsService.updateLastView(userId, lastView);
     }
 
-    //FIXME Currently returns everything
     @POST
     @Path("/checkSubscriptions") @Consumes("application/json") @Produces("application/json")
     public JobOfferListDTO checkSubscriptions(StudentSubscriptionsDTO studentSubscriptionsDTO){
