@@ -1,5 +1,8 @@
 package jfs.service.services;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+import jfs.transferdata.transferobjects.JobOfferListDTO;
+import jfs.transferdata.transferobjects.SearchDTO;
 import jfs.transferdata.transferobjects.StudentProfileDTO;
 import jfs.transferdata.transferobjects.StudentSubscriptionsDTO;
 
@@ -30,5 +33,30 @@ public class StudentSubscriptionsWebService {
         return result;
     }
 
-    //TODO update
+    @POST
+    @Path("/update") @Consumes("application/json") @Produces("application/json")
+    public Boolean updateStudentSubscriptions(String userId, StudentSubscriptionsDTO subscriptionsDTO){
+        return this.studentSubscriptionsService.updateStudentSubscriptions(userId, subscriptionsDTO);
+    }
+
+    //might not be needed...
+    @POST
+    @Path("/updateLastView") @Consumes("application/json") @Produces("application/json")
+    public Boolean updateLastView(String userId, long lastView){
+        return this.studentSubscriptionsService.updateLastView(userId, lastView);
+    }
+
+    //FIXME Currently returns everything
+    @POST
+    @Path("/checkSubscriptions") @Consumes("application/json") @Produces("application/json")
+    public JobOfferListDTO checkSubscriptions(StudentSubscriptionsDTO studentSubscriptionsDTO){
+        //1. get job offers by userId -> type, location, skills
+        JobOfferListDTO list = new JobOfferListDTO();
+        list.offers = this.studentSubscriptionsService.checkSubscriptions(studentSubscriptionsDTO);
+
+        //2. update last view
+        this.updateLastView(studentSubscriptionsDTO.userId, studentSubscriptionsDTO.lastView);
+        return list;
+    }
+
 }

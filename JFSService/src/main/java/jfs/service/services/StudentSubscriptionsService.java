@@ -1,10 +1,15 @@
 package jfs.service.services;
 
+import jfs.data.dataobjects.JobOfferDO;
 import jfs.data.dataobjects.StudentSubscriptionsDO;
+import jfs.data.stores.JobOfferStore;
 import jfs.data.stores.StudentSubscriptionsStore;
+import jfs.transferdata.transferobjects.JobOfferDTO;
 import jfs.transferdata.transferobjects.StudentSubscriptionsDTO;
 
 import javax.ejb.Singleton;
+import javax.inject.Inject;
+import java.util.List;
 
 /**
  * Created by Hulk-A on 13.11.2015.
@@ -12,16 +17,20 @@ import javax.ejb.Singleton;
 @Singleton
 public class StudentSubscriptionsService {
     private StudentSubscriptionsStore studentSubscriptionsStore = StudentSubscriptionsStore.store;
+    private JobOfferStore jobOfferStore = JobOfferStore.store;
+
+    @Inject
+    private JobOfferService jobOfferService;
 
     private StudentSubscriptionsDO createStudentSubscriptionDO(StudentSubscriptionsDTO studentSubscriptionsDTO){
         return new StudentSubscriptionsDO(
-                studentSubscriptionsDTO.userId, studentSubscriptionsDTO.types, studentSubscriptionsDTO.location , studentSubscriptionsDTO.skills
+                studentSubscriptionsDTO.userId, studentSubscriptionsDTO.types, studentSubscriptionsDTO.location , studentSubscriptionsDTO.skills, studentSubscriptionsDTO.lastView
         );
     }
 
     private StudentSubscriptionsDTO createStudentSubscriptionsDTO(StudentSubscriptionsDO studentSubscriptionsDO){
         return new StudentSubscriptionsDTO(
-                studentSubscriptionsDO._id, studentSubscriptionsDO.types, studentSubscriptionsDO.location , studentSubscriptionsDO.skills
+                studentSubscriptionsDO._id, studentSubscriptionsDO.types, studentSubscriptionsDO.location , studentSubscriptionsDO.skills, studentSubscriptionsDO.lastView
         );
     }
 
@@ -33,5 +42,16 @@ public class StudentSubscriptionsService {
         return createStudentSubscriptionsDTO(this.studentSubscriptionsStore.getStudentSubscriptions(userId));
     }
 
-    //TODO update
+    public Boolean updateStudentSubscriptions(String userId, StudentSubscriptionsDTO studentSubscriptionsDTO){
+        return this.studentSubscriptionsStore.updateStudentSubscription(userId, this.createStudentSubscriptionDO(studentSubscriptionsDTO));
+    }
+
+    public Boolean updateLastView(String userId, long lastView){
+        return this.studentSubscriptionsStore.updateLastView(userId, lastView);
+    }
+
+    public List<JobOfferDTO> checkSubscriptions(StudentSubscriptionsDTO studentSubscriptionsDTO){
+        List<JobOfferDO> offerDOs = jobOfferStore.getJobOffersByCriteria(this.createStudentSubscriptionDO(studentSubscriptionsDTO));
+        return jobOfferService.createOfferDTOList(offerDOs);
+    }
 }

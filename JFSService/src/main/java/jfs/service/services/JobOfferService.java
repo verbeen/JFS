@@ -93,7 +93,7 @@ public class JobOfferService {
         );
     }
 
-    private List<JobOfferDTO> createOfferDTOList(List<JobOfferDO> offerDOs){
+    public List<JobOfferDTO> createOfferDTOList(List<JobOfferDO> offerDOs){
         List<JobOfferDTO> offers = new ArrayList<JobOfferDTO>();
         for(JobOfferDO offerDO : offerDOs){
             offers.add(this.createOfferDTO(offerDO));

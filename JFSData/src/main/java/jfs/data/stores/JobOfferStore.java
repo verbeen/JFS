@@ -7,6 +7,7 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.model.IndexOptions;
 import com.mongodb.client.model.Sorts;
 import jfs.data.dataobjects.JobOfferDO;
+import jfs.data.dataobjects.StudentSubscriptionsDO;
 import jfs.data.dataobjects.helpers.Pair;
 import org.bson.Document;
 
@@ -82,6 +83,16 @@ public class JobOfferStore extends DataStore {
     public List<JobOfferDO> getJobOffersRecent(int amount){
         List<JobOfferDO> offers = new ArrayList<JobOfferDO>();
         FindIterable<DBObject> results = this.collection.find().sort(Sorts.descending("_id")).limit(amount);
+        for(DBObject obj : results){
+            offers.add(this.extractJobOffer(obj));
+        }
+        return offers;
+    }
+
+    //FIXME Currently returns everything
+    public List<JobOfferDO> getJobOffersByCriteria(StudentSubscriptionsDO studentSubscriptionsDO){
+        List<JobOfferDO> offers = new ArrayList<JobOfferDO>();
+        FindIterable<DBObject> results = this.collection.find().sort(Sorts.descending("_id"));
         for(DBObject obj : results){
             offers.add(this.extractJobOffer(obj));
         }
