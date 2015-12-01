@@ -57,6 +57,8 @@
             $scope.$broadcast('show-errors-check-validity');
 
             if ($scope.formCreateJob.$invalid) {
+                $scope.responseMessage.error = true;
+                $scope.responseMessage.text = "An error occurred while creating your job offer.";
                 $scope.dataLoading = false;
                 return;
             }
@@ -82,6 +84,7 @@
 
             JobService.createJob(obj)
                 .then(function (response) {
+                    $scope.responseMessage = {};
                     $scope.responseMessage.showForm = false;
                     if (response.success) {
                         console.info("Job offer created!");
