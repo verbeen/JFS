@@ -5,17 +5,17 @@ package jfs.transferdata.transferobjects;
  */
 public class StudentSubscriptionsDTO {
     public String userId;
-    public String subTypes;
-    public String subLocation;
-    public String subSkills;
+    public String types;
+    public String location;
+    public String skills;
 
     public StudentSubscriptionsDTO() {
     }
 
-    public StudentSubscriptionsDTO(String userId, String subTypes, String subLocation, String subSkills) {
+    public StudentSubscriptionsDTO(String userId, String types, String location, String skills) {
         this.userId = userId;
-        this.subTypes = subTypes;
-        this.subLocation = subLocation;
-        this.subSkills = subSkills;
+        this.types = types;
+        this.location = location;
+        this.skills = skills;
     }
 }

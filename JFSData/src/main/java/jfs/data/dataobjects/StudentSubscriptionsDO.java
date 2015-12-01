@@ -5,17 +5,17 @@ package jfs.data.dataobjects;
  */
 public class StudentSubscriptionsDO extends DataObject {
 
-    public String subTypes;
-    public String subLocation;
-    public String subSkills;
+    public String types;
+    public String location;
+    public String skills;
 
     public StudentSubscriptionsDO() {
     }
 
-    public StudentSubscriptionsDO(String userId, String subTypes, String subLocation, String subSkills) {
+    public StudentSubscriptionsDO(String userId, String types, String location, String skills) {
         super(userId);
-        this.subTypes = subTypes;
-        this.subLocation = subLocation;
-        this.subSkills = subSkills;
+        this.types = types;
+        this.location = location;
+        this.skills = skills;
     }
 }

@@ -1,10 +1,7 @@
 package jfs.service.services;
 
-import jfs.data.dataobjects.StudentProfileDO;
 import jfs.data.dataobjects.StudentSubscriptionsDO;
-import jfs.data.stores.StudentProfileStore;
 import jfs.data.stores.StudentSubscriptionsStore;
-import jfs.transferdata.transferobjects.StudentProfileDTO;
 import jfs.transferdata.transferobjects.StudentSubscriptionsDTO;
 
 import javax.ejb.Singleton;
@@ -18,13 +15,13 @@ public class StudentSubscriptionsService {
 
     private StudentSubscriptionsDO createStudentSubscriptionDO(StudentSubscriptionsDTO studentSubscriptionsDTO){
         return new StudentSubscriptionsDO(
-                studentSubscriptionsDTO.userId, studentSubscriptionsDTO.subTypes, studentSubscriptionsDTO.subLocation , studentSubscriptionsDTO.subSkills
+                studentSubscriptionsDTO.userId, studentSubscriptionsDTO.types, studentSubscriptionsDTO.location , studentSubscriptionsDTO.skills
         );
     }
 
     private StudentSubscriptionsDTO createStudentSubscriptionsDTO(StudentSubscriptionsDO studentSubscriptionsDO){
         return new StudentSubscriptionsDTO(
-                studentSubscriptionsDO._id, studentSubscriptionsDO.subTypes, studentSubscriptionsDO.subLocation , studentSubscriptionsDO.subSkills
+                studentSubscriptionsDO._id, studentSubscriptionsDO.types, studentSubscriptionsDO.location , studentSubscriptionsDO.skills
         );
     }
 
