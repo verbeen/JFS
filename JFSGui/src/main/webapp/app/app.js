@@ -60,7 +60,7 @@
             })
             .otherwise({redirectTo: '/'});
 
-            $locationProvider.html5Mode(true);
+            //$locationProvider.html5Mode(true);
     }
 
     run.$inject = ['$rootScope', '$location', '$cookieStore'];
