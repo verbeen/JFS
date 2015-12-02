@@ -1,4 +1,10 @@
+<head>
 
+
+    <link rel="stylesheet" href="/app/student/notification/style.css" />
+
+
+</head>
 
 {{5+5}}
 
@@ -9,11 +15,12 @@
     Manage Notification Settings here<hr>
         <div class="col-md-8">
               <br><br>
+            <form class="form-horizontal">
             <div class="form-group">
-                <label id="AddJobSettingsLabel" class="control-label">Add notifications:</label>
+                <label id="AddNotification" class="control-label">Add notifications:</label>
                 <div class="input-group">
                     <button aria-label="Select" type="button" class="btn btn-default form-control"
-                            ng-model="selectedJobSearch.type" data-placeholder="Type" data-html="1"
+                            ng-model="types" data-placeholder="Type" data-html="1"
                             bs-options="type.value as type.label for type in jobSearch.type" bs-select>
                     </button>
                     <div class="searchButton input-group-addon">
@@ -25,38 +32,54 @@
 
             <div class="form-group">
                 <div class="input-group">
-                    <input type="text" class="form-control" ng-model="selectedJobSearch.location" placeholder="Location">
+                    <input type="text" id="jobLocation" class="form-control" name="jobCreateLocation"
+                           ng-model="location" placeholder="Location">
                     <div class="searchButton input-group-addon">
                         <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
                     </div>
                 </div>
             </div>
+                <!--
             <div class="form-group">
-                <div class="input-group">
-                    <input type="text" class="form-control" ng-model="" placeholder="Skill">
-                    <div class="searchButton input-group-addon">
-                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+
+                    <tags-input class="bootstrap"
+                                ng-model="skills"
+                                placeholder="Add a skill"
+                                replace-spaces-with-dashes="false">
+                                        </tags-input>
+            </div>-->
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" id="subSkill" class="form-control" name="jobCreateLocation"
+                               ng-model="skills" placeholder="Skills">
+                        <div class="searchButton input-group-addon">
+                            <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+                        </div>
                     </div>
                 </div>
-            </div>
 
+
+            </form>
             <button ng-click="redirect()" class="btn btn-primary">Go Back</button>
-            <button type="submit" class="btn btn-primary">Save Settings</button>
+            <button type="submit" ng-click="createSub()" class="btn btn-primary">Save Settings</button>
         </div>
     </div>
+    <!--
+       <tags-input class="bootstrap"
+                   ng-model="movies"
+                   placeholder="Add a movie"
+                   input type="text"
+                   replace-spaces-with-dashes="false">
 
-    <tags-input class="bootstrap"
-                ng-model="movies"
-                placeholder="Add a movie"
-                replace-spaces-with-dashes="false">
-        <auto-complete source="loadMovies($query)"
-                       min-length="0"
-                       debounce-delay="3"
-                       max-results="5"
-                       maxResultsToShow = "3"></auto-complete>
+           <auto-complete bs-options="movie for movie in movies"
+                          min-length="0"
+                          debounce-delay="3"
+                          max-results="5"
+                          maxResultsToShow = "3">
+                          </auto-complete>
+   -->
     </tags-input>
-    <p>Model: {{movies}}</p>
+    </div>
+<p>{{skills}}{{types}}{{location}}</p>
 
 </div>
-
-

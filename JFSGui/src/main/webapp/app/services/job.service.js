@@ -14,6 +14,8 @@
         service.getRecentJobs = getRecentJobs;
         service.getJobsBySearch = getJobsBySearch;
         service.createJob = createJob;
+        service.addSubscription = addSubscription;
+
 
         return service;
 
@@ -40,6 +42,11 @@
         function createJob(jobDetails) {
             return $http.post('/service/offers/add', jobDetails)
                 .then(handleSuccess, handleError('Error adding job offers by "' + jobDetails + '"!'));
+        }
+        //function for subscription
+        function addSubscription(subDetails) {
+            return $http.post('/service/studentsubscriptions/add', subDetails)
+                .then(handleSuccess, handleError('Error adding job offers by "' + subDetails + '"!'));
         }
 
         // private functions

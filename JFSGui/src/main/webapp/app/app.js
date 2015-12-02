@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('app', ["ngRoute", "ngCookies", "ngSanitize", "mgcrea.ngStrap", "wu.masonry",'ngTagsInput'])
+    angular.module('app', ["ngRoute", "ngCookies", "ngSanitize", "mgcrea.ngStrap", "wu.masonry","ngTagsInput"])
         .config(config)
         .run(run)
         .controller('HomeController', HomeController)
