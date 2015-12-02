@@ -1,5 +1,8 @@
 package jfs.service.services;
 
+import com.google.maps.GeoApiContext;
+import com.google.maps.GeocodingApi;
+import com.google.maps.model.GeocodingResult;
 import jfs.data.dataobjects.JobOfferDO;
 import jfs.data.dataobjects.enums.JobType;
 import jfs.data.dataobjects.helpers.Pair;
@@ -18,6 +21,7 @@ import java.util.List;
 @Singleton
 public class JobOfferService {
     private JobOfferStore jobOfferStore = JobOfferStore.store;
+    private static final String googleApiKey = "AIzaSyANAUSC2OFBrJXnqwzMeJtqU1JNnA47xto";
 
     private JobOfferDO createOfferDO(JobOfferDTO offerDTO, String userId){
         JobOfferDO offer = new JobOfferDO();
@@ -35,6 +39,8 @@ public class JobOfferService {
         offer.website = offerDTO.website;
 
         offer.userId = userId;
+        offer.latitude = offerDTO.latitude;
+        offer.longitude = offerDTO.longitude;
 
         return offer;
     }
@@ -46,6 +52,28 @@ public class JobOfferService {
     }
 
     public Boolean addOffer(JobOfferDTO offerDTO, String userId){
+        String location = offerDTO.location;
+        String latitude;
+        String longitude;
+         // Call GeoCoding API
+        GeoApiContext context = new GeoApiContext();
+        context.setApiKey(googleApiKey);
+
+        try {
+
+            GeocodingResult[] results = GeocodingApi.newRequest(context).address(location).await();
+            if (results != null) {
+                if (results[0].geometry != null) {
+                    latitude = String.valueOf(results[0].geometry.location.lat);
+                    longitude = String.valueOf(results[0].geometry.location.lng);
+                    offerDTO.latitude = latitude;
+                    offerDTO.longitude = longitude;
+                }
+            }
+        } catch (Exception ex) {
+
+        }
+        // update
         return this.jobOfferStore.addOffer(this.createOfferDO(offerDTO, userId));
     }
 

@@ -19,6 +19,8 @@ public class JobOfferDTO {
     public String location;
     public String website;
     public JobTypeDTO type;
+    public String latitude;
+    public String longitude;
 
     public JobOfferDTO(){
 
@@ -38,5 +40,7 @@ public class JobOfferDTO {
         this.location = location;
         this.website = website;
         this.type = type;
+        this.latitude = "";
+        this.longitude ="";
     }
 }

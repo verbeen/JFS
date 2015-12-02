@@ -19,4 +19,6 @@ public class JobOfferDO extends DataObject{
     public String website;
     public String contactEmail;
     public JobType type;
+    public String latitude;
+    public String longitude;
 }
