@@ -15,6 +15,7 @@
            {{5+5}}
 
            <h3>Recently added Jobs</h3>
+            <button type="button" ng-click="checkSub()" class="btn btn-primary">check subs</button>
 
             <!--the code for the job list-->
 
@@ -70,15 +71,12 @@
                     <!-- Modal content-->
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <button type="button" class="close" data-dismiss="modal" ng-click="checkSub()">&times;</button>
                             <h4 class="modal-title">Job Notifications</h4>
                         </div>
                         <div class="modal-body">
                         <p><a href="https://server-jobsforstudents.rhcloud.com/#/job/profile/56543676330164dc9fae63a1"> Job 1</a></p>
-                        <br><p><a href="https://server-jobsforstudents.rhcloud.com/#/job/profile/56543676330164dc9fae63a1"> Job 2</a></p>
-                        <br><p><a href="https://server-jobsforstudents.rhcloud.com/#/job/profile/56543676330164dc9fae63a1"> Job 3</a></p>
-                        <br><p><a href="https://server-jobsforstudents.rhcloud.com/#/job/profile/56543676330164dc9fae63a1"> Job 4</a></p>
-                        <br><p><a href="https://server-jobsforstudents.rhcloud.com/#/job/profile/56543676330164dc9fae63a1"> Job 5</a></p>
+                        {{subDetails.userId}}
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
