@@ -7,7 +7,7 @@
 
     AddNotificationController.$inject = ['JobService','$scope','$http','$rootScope'];
     function AddNotificationController(JobService,$scope,$http,$rootScope) {
-
+        $scope.create = createSub;
         $scope.createSub = createSub;
         $scope.skills = '';
         $scope.jobSearch = {
@@ -21,6 +21,9 @@
                 {"value": "contract", "label": "Contract"}
             ]
         };
+
+
+
         $scope.sample = "sample";
         $scope.redirect = function () {
             window.location = "#/student";
@@ -46,12 +49,13 @@
                     console.info("inside subscriptionfunction!");
                     console.info(obj);
 
-                    $scope.responseMessage.showForm = false;
+                 //   $scope.responseMessage.showForm = false;
                     if (response.success) {
                         console.info("subscription added sucessfully!");
-                        $scope.responseMessage.success = true;
+                       /* $scope.responseMessage.success = true;
                         $scope.responseMessage.text = "subscription added sucessfully!";
                         $scope.dataLoading = false;
+                        */
                     } else {
                         // backend service is not reachable (e.g. database down)
                         console.error(response.message);
