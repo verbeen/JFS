@@ -93,11 +93,13 @@ public class JobOfferStore extends DataStore {
     public List<JobOfferDO> getJobOffersByCriteria(StudentSubscriptionsDO studentSubscriptionsDO){
         List<JobOfferDO> offers = new ArrayList<JobOfferDO>();
         BasicDBObject query;
+        /*
         query = new BasicDBObject("function", studentSubscriptionsDO.types) //function/type
                 .append("$text", new BasicDBObject("skills", studentSubscriptionsDO.skills) //skills: Currently only text as only 1 skill is possible
                         .append("location", studentSubscriptionsDO.types) //location
                         .append("_id", new BasicDBObject("$gt", new ObjectId(Long.toHexString(studentSubscriptionsDO.lastView / 1000) + "0000000000000000")))); //http://stackoverflow.com/questions/8749971/can-i-query-mongodb-objectid-by-date
-        FindIterable<DBObject> results = this.collection.find(query);
+        */
+        FindIterable<DBObject> results = this.collection.find();//query
         for(DBObject obj : results){
             offers.add(this.extractJobOffer(obj));
         }
