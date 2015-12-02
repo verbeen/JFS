@@ -27,12 +27,17 @@
         }
         function createSub()
         {
+            var t = new Date();
+            var time=new Date(t).getTime();
+            $scope.time=time;
+            console.log($scope.time);
+
             var obj = {
                 "userId": $rootScope.globals.currentUser.username,
                 "types": $scope.types,
                 "location": $scope.location,
                 "skills": $scope.skills,
-                "lastView": $scope.location
+                "lastView": $scope.time
 
 
             };
@@ -53,6 +58,7 @@
                         $scope.responseMessage.error = true;
                         $scope.responseMessage.text = "An error occurred while creating your subscription.";
                         $scope.dataLoading = false;
+                        console.info("failed!");
                     }
                 });
 
