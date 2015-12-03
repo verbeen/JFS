@@ -12,7 +12,7 @@ angular
 
         function StudentLandingController(JobService,$scope,$http,$rootScope) {
             // method declarations
-            $scope.checkSub=checkSub;
+            $scope.checkSub = checkSub;
             // gets executed on initial load
             (function initController() {
                 $scope.dataLoading = false;
@@ -35,7 +35,7 @@ angular
             function getRecentJobs() {
                 $scope.dataLoading = true;
 
-                JobService.getRecentJobs(12)
+                JobService.getRecentJobs(2)
                     .then(function(response) {
                         $scope.noResults = {};
                         $scope.noResults.info = false;
