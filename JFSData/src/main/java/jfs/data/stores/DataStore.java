@@ -25,11 +25,11 @@ public abstract class DataStore<T> {
         this.collection = DataClient.defaultClient.getCollection(dbName, DBObject.class);
     }
 
-    public Boolean insert(DataObject obj) {
+    public Boolean insert(DataObject obj){
         return this.insert(obj, null);
     }
 
-    public Boolean insert(DataObject obj, String id) {
+    public Boolean insert(DataObject obj, String id){
         String json = this.serializer.serialize(obj);
         DBObject doc = BasicDBObject.parse(json);
 
