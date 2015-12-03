@@ -15,6 +15,7 @@
            {{5+5}}
 
            <h3>Recently added Jobs</h3>
+            <h5>(According to your subcription)</h5>
             <button type="button" ng-click="checkSub()" class="btn btn-primary">check subs</button>
 
             <!--the code for the job list-->
@@ -36,9 +37,7 @@
                                     <li class="jobOfferCompany">{{ offer.companyId }}</li>
                                     <li class="jobOfferLocation">{{ offer.location }}</li>
                                     <li class="jobOfferDuration">{{ offer.duration | duration }}</li>
-                                    <!--<li class="jobOfferSalary">100,000</li>-->
                                     <li class="jobOfferStartDate">{{ offer.startDate | dateCheckedZero: 'yyyy-MM-dd' }}</li>
-                                    <!--<li class="jobOfferSkill">Jquery, Javascript, HTML 5, CSS, Jquery, Javascript, HTML 5, CSS</li>-->
                                 </ul>
                                 <p>{{ offer.description | htmlToPlainText | limitTo: 50 }}...</p>
                             </div>
@@ -62,8 +61,6 @@
             <form action="#/student/notification">
                 <input type="submit" class="btn  btn-info" value="Manage Notification">
             </form>
-           <!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>-->
-
             <!-- Modal -->
             <div class="modal fade" id="myModal" role="dialog">
                 <div class="modal-dialog">

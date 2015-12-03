@@ -16,6 +16,7 @@
         service.createJob = createJob;
         service.addSubscription = addSubscription;
         service.checkSubscription = checkSubscription;
+        service.getJobsSubs = getJobsSubs;
 
 
         return service;
@@ -51,6 +52,10 @@
         }
         function checkSubscription(user) {
             return $http.post('/service/studentsubscriptions/get', user)
+                .then(handleSuccess, handleError('Error adding job offers by "' + user + '"!'));
+        }
+        function getJobsSubs(user) {
+            return $http.post('/service/studentsubscriptions/***', user)
                 .then(handleSuccess, handleError('Error adding job offers by "' + user + '"!'));
         }
 
