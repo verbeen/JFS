@@ -16,17 +16,16 @@ public class JobOfferDTO {
     public long duration;
     public long validUntil;
     public long startDate;
-    public String location;
+    public String address;
     public String website;
     public JobTypeDTO type;
-    public String latitude;
-    public String longitude;
+    public LocationDTO location;
 
     public JobOfferDTO(){
 
     }
 
-    public JobOfferDTO(String offerId, String companyId, String contactEmail, String name, String function, String description, String task, long duration, long validUntil, long startDate, String location, String website, JobTypeDTO type) {
+    public JobOfferDTO(String offerId, String companyId, String contactEmail, String name, String function, String description, String task, long duration, long validUntil, long startDate, String address, String website, JobTypeDTO type){
         this.offerId = offerId;
         this.companyId = companyId;
         this.contactEmail = contactEmail;
@@ -37,10 +36,9 @@ public class JobOfferDTO {
         this.duration = duration;
         this.validUntil = validUntil;
         this.startDate = startDate;
-        this.location = location;
+        this.address = address;
         this.website = website;
         this.type = type;
-        this.latitude = "";
-        this.longitude ="";
+
     }
 }

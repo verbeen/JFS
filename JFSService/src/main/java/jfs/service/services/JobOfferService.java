@@ -4,10 +4,12 @@ import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.model.GeocodingResult;
 import jfs.data.dataobjects.JobOfferDO;
+import jfs.data.dataobjects.LocationDO;
 import jfs.data.dataobjects.enums.JobType;
 import jfs.data.dataobjects.helpers.Pair;
 import jfs.data.stores.JobOfferStore;
 import jfs.transferdata.transferobjects.JobOfferDTO;
+import jfs.transferdata.transferobjects.LocationDTO;
 import jfs.transferdata.transferobjects.SearchDTO;
 import jfs.transferdata.transferobjects.enums.JobTypeDTO;
 
@@ -25,11 +27,10 @@ public class JobOfferService {
 
     private JobOfferDO createOfferDO(JobOfferDTO offerDTO, String userId){
         JobOfferDO offer = new JobOfferDO();
-
         offer.description = offerDTO.description;
         offer.duration = offerDTO.duration;
         offer.function = offerDTO.function;
-        offer.location = offerDTO.location;
+        offer.address = offerDTO.address;
         offer.name = offerDTO.name;
         offer.task = offerDTO.task;
         offer.type = JobType.valueOf(offerDTO.type.name());
@@ -39,8 +40,11 @@ public class JobOfferService {
         offer.website = offerDTO.website;
 
         offer.userId = userId;
-        offer.latitude = offerDTO.latitude;
-        offer.longitude = offerDTO.longitude;
+
+        // set the geo-location
+        LocationDO location = new LocationDO();
+        location.coordindates = offerDTO.location.coordinates;
+        offer.location = location;
 
         return offer;
     }
@@ -52,10 +56,9 @@ public class JobOfferService {
     }
 
     public Boolean addOffer(JobOfferDTO offerDTO, String userId){
-        String location = offerDTO.location;
-        String latitude;
-        String longitude;
-         // Call GeoCoding API
+        String location = offerDTO.address;
+
+        // Call GeoCoding API
         GeoApiContext context = new GeoApiContext();
         context.setApiKey(googleApiKey);
 
@@ -64,10 +67,15 @@ public class JobOfferService {
             GeocodingResult[] results = GeocodingApi.newRequest(context).address(location).await();
             if (results != null) {
                 if (results[0].geometry != null) {
-                    latitude = String.valueOf(results[0].geometry.location.lat);
-                    longitude = String.valueOf(results[0].geometry.location.lng);
-                    offerDTO.latitude = latitude;
-                    offerDTO.longitude = longitude;
+                    String latitude = String.valueOf(results[0].geometry.location.lat);
+                    String longitude = String.valueOf(results[0].geometry.location.lng);
+
+                    offerDTO.location = new LocationDTO();
+                    List<String> coordinates = new ArrayList<>();
+                    coordinates.add(longitude);
+                    coordinates.add(latitude);
+                    offerDTO.location.coordinates = coordinates;
+
                 }
             }
         } catch (Exception ex) {
@@ -116,7 +124,7 @@ public class JobOfferService {
         return new JobOfferDTO(
                 offerDO._id, offerDO.userId, offerDO.contactEmail, offerDO.name, offerDO.function, offerDO.description,
                 offerDO.task, offerDO.duration, offerDO.validUntil, offerDO.startDate,
-                offerDO.location, offerDO.website, JobTypeDTO.valueOf(offerDO.type.name())
+                offerDO.address, offerDO.website, JobTypeDTO.valueOf(offerDO.type.name())
         );
     }
 
