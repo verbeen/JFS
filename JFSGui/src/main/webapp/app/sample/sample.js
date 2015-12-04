@@ -12,6 +12,8 @@
 
         $scope.sample = "sample";
 
+        that.sample2 = "sample";
+
         $scope.sampleObjectForSelect = [
             {"value":"Gear","label":"Gear"},
             {"value":"Globe","label":"Globe"},
