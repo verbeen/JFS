@@ -7,6 +7,7 @@
 
     <servlet>
         <servlet-name>javax.ws.rs.core.Application</servlet-name>
+        <!--
         <init-param>
             <param-name>jersey.config.server.provider.packages</param-name>
             <param-value>
@@ -14,12 +15,22 @@
                 jfs.service.services
             </param-value>
         </init-param>
+        -->
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>javax.ws.rs.core.Application</servlet-name>
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
+
+    <context-param>
+        <param-name>resteasy.providers</param-name>
+        <param-value>
+            io.swagger.jaxrs.listing.ApiListingResource,
+            io.swagger.jaxrs.listing.SwaggerSerializers,
+            jfs.service.services.UserWebService
+        </param-value>
+    </context-param>
 
     <servlet>
         <servlet-name>Jersey2Config</servlet-name>

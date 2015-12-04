@@ -19,25 +19,27 @@ import java.util.List;
  */
 @Path("/users")
 @Api(tags = {"users"}, value = "/users", description = "Operations about user")
-public class UserWebService
-{
+public class UserWebService {
     @Inject
     UserService service;
 
     @POST
+    @Path("/register/company")
     @ApiOperation(value = "Register company",
         notes = "A user account for company will be created.",
         position = 1)
-    @Path("/register/company")
     @Consumes("application/json")
     @Produces("application/json")
-    public Boolean registerCompany(RegisterDTO register){
+    public Boolean registerCompany(RegisterDTO register) {
         Boolean result = false;
         result = this.service.registerUser(register.email, register.password, UserType.COMPANY);
         return result;
     }
 
-    @POST @Path("/register/student") @Consumes("application/json") @Produces("application/json")
+    @POST
+    @Path("/register/student")
+    @Consumes("application/json")
+    @Produces("application/json")
     public Boolean registerStudent(RegisterDTO register){
         Boolean result = false;
         result = this.service.registerUser(register.email, register.password, UserType.STUDENT);
