@@ -2,6 +2,9 @@ package jfs.transferdata.transferobjects;
 
 import jfs.transferdata.transferobjects.enums.JobTypeDTO;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by lpuddu on 12-11-2015.
  */
@@ -22,7 +25,7 @@ public class JobOfferDTO {
     public LocationDTO location;
 
     public JobOfferDTO(){
-
+        location = new LocationDTO();
     }
 
     public JobOfferDTO(String offerId, String companyId, String contactEmail, String name, String function, String description, String task, long duration, long validUntil, long startDate, String address, String website, JobTypeDTO type){
@@ -40,5 +43,15 @@ public class JobOfferDTO {
         this.website = website;
         this.type = type;
 
+    }
+
+    public static class LocationDTO{
+        public List<String> coordinates;
+        public String type="Point";
+
+        public LocationDTO(){
+            coordinates = new ArrayList<>();
+            type="Point";
+        }
     }
 }

@@ -4,12 +4,10 @@ import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.model.GeocodingResult;
 import jfs.data.dataobjects.JobOfferDO;
-import jfs.data.dataobjects.LocationDO;
 import jfs.data.dataobjects.enums.JobType;
 import jfs.data.dataobjects.helpers.Pair;
 import jfs.data.stores.JobOfferStore;
 import jfs.transferdata.transferobjects.JobOfferDTO;
-import jfs.transferdata.transferobjects.LocationDTO;
 import jfs.transferdata.transferobjects.SearchDTO;
 import jfs.transferdata.transferobjects.enums.JobTypeDTO;
 
@@ -42,10 +40,7 @@ public class JobOfferService {
         offer.userId = userId;
 
         // set the geo-location
-        LocationDO location = new LocationDO();
-        location.coordindates = offerDTO.location.coordinates;
-        offer.location = location;
-
+        offer.location.coordindates = offerDTO.location.coordinates;
         return offer;
     }
 
@@ -70,12 +65,10 @@ public class JobOfferService {
                     String latitude = String.valueOf(results[0].geometry.location.lat);
                     String longitude = String.valueOf(results[0].geometry.location.lng);
 
-                    offerDTO.location = new LocationDTO();
                     List<String> coordinates = new ArrayList<>();
                     coordinates.add(longitude);
                     coordinates.add(latitude);
                     offerDTO.location.coordinates = coordinates;
-
                 }
             }
         } catch (Exception ex) {

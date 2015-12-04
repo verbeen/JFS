@@ -23,4 +23,12 @@ public class JobOfferDO extends DataObject{
     public String contactEmail;
     public JobType type;
     public LocationDO location;
+
+    public JobOfferDO(){
+        location = new LocationDO();
+    }
+    public static class LocationDO{
+        public List<String> coordindates = new ArrayList<>();
+        public String type = "Point";
+    }
 }
