@@ -13,6 +13,7 @@ import jfs.transferdata.transferobjects.enums.JobTypeDTO;
 
 import javax.ejb.Singleton;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -114,11 +115,16 @@ public class JobOfferService {
     }
 
     private JobOfferDTO createOfferDTO(JobOfferDO offerDO){
-        return new JobOfferDTO(
+
+        JobOfferDTO jobOfferDTO =  new JobOfferDTO(
                 offerDO._id, offerDO.userId, offerDO.contactEmail, offerDO.name, offerDO.function, offerDO.description,
                 offerDO.task, offerDO.duration, offerDO.validUntil, offerDO.startDate,
-                offerDO.address, offerDO.website, JobTypeDTO.valueOf(offerDO.type.name())
-        );
+                offerDO.address, offerDO.website, JobTypeDTO.valueOf(offerDO.type.name()));
+        List<String> coords = offerDO.location.coordindates;
+        Collections.reverse(coords);
+        jobOfferDTO.location.coordinates = coords;
+
+        return jobOfferDTO;
     }
 
     private List<JobOfferDTO> createOfferDTOList(List<JobOfferDO> offerDOs){

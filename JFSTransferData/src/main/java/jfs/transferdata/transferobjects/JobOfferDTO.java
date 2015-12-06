@@ -24,10 +24,6 @@ public class JobOfferDTO {
     public JobTypeDTO type;
     public LocationDTO location;
 
-    public JobOfferDTO(){
-        location = new LocationDTO();
-    }
-
     public JobOfferDTO(String offerId, String companyId, String contactEmail, String name, String function, String description, String task, long duration, long validUntil, long startDate, String address, String website, JobTypeDTO type){
         this.offerId = offerId;
         this.companyId = companyId;
@@ -42,6 +38,7 @@ public class JobOfferDTO {
         this.address = address;
         this.website = website;
         this.type = type;
+        this.location = new LocationDTO();
 
     }
 
