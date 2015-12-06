@@ -97,10 +97,13 @@ public class JobOfferStore extends DataStore {
 
         query = new BasicDBObject("type", studentSubscriptionsDO.types.name()) //type
                 //.append("$text", new BasicDBObject("skills", studentSubscriptionsDO.skills) //skills: Currently only text as only 1 skill is possible
-                        .append("location", studentSubscriptionsDO.location); //location
-                        //.append("_id", new BasicDBObject("$gt", new ObjectId(Long.toHexString(studentSubscriptionsDO.lastView / 1000) + "0000000000000000"))); //http://stackoverflow.com/questions/8749971/can-i-query-mongodb-objectid-by-date
+                        .append("location", studentSubscriptionsDO.location) //location
+                        .append("_id", new BasicDBObject("$gt", new ObjectId(Long.toHexString(studentSubscriptionsDO.lastView / 1000) + "0000000000000000").toString()));
+                        //_id Timestamp will be compared with $gt greater than an ObjectId(X).toString()
+                        //Format that the long lastView should be in seconds instead of milliseconds 1000000000
+                        //See: http://stackoverflow.com/questions/8749971/can-i-query-mongodb-objectid-by-date
 
-        FindIterable<DBObject> results = this.collection.find(query);
+        FindIterable<DBObject> results = this.collection.find(query);//this.collection.find(new BasicDBObject("_id", new BasicDBObject("$gt", "3b9aca000000000000000000")));
         for(DBObject obj : results){
             offers.add(this.extractJobOffer(obj));
         }
