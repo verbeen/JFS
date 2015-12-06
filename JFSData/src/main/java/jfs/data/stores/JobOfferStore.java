@@ -8,6 +8,7 @@ import com.mongodb.client.model.IndexOptions;
 import com.mongodb.client.model.Sorts;
 import jfs.data.dataobjects.JobOfferDO;
 import jfs.data.dataobjects.StudentSubscriptionsDO;
+import jfs.data.dataobjects.enums.JobType;
 import jfs.data.dataobjects.helpers.Pair;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -93,13 +94,13 @@ public class JobOfferStore extends DataStore {
     public List<JobOfferDO> getJobOffersByCriteria(StudentSubscriptionsDO studentSubscriptionsDO){
         List<JobOfferDO> offers = new ArrayList<JobOfferDO>();
         BasicDBObject query;
-        /*
-        query = new BasicDBObject("function", studentSubscriptionsDO.types) //function/type
-                .append("$text", new BasicDBObject("skills", studentSubscriptionsDO.skills) //skills: Currently only text as only 1 skill is possible
-                        .append("location", studentSubscriptionsDO.types) //location
-                        .append("_id", new BasicDBObject("$gt", new ObjectId(Long.toHexString(studentSubscriptionsDO.lastView / 1000) + "0000000000000000")))); //http://stackoverflow.com/questions/8749971/can-i-query-mongodb-objectid-by-date
-        */
-        FindIterable<DBObject> results = this.collection.find();//query
+
+        query = new BasicDBObject("type", studentSubscriptionsDO.types.name()) //type
+                //.append("$text", new BasicDBObject("skills", studentSubscriptionsDO.skills) //skills: Currently only text as only 1 skill is possible
+                        .append("location", studentSubscriptionsDO.location); //location
+                        //.append("_id", new BasicDBObject("$gt", new ObjectId(Long.toHexString(studentSubscriptionsDO.lastView / 1000) + "0000000000000000"))); //http://stackoverflow.com/questions/8749971/can-i-query-mongodb-objectid-by-date
+
+        FindIterable<DBObject> results = this.collection.find(query);
         for(DBObject obj : results){
             offers.add(this.extractJobOffer(obj));
         }

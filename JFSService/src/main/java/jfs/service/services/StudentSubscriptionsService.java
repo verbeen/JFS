@@ -2,10 +2,12 @@ package jfs.service.services;
 
 import jfs.data.dataobjects.JobOfferDO;
 import jfs.data.dataobjects.StudentSubscriptionsDO;
+import jfs.data.dataobjects.enums.JobType;
 import jfs.data.stores.JobOfferStore;
 import jfs.data.stores.StudentSubscriptionsStore;
 import jfs.transferdata.transferobjects.JobOfferDTO;
 import jfs.transferdata.transferobjects.StudentSubscriptionsDTO;
+import jfs.transferdata.transferobjects.enums.JobTypeDTO;
 
 import javax.ejb.Singleton;
 import javax.inject.Inject;
@@ -24,13 +26,13 @@ public class StudentSubscriptionsService {
 
     private StudentSubscriptionsDO createStudentSubscriptionDO(StudentSubscriptionsDTO studentSubscriptionsDTO){
         return new StudentSubscriptionsDO(
-                studentSubscriptionsDTO.userId, studentSubscriptionsDTO.types, studentSubscriptionsDTO.location , studentSubscriptionsDTO.skills, studentSubscriptionsDTO.lastView
+                studentSubscriptionsDTO.userId, JobType.valueOf(studentSubscriptionsDTO.types.name()), studentSubscriptionsDTO.location , studentSubscriptionsDTO.skills, studentSubscriptionsDTO.lastView
         );
     }
 
     private StudentSubscriptionsDTO createStudentSubscriptionsDTO(StudentSubscriptionsDO studentSubscriptionsDO){
         return new StudentSubscriptionsDTO(
-                studentSubscriptionsDO._id, studentSubscriptionsDO.types, studentSubscriptionsDO.location , studentSubscriptionsDO.skills, studentSubscriptionsDO.lastView
+                studentSubscriptionsDO._id, JobTypeDTO.valueOf(studentSubscriptionsDO.types.name()), studentSubscriptionsDO.location , studentSubscriptionsDO.skills, studentSubscriptionsDO.lastView
         );
     }
 
