@@ -50,8 +50,8 @@ public class StudentSubscriptionsService {
         return this.studentSubscriptionsStore.updateLastView(userId, lastView);
     }
 
-    public List<JobOfferDTO> checkSubscriptions(StudentSubscriptionsDTO studentSubscriptionsDTO){
-        List<JobOfferDO> offerDOs = jobOfferStore.getJobOffersByCriteria(this.createStudentSubscriptionDO(studentSubscriptionsDTO));
+    public List<JobOfferDTO> checkSubscriptions(String userId){
+        List<JobOfferDO> offerDOs = jobOfferStore.getJobOffersByCriteria(this.studentSubscriptionsStore.getStudentSubscriptions(userId));
         return jobOfferService.createOfferDTOList(offerDOs);
     }
 }

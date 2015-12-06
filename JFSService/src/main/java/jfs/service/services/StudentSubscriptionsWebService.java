@@ -48,13 +48,13 @@ public class StudentSubscriptionsWebService {
 
     @POST
     @Path("/checkSubscriptions") @Consumes("application/json") @Produces("application/json")
-    public JobOfferListDTO checkSubscriptions(StudentSubscriptionsDTO studentSubscriptionsDTO){
+    public JobOfferListDTO checkSubscriptions(String userId, long lastView){
         //1. get job offers by userId -> type, location, skills
         JobOfferListDTO list = new JobOfferListDTO();
-        list.offers = this.studentSubscriptionsService.checkSubscriptions(studentSubscriptionsDTO);
+        list.offers = this.studentSubscriptionsService.checkSubscriptions(userId);
 
         //2. update last view
-        this.updateLastView(studentSubscriptionsDTO.userId, studentSubscriptionsDTO.lastView);
+        this.updateLastView(userId, lastView);
         return list;
     }
 
