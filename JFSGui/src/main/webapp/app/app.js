@@ -54,6 +54,10 @@
                 templateUrl: 'app/job/create/job-create.html',
                 controller: 'JobCreateController as vm'
             })
+            .when('/job/createmulti', {
+                templateUrl: 'app/job/createmulti/job-createmulti.html',
+                controller: 'JobCreateMultiController as vm'
+            })
             .when('/company', {
                 templateUrl: 'app/company/company_profile.html',
                 controller: 'CompanyProfileController as vm'

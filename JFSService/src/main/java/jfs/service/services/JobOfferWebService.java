@@ -46,12 +46,15 @@ public class JobOfferWebService {
     }
 
     @POST
-    @Path("/addmore") @Consumes("application/json") @Produces("application/json")
-    public Boolean addOffers(CreateJobOffersDTO offerDTO){
-        if(offerDTO.companyId != null) {
-            Session session = SessionService.sessions.get(offerDTO.token);
+    @Path("/addmulti") @Consumes("application/json") @Produces("application/json")
+    public Boolean addOffers(CreateJobOffersDTO offersDTO){
+        if(offersDTO.companyId != null) {
+            Session session = SessionService.sessions.get(offersDTO.token);
             if (session != null && session.type == UserTypeDTO.COMPANY) {
-                return this.jobOfferService.addOffers(offerDTO.jobOffers, offerDTO.companyId);
+                for(JobOfferDTO offer : offersDTO.jobOffers){
+                    offer.companyId = offersDTO.companyId;
+                }
+                return this.jobOfferService.addOffers(offersDTO.jobOffers, offersDTO.companyId);
             }
         }
         return false;

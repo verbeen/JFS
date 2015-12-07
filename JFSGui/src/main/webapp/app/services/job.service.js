@@ -14,6 +14,7 @@
         service.getRecentJobs = getRecentJobs;
         service.getJobsBySearch = getJobsBySearch;
         service.createJob = createJob;
+        service.createJobMulti = createJobMulti;
 
         return service;
 
@@ -40,6 +41,11 @@
         function createJob(jobDetails) {
             return $http.post('/service/offers/add', jobDetails)
                 .then(handleSuccess, handleError('Error adding job offers by "' + jobDetails + '"!'));
+        }
+
+        function createJobMulti(jobsArray) {
+            return $http.post('/service/offers/addmulti', jobsArray)
+                .then(handleSuccess, handleError('Error adding job offers by "' + jobsArray + '"!'));
         }
 
         // private functions

@@ -1,0 +1,35 @@
+<div id="jfsCreateJobMulti" class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <h2>Upload multiple job offers</h2>
+        <hr>
+
+        <div ng-if="responseMessage.success || responseMessage.error">
+            <div class="alert" ng-class="{ 'alert-success': responseMessage.success, 'alert-danger': responseMessage.error }">
+                {{ responseMessage.text }}
+            </div>
+            <button ng-show="!responseMessage.showForm" class="btn btn-primary" ng-click="initializeNewJobOffer()">New job offer</button>
+        </div>
+
+        <form class="form-horizontal" ng-submit="create()" role="form" name="formCreateJobMulti" ng-show="responseMessage.showForm" novalidate>
+
+            <div class="form-group" show-errors>
+                <label for="jobOffers" class="col-sm-3 col-md-3 control-label">Source file</label>
+                <div class="col-sm-9 col-md-9">
+                    <input type="file" id="jobOffers" class="form-control" name="jobOffers"
+                           ng-model="jobOffers" required>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Upload job offers</button>
+                <div ng-if="dataLoading" class="loadingAnimationWrapper">
+                    <div class="loadingAnimation">
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
