@@ -54,9 +54,9 @@
             return $http.post('/service/studentsubscriptions/get', user)
                 .then(handleSuccess, handleError('Error adding job offers by "' + user + '"!'));
         }
-        function getJobsSubs(user) {
-            return $http.post('/service/studentsubscriptions/***', user)
-                .then(handleSuccess, handleError('Error adding job offers by "' + user + '"!'));
+        function getJobsSubs(userDetails) {
+            return $http.post('/service/studentsubscriptions/checkSubscriptions', userDetails)
+                .then(handleSuccess, handleError('Error adding job offers by "' + userDetails + '"!'));
         }
 
         // private functions
