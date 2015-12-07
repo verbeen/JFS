@@ -35,8 +35,8 @@ public class StudentSubscriptionsWebService {
 
     @POST
     @Path("/update") @Consumes("application/json") @Produces("application/json")
-    public Boolean updateStudentSubscriptions(String userId, StudentSubscriptionsDTO subscriptionsDTO){
-        return this.studentSubscriptionsService.updateStudentSubscriptions(userId, subscriptionsDTO);
+    public Boolean updateStudentSubscriptions(StudentSubscriptionsDTO subscriptionsDTO){
+        return this.studentSubscriptionsService.updateStudentSubscriptions(subscriptionsDTO.userId, subscriptionsDTO);
     }
 
     //might not be needed...
