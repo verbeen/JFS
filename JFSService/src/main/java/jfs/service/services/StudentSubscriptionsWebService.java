@@ -5,7 +5,7 @@ import jfs.transferdata.transferobjects.JobOfferListDTO;
 import jfs.transferdata.transferobjects.SearchDTO;
 import jfs.transferdata.transferobjects.StudentProfileDTO;
 import jfs.transferdata.transferobjects.StudentSubscriptionsDTO;
-
+import java.util.Date;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -48,13 +48,15 @@ public class StudentSubscriptionsWebService {
 
     @POST
     @Path("/checkSubscriptions") @Consumes("application/json") @Produces("application/json")
-    public JobOfferListDTO checkSubscriptions(String userId, long lastView){
+    public JobOfferListDTO checkSubscriptions(String userId){
         //1. get job offers by userId -> type, location, skills
         JobOfferListDTO list = new JobOfferListDTO();
         list.offers = this.studentSubscriptionsService.checkSubscriptions(userId);
 
+        Date myDate = new Date();
+
         //2. update last view
-        this.updateLastView(userId, lastView);
+        this.updateLastView(userId, myDate.getTime());
         return list;
     }
 
