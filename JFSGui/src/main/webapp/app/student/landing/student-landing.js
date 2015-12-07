@@ -18,8 +18,9 @@ angular
             (function initController() {
                 $scope.dataLoading = false;
              //   getRecentJobs();
+              //  checkSub();
             })();
-
+            checkSub();
             function getRecentJobs() {
                 $scope.dataLoading = true;
 
@@ -55,23 +56,7 @@ angular
                 var time = new Date(t).getTime();
                 $scope.time = time;
 
-                //Creating DTO
-                /*
-                var obj = {
-                    "userId": $rootScope.globals.currentUser.username
 
-                        "types": $scope.types,
-                    "location": $scope.location,
-                    "skills": $scope.skills,
-
-                    "types": "master_thesis",
-                    "location": "Trivandrum",
-                    "skills": "Android",
-                    "lastView": $scope.time
-
-
-                };
-        */
 
                 JobService.getJobsSubs($rootScope.globals.currentUser.username)
                     .then(function(response) {
@@ -88,7 +73,7 @@ angular
                                 $scope.offers = [];
                                 $scope.noResults.info = true;
                                 $scope.noResults.title = "No results!";
-                                $scope.noResults.text = "No job offers found. Please change your search parameters.";
+                                $scope.noResults.text = "No job offers according to your notification settings.";
                             }
                             $scope.dataLoading = false;
                         } else {
@@ -109,19 +94,26 @@ angular
                 console.log(user);
                 JobService.checkSubscription($rootScope.globals.currentUser.username)
                     .then(function(response) {
-                        console.info("inside checkSub function!");
                         console.info(response.data);
+                        $scope.noResults = {};
+                        $scope.noResults.info = false;
+                        $scope.noResults.error = false;
                         if (response.success) {
                             $scope.subDetails=response.data;
-                            console.info("got data sucessfully!");
-                            /* $scope.responseMessage.success = true;
-                             $scope.responseMessage.text = "subscription added sucessfully!";
-                             $scope.dataLoading = false;
-                             */
+                            console.log($scope.subDetails);
+                            console.info("got data sucessfully and running the job getting function!");
+                            getJobsSubs();
                         } else {
                             // backend service is not reachable (e.g. database down)
                             console.error(response.message);
                             console.info("failed!No data retrieved");
+
+
+                            $scope.noResults.error = true;
+                            $scope.noResults.title = "Please setup the notification !";
+                            $scope.noResults.text = "Please setup the notification settings for getting recent" +
+                                "job updates.";
+                            $scope.dataLoading = false;
                         }
                     });
             };

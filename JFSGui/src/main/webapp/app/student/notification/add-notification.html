@@ -5,7 +5,7 @@
     Manage Notification Settings<hr>
         <div class="col-md-8">
               <br><br>
-            <form class="form-horizontal">
+            <form class="form-horizontal" name="form" ng-submit="saveSub()">
             <div class="form-group">
                 <label id="AddNotification" class="control-label">Add notifications:</label>
                 <div class="input-group">
@@ -23,7 +23,7 @@
             <div class="form-group">
                 <div class="input-group">
                     <input type="text" id="jobLocation" class="form-control" name="jobCreateLocation"
-                           ng-model="location" placeholder="Location">
+                           ng-model="location" placeholder="Location" required>
                     <div class="searchButton input-group-addon">
                         <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
                     </div>
@@ -33,15 +33,17 @@
             <div class="form-group">
                 <div class="input-group">
                     <input type="text" id="subSkill" class="form-control" name="jobCreateLocation"
-                           ng-model="skills" placeholder="Skills">
+                           ng-model="skills" placeholder="Skills" >
                     <div class="searchButton input-group-addon">
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                     </div>
                 </div>
             </div>
+                <button ng-click="redirect()" class="btn btn-primary">Go Back</button>
+                <button type="submit"  class="btn btn-primary">Save Settings</button>
+
             </form>
-            <button ng-click="redirect()" class="btn btn-primary">Go Back</button>
-            <button type="submit" ng-click="createSub()" class="btn btn-primary">Save Settings</button>
+
         </div>
     </div>
 </div>

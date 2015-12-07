@@ -10,7 +10,10 @@
         //Declaring functions for the page
         $scope.checkSub = checkSub;
         $scope.createSub = createSub;
+        $scope.subsUpdate = subsUpdate;
         $scope.skills = '';
+        $scope.flag = 0;
+        $scope.saveSub = saveSub;
         $scope.jobSearch = {
             "type": [
                 {"value": "", "label": "All"},
@@ -28,6 +31,28 @@
         $scope.redirect = function () {
             window.location = "#/student";
         }
+        function saveSub()
+        {
+            console.log("inside the savesub fn");
+            console.log( $scope.flag);
+            $scope.$watch('$scope.flag', function () {
+                if ($scope.flag > 0) {
+                    console.log("flag else and update!");
+                    subsUpdate();
+                } else {
+
+                    createSub();
+                    console.log("flag 0 and create!");
+
+                }
+            });
+
+
+
+
+        }
+
+
         function createSub()
         {
             //Getting current time and converting it to milliseconds
@@ -61,6 +86,39 @@
                     }
                 });
         }
+        //updating existing subscriptions
+        function subsUpdate()
+        {
+            //Getting current time and converting it to milliseconds
+            var t = new Date();
+            var time = new Date(t).getTime();
+            $scope.time = time;
+            console.info("inside update func!");
+
+            //Creating DTO
+            var obj = {
+                "userId": $rootScope.globals.currentUser.username,
+                "types": $scope.types,
+                "location": $scope.location,
+                "skills": $scope.skills,
+                "lastView": $scope.time
+
+
+            };
+            //Adding a new subscription
+            JobService.subsUpdate(obj)
+                .then(function (response) {
+                    console.info(obj);
+                    if (response.success) {
+                        console.info("subscription updated sucessfully!");
+                    } else {
+                        // backend service is not reachable (e.g. database down)
+                        console.error(response.message);
+
+                        console.info("failed updting subscription!");
+                    }
+                });
+        }
         //retrieving current subscription details and settings default values
         function checkSub() {
             var user = $rootScope.globals.currentUser.username;
@@ -71,6 +129,8 @@
                     if (response.success) {
                         $scope.subDetails = response.data;
                         console.info("got data sucessfully!");
+                        $scope.flag = 1;
+                        console.info("updated to flag 1!");
                         $scope.location = response.data.location;
                         $scope.skills = response.data.skills;
                         //Setting default values for the dropdown values
@@ -94,6 +154,7 @@
                         }
                     } else {
                         // backend service is not reachable (e.g. database down)
+
                         console.error(response.message);
                         console.info("failed!No data retrieved");
                     }
