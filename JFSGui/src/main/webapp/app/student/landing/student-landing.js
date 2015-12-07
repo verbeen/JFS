@@ -56,9 +56,10 @@ angular
                 $scope.time = time;
 
                 //Creating DTO
+                /*
                 var obj = {
-                    "userId": $rootScope.globals.currentUser.username,
-                    /*
+                    "userId": $rootScope.globals.currentUser.username
+
                         "types": $scope.types,
                     "location": $scope.location,
                     "skills": $scope.skills,
@@ -66,15 +67,16 @@ angular
                     "types": "master_thesis",
                     "location": "Trivandrum",
                     "skills": "Android",
-                    "lastView": $scope.time*/
+                    "lastView": $scope.time
 
 
                 };
+        */
 
-                JobService.getJobsSubs(obj)
+                JobService.getJobsSubs($rootScope.globals.currentUser.username)
                     .then(function(response) {
                         console.log("Printing object-");
-                        console.log(obj);
+                        console.log($rootScope.globals.currentUser.username);
                         $scope.noResults = {};
                         $scope.noResults.info = false;
                         $scope.noResults.error = false;
