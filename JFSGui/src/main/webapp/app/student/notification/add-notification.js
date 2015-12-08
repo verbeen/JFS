@@ -19,7 +19,7 @@
         $scope.saveSub = saveSub;
         $scope.jobSearch = {
             "type": [
-                {"value": "", "label": "All"},
+                {"value": "all", "label": "All"},
                 {"value": "master_thesis", "label": "Master thesis"},
                 {"value": "bachelor_thesis", "label": "Bachelor thesis"},
                 {"value": "part_time", "label": "Part time"},
