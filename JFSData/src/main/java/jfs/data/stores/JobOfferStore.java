@@ -91,14 +91,15 @@ public class JobOfferStore extends DataStore {
         return offers;
     }
 
-    public List<JobOfferDO> getJobOffersByCriteria(StudentSubscriptionsDO studentSubscriptionsDO){
+    public List<JobOfferDO> getJobOffersByCriteria(StudentSubscriptionsDO studentSubscriptionsDO, long delayForDisplay){
         List<JobOfferDO> offers = new ArrayList<JobOfferDO>();
         BasicDBObject query;
 
         query = new BasicDBObject("type", studentSubscriptionsDO.types.name()) //type
-                //.append("$text", new BasicDBObject("skills", studentSubscriptionsDO.skills) //skills: Currently only text as only 1 skill is possible
+                //.append("skills", studentSubscriptionsDO.skills)
+                //.append("$text", new BasicDBObject("skills", studentSubscriptionsDO.skills)) //skills: Currently only text as only 1 skill is possible
                         .append("location", studentSubscriptionsDO.location) //location
-                        .append("_id", new BasicDBObject("$gt", new ObjectId(Long.toHexString(studentSubscriptionsDO.lastView / 1000) + "0000000000000000").toString()));
+                        .append("_id", new BasicDBObject("$gt", new ObjectId(Long.toHexString((studentSubscriptionsDO.lastView / 1000)-delayForDisplay) + "0000000000000000").toString()));
                         //_id Timestamp will be compared with $gt greater than an ObjectId(X).toString()
                         //Format that the long lastView should be in seconds instead of milliseconds 1000000000
                         //See: http://stackoverflow.com/questions/8749971/can-i-query-mongodb-objectid-by-date

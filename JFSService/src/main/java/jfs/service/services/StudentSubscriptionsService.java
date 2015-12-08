@@ -53,7 +53,7 @@ public class StudentSubscriptionsService {
     }
 
     public List<JobOfferDTO> checkSubscriptions(String userId){
-        List<JobOfferDO> offerDOs = jobOfferStore.getJobOffersByCriteria(this.studentSubscriptionsStore.getStudentSubscriptions(userId));
+        List<JobOfferDO> offerDOs = jobOfferStore.getJobOffersByCriteria(this.studentSubscriptionsStore.getStudentSubscriptions(userId), (60*60*24*3));
         return jobOfferService.createOfferDTOList(offerDOs);
     }
 }
