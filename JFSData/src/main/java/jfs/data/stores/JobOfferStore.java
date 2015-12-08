@@ -14,6 +14,7 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -92,23 +93,33 @@ public class JobOfferStore extends DataStore {
     }
 
     public List<JobOfferDO> getJobOffersByCriteria(StudentSubscriptionsDO studentSubscriptionsDO, long delayForDisplay){
-        List<JobOfferDO> offers = new ArrayList<JobOfferDO>();
-        BasicDBObject query;
 
-        query = new BasicDBObject("type", studentSubscriptionsDO.types.name()) //type
-                //.append("skills", studentSubscriptionsDO.skills)
-                //.append("$text", new BasicDBObject("skills", studentSubscriptionsDO.skills)) //skills: Currently only text as only 1 skill is possible
-                        .append("location", studentSubscriptionsDO.location) //location
-                        .append("_id", new BasicDBObject("$gt", new ObjectId(Long.toHexString((studentSubscriptionsDO.lastView / 1000)-delayForDisplay) + "0000000000000000").toString()));
-                        //_id Timestamp will be compared with $gt greater than an ObjectId(X).toString()
-                        //Format that the long lastView should be in seconds instead of milliseconds 1000000000
-                        //See: http://stackoverflow.com/questions/8749971/can-i-query-mongodb-objectid-by-date
+        ArrayList<Pair<String, Object>> pairs = new ArrayList<Pair<String, Object>>();
 
-        FindIterable<DBObject> results = this.collection.find(query);//this.collection.find(new BasicDBObject("_id", new BasicDBObject("$gt", "3b9aca000000000000000000")));
-        for(DBObject obj : results){
-            offers.add(this.extractJobOffer(obj));
+        pairs.add(new Pair("_id", new BasicDBObject("$gt", new ObjectId(Long.toHexString((studentSubscriptionsDO.lastView / 1000) - delayForDisplay) + "0000000000000000").toString())));
+
+        if(studentSubscriptionsDO.types != null && !"".equals(studentSubscriptionsDO.types)){
+            pairs.add(new Pair("type", studentSubscriptionsDO.types.name()));
         }
-        return offers;
+        if(studentSubscriptionsDO.location != null && !"".equals(studentSubscriptionsDO.location)){
+            pairs.add(new Pair("location", studentSubscriptionsDO.location));
+        }
+        if(studentSubscriptionsDO.skills != null && !"".equals(studentSubscriptionsDO.skills)){
+            //List<String> Skills = Arrays.asList(studentSubscriptionsDO.skills.split("\\s*,\\s*")); //also deleted any additional white spaces
+            String skillsRegex = studentSubscriptionsDO.skills.replace(",", "|");
+            skillsRegex = skillsRegex.replace(" ", "");
+            System.out.println(skillsRegex);
+
+            pairs.add(new Pair("skills", new BasicDBObject("$regex", skillsRegex)));
+        }
+
+        List<JobOfferDO> doList = this.getJobOffers(pairs);
+        return doList;
+
+        //Explanation for "_id" seach query
+        //"_id" Timestamp will be compared with $gt greater than an ObjectId(X).toString()
+        //Format that the long lastView should be in seconds instead of milliseconds 1000000000
+        // See: http://stackoverflow.com/questions/8749971/can-i-query-mongodb-objectid-by-date
     }
 
     public List<JobOfferDO> getJobOffers(List<Pair<String, Object>> pairs){
