@@ -98,7 +98,7 @@ public class JobOfferStore extends DataStore {
 
         pairs.add(new Pair("_id", new BasicDBObject("$gt", new ObjectId(Long.toHexString((studentSubscriptionsDO.lastView / 1000) - delayForDisplay) + "0000000000000000").toString())));
 
-        if(studentSubscriptionsDO.types != null && !"".equals(studentSubscriptionsDO.types)){
+        if(studentSubscriptionsDO.location != null && !"".equals(studentSubscriptionsDO.location) && (studentSubscriptionsDO.types != JobType.all)){
             pairs.add(new Pair("type", studentSubscriptionsDO.types.name()));
         }
         if(studentSubscriptionsDO.location != null && !"".equals(studentSubscriptionsDO.location)){
