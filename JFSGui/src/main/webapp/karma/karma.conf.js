@@ -24,8 +24,7 @@ module.exports = function(config) {
         'vendor/angular-strap-2.3.5/angular-strap.tpl.min.js',
         'vendor/angular-masonry-0.13.0/angular-masonry.min.js',
         'app/app.js',
-        'app/sample/sample.js',
-        'app/sample/sample_test.js'
+        'app/**/*.js'
     ],
 
 
@@ -56,7 +55,7 @@ module.exports = function(config) {
 
     // level of logging
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-    logLevel: config.LOG_INFO,
+    logLevel: config.LOG_DEBUG,
 
 
     // enable / disable watching file and executing tests whenever any file changes

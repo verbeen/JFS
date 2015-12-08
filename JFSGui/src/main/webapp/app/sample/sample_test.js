@@ -9,7 +9,7 @@ describe('Controller: SampleController', function() {
     }));
 
     it('should have the sample string set on load', function() {
-       expect(ctrl.sample2).toEqual('sample1');
+       expect(scope.sample).toEqual('sample');
     });
 
 });
