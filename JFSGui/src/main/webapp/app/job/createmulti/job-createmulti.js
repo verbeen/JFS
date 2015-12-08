@@ -3,7 +3,30 @@
 
     angular
         .module('app')
-        .controller('JobCreateMultiController', JobCreateMultiController);
+        .controller('JobCreateMultiController', JobCreateMultiController)
+        .directive('fileSelected', fileSelected);
+
+    function fileSelected() {
+        return {
+            restrict: 'A',
+            require: 'ngModel',
+            scope: {
+                fileSelected: '&'
+            },
+            link: function link(scope, element, attrs, ctrl) {
+                element.on('change', onChange);
+
+                scope.$on('destroy', function () {
+                    element.off('change', onChange);
+                });
+
+                function onChange() {
+                    ctrl.$setViewValue(element[0]);
+                    scope.fileSelected();
+                }
+            }
+        };
+    }
 
     JobCreateMultiController.$inject = ['JobService', '$scope', '$rootScope'];
     function JobCreateMultiController(JobService, $scope, $rootScope) {
@@ -13,6 +36,7 @@
         $scope.create = create;
         $scope.jobOffers = [];
         $scope.files = [];
+        $scope.handleFileSelection = handleFileSelection;
 
         // gets executed on initial load
         (function initController() {
@@ -66,12 +90,14 @@
                 });
         }
 
-        function fileSelected(evt){
-            $scope.files = evt.target.files;
+        function handleFileSelection(){
+            $scope.$apply(function (){
+                if($scope.jobOfferChooser.files.length > 0){
+                    $scope.files = $scope.jobOfferChooser.files;
+                }
+            });
         }
-        $(document).ready(function(){
-            $("#jobOfferChooser").change(fileSelected);
-        });
+
 
         function parseFiles() {
             $scope.jobOffers = [];
