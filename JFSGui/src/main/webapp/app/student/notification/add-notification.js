@@ -28,6 +28,7 @@
                 {"value": "contract", "label": "Contract"}
             ]
         };
+        $scope.types = "all";
         $scope.checkSub();
         //Setting redirection navigation for main page
         $scope.sample = "sample";

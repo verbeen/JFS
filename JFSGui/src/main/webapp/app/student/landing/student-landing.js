@@ -65,8 +65,9 @@ angular
                             // backend service is not reachable (e.g. database down)
                             console.error(response.message);
                             console.info("failed!No data retrieved");
-                            $scope.noResults.error = true;
-                            $scope.noResults.title = "Please setup the notification !";
+                            //$scope.noResults.error = true;
+                            $scope.noResults.info = true;
+                            $scope.noResults.title = "Please setup the notification!";
                             $scope.noResults.text = "Please setup the notification settings for getting recent " +
                                 "job updates.";
                             $scope.dataLoading = false;
