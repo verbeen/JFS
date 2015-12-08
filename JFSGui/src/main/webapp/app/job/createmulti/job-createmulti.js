@@ -8,8 +8,11 @@
     JobCreateMultiController.$inject = ['JobService', '$scope', '$rootScope'];
     function JobCreateMultiController(JobService, $scope, $rootScope) {
         $scope.initializeNewJobOffers = initializeNewJobOffers;
+        $scope.parseFiles = parseFiles;
+        $scope.jobOfferChooser = "";
         $scope.create = create;
         $scope.jobOffers = [];
+        $scope.files = [];
 
         // gets executed on initial load
         (function initController() {
@@ -22,6 +25,7 @@
             $scope.responseMessage.showForm = true;
             $scope.responseMessage.success = false;
             $scope.responseMessage.error = false;
+            $scope.files = [];
             $scope.jobOffers = [];
         }
 
@@ -30,9 +34,9 @@
 
             $scope.$broadcast('show-errors-check-validity');
 
-            if ($scope.formCreateJobMulti.$invalid) {
+            if ($scope.jobOffers.length == 0) {
                 $scope.responseMessage.error = true;
-                $scope.responseMessage.text = "An error occurred while creating your job offer.";
+                $scope.responseMessage.text = "No job offers loaded. Please select files and click parse.";
                 $scope.dataLoading = false;
                 return;
             }
@@ -48,7 +52,7 @@
                     $scope.responseMessage = {};
                     $scope.responseMessage.showForm = false;
                     if (response.success) {
-                        console.info("Job offer created!");
+                        console.info("Job offers uploaded!");
                         $scope.responseMessage.success = true;
                         $scope.responseMessage.text = "Your job offers have been successfully added.";
                         $scope.dataLoading = false;
@@ -62,22 +66,32 @@
                 });
         }
 
-        function handleFileSelect(evt) {
-            var file = evt.target.files[0];
-
-            Papa.parse(file, {
-                header: true,
-                dynamicTyping: true,
-                delimiter:",",
-                skipEmptyLines: true,
-                complete: function(results) {
-                    $scope.jobOffers = results.data;
-                }
-            });
+        function fileSelected(evt){
+            $scope.files = evt.target.files;
         }
-
         $(document).ready(function(){
-            $("#jobOffers").change(handleFileSelect);
+            $("#jobOfferChooser").change(fileSelected);
         });
+
+        function parseFiles() {
+            $scope.jobOffers = [];
+
+            for (var i = 0; i < $scope.files.length; i++){
+                var file = $scope.files[i];
+                Papa.parse(file, {
+                    header: true,
+                    dynamicTyping: true,
+                    delimiter:",",
+                    skipEmptyLines: true,
+                    complete: function(results) {
+                        if(results.errors.length == 0) {
+                            $scope.$apply(function () {
+                                $scope.jobOffers = $scope.jobOffers.concat(results.data);
+                            });
+                        }
+                    }
+                });
+            }
+        }
     }
 })();

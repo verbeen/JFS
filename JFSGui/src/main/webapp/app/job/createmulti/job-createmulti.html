@@ -11,12 +11,19 @@
         </div>
 
         <form class="form-horizontal" ng-submit="create()" role="form" name="formCreateJobMulti" ng-show="responseMessage.showForm" novalidate>
-
             <div class="form-group" show-errors>
-                <label for="jobOffers" class="col-sm-3 col-md-3 control-label">Source file</label>
+                <label for="jobOfferChooser" class="col-sm-3 col-md-3 control-label">Source file(s)</label>
                 <div class="col-sm-9 col-md-9">
-                    <input type="file" id="jobOffers" class="form-control" name="jobOffers"
-                           ng-model="jobOffers" required>
+                    <span class="btn btn-default btn-file">
+                        <input type="file" id="jobOfferChooser" ng-model="jobOfferChooser" multiple required>
+                    </span>
+                </div>
+                <label class="col-sm-3 col-md-3 control-label"> </label>
+                <div class="col-sm-9 col-md-9">
+                    <button type="button" ng-click="parseFiles()" class="btn btn-default">Parse selected files</button>
+                    <span ng-if="jobOffers.length > 0">
+                        &nbsp; {{ jobOffers.length }} offers ready for upload.
+                    </span>
                 </div>
             </div>
 
