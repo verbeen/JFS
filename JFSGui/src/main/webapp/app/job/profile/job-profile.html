@@ -19,6 +19,9 @@
             <dt>Job task</dt>
             <dd>{{ jobOffer.task | htmlToPlainText }}</dd>
 
+            <dt>Job Skills</dt>
+            <dd>{{ jobOffer.skills | htmlToPlainText }}</dd>
+
             <dt>Valid till date</dt>
             <dd>{{ jobOffer.validUntil | dateCheckedZero: 'yyyy-MM-dd' }}</dd>
 

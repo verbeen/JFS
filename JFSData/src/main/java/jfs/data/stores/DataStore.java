@@ -48,7 +48,8 @@ public abstract class DataStore<T> {
     }
 
     public <T> Boolean replace(String key, T value){
-        UpdateResult updateResult = this.collection.replaceOne(new BasicDBObject("_id", new ObjectId(key)), BasicDBObject.parse(this.serializer.serialize(value)));
+        BasicDBObject doc = (BasicDBObject) this.collection.find(new BasicDBObject("_id", key)).first();
+        UpdateResult updateResult = this.collection.replaceOne(doc, BasicDBObject.parse(this.serializer.serialize(value)));
         return updateResult.wasAcknowledged();
     }
 
