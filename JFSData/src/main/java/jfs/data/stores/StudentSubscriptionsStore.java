@@ -6,12 +6,15 @@ import com.mongodb.DBObject;
 import com.mongodb.client.result.UpdateResult;
 import jfs.data.dataobjects.StudentProfileDO;
 import jfs.data.dataobjects.StudentSubscriptionsDO;
+import jfs.data.serializers.Serializer;
 
 /**
  * Created by Hulk-A on 10.11.2015.
  */
 public class StudentSubscriptionsStore extends DataStore {
     public static final StudentSubscriptionsStore store = new StudentSubscriptionsStore();
+
+    protected Serializer serializer = Serializer.DefaultSerializer;
 
     public StudentSubscriptionsStore() {
         super("studentSubscription");
@@ -29,7 +32,7 @@ public class StudentSubscriptionsStore extends DataStore {
         StudentSubscriptionsDO studentSubscription = null;
         DBObject doc = (DBObject)this.collection.find(new BasicDBObject("_id", userId)).first();
         if (doc != null) {
-            studentSubscription = (StudentSubscriptionsDO) new Gson().fromJson((doc).toString(), StudentSubscriptionsDO.class);
+            studentSubscription = (StudentSubscriptionsDO)  this.serializer.deSerialize((doc).toString(), StudentSubscriptionsDO.class);
         }
         return studentSubscription;
     }
