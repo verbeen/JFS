@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('app', ["ngRoute", "ngCookies", "ngSanitize", "mgcrea.ngStrap", "wu.masonry"])
+    angular.module('app', ["ngRoute", "ngCookies", "ngSanitize", "mgcrea.ngStrap", "wu.masonry","ngTagsInput"])
         .config(config)
         .run(run)
         .controller('HomeController', HomeController)
@@ -62,6 +62,15 @@
                 templateUrl: 'app/company/company_profile.html',
                 controller: 'CompanyProfileController as vm'
             })
+            .when('/student', {
+                templateUrl: 'app/student/landing/student-landing.html',
+                controller: 'StudentLandingController as vm'
+            })
+            .when('/student/notification', {
+                templateUrl: 'app/student/notification/add-notification.html',
+                controller: 'AddNotificationController as vm'
+            })
+
             .otherwise({redirectTo: '/'});
 
             //$locationProvider.html5Mode(true);

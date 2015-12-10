@@ -51,6 +51,7 @@
             $scope.responseMessage.error = false;
             $scope.files = [];
             $scope.jobOffers = [];
+            $scope.$broadcast('show-errors-reset');
         }
 
         function create() {

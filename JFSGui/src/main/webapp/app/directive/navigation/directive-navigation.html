@@ -19,7 +19,10 @@
                 <li ng-show="isCompany" data-match-route="^/job/createmulti"><a href="#/job/createmulti">Upload multiple jobs</a></li>
                 <li ng-show="isAdmin" data-match-route="^/administration/job/list.*"><a href="#/administration/job/list">Admin job offers</a></li>
                 <li ng-show="isAdmin" data-match-route="^/administration/user/list.*"><a href="#/administration/user/list">Admin users</a></li>
+                <li ng-show="isStudent" data-match-route="^/student.*"><a href="#/student">Notifications</a></li>
                 <li><a ng-href="#/authentication/{{loggedIn ? 'logout' : 'login'}}">{{loggedIn ? "Logout" : "Login"}}</a></li>
+
+
             </ul>
         </div>
     </div>
