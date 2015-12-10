@@ -98,7 +98,12 @@ public class JobOfferStore extends DataStore {
 
         pairs.add(new Pair("_id", new BasicDBObject("$gt", new ObjectId(Long.toHexString((studentSubscriptionsDO.lastView / 1000) - delayForDisplay) + "0000000000000000").toString())));
 
-        if(studentSubscriptionsDO.location != null && !"".equals(studentSubscriptionsDO.location) && (studentSubscriptionsDO.types != JobType.all)){
+        //Explanation for "_id" seach query
+        //"_id" Timestamp will be compared with $gt greater than an ObjectId(X).toString()
+        //Format that the long lastView should be in seconds instead of milliseconds 1000000000
+        // See: http://stackoverflow.com/questions/8749971/can-i-query-mongodb-objectid-by-date
+
+        if(studentSubscriptionsDO.types != null && !"".equals(studentSubscriptionsDO.types) && (studentSubscriptionsDO.types != JobType.all)){
             pairs.add(new Pair("type", studentSubscriptionsDO.types.name()));
         }
         if(studentSubscriptionsDO.location != null && !"".equals(studentSubscriptionsDO.location)){
@@ -115,11 +120,6 @@ public class JobOfferStore extends DataStore {
 
         List<JobOfferDO> doList = this.getJobOffers(pairs);
         return doList;
-
-        //Explanation for "_id" seach query
-        //"_id" Timestamp will be compared with $gt greater than an ObjectId(X).toString()
-        //Format that the long lastView should be in seconds instead of milliseconds 1000000000
-        // See: http://stackoverflow.com/questions/8749971/can-i-query-mongodb-objectid-by-date
     }
 
     public List<JobOfferDO> getJobOffers(List<Pair<String, Object>> pairs){
