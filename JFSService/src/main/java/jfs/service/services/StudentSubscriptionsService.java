@@ -53,7 +53,10 @@ public class StudentSubscriptionsService {
     }
 
     public List<JobOfferDTO> checkSubscriptions(String userId){
-        List<JobOfferDO> offerDOs = jobOfferStore.getJobOffersByCriteria(this.studentSubscriptionsStore.getStudentSubscriptions(userId), (60*60*24*3));
+        long jobOfferVisibilityBuffer = (60*60*24*3);
+        //jobOfferVisibilityBuffer: amount of time in seconds that results get shown after they were created
+        //(if they apply to the notification settings=
+        List<JobOfferDO> offerDOs = jobOfferStore.getJobOffersByCriteria(this.studentSubscriptionsStore.getStudentSubscriptions(userId), jobOfferVisibilityBuffer);
         return jobOfferService.createOfferDTOList(offerDOs);
     }
 }

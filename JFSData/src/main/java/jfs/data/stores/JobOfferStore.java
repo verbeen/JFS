@@ -92,11 +92,11 @@ public class JobOfferStore extends DataStore {
         return offers;
     }
 
-    public List<JobOfferDO> getJobOffersByCriteria(StudentSubscriptionsDO studentSubscriptionsDO, long delayForDisplay){
+    public List<JobOfferDO> getJobOffersByCriteria(StudentSubscriptionsDO studentSubscriptionsDO, long jobOfferVisibilityBuffer){
 
         ArrayList<Pair<String, Object>> pairs = new ArrayList<Pair<String, Object>>();
 
-        pairs.add(new Pair("_id", new BasicDBObject("$gt", new ObjectId(Long.toHexString((studentSubscriptionsDO.lastView / 1000) - delayForDisplay) + "0000000000000000").toString())));
+        pairs.add(new Pair("_id", new BasicDBObject("$gt", new ObjectId(Long.toHexString((studentSubscriptionsDO.lastView / 1000) - jobOfferVisibilityBuffer) + "0000000000000000").toString())));
 
         //Explanation for "_id" seach query
         //"_id" Timestamp will be compared with $gt greater than an ObjectId(X).toString()
