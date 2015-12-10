@@ -6,6 +6,7 @@ import com.mongodb.DBObject;
 import jfs.data.connections.DataClient;
 import jfs.data.dataobjects.StudentProfileDO;
 import jfs.data.dataobjects.UserDO;
+import jfs.data.serializers.Serializer;
 import org.bson.Document;
 
 /**
@@ -13,6 +14,8 @@ import org.bson.Document;
  */
 public class StudentProfileStore extends DataStore {
     public static final StudentProfileStore store = new StudentProfileStore();
+
+    protected Serializer serializer = Serializer.DefaultSerializer;
 
     public StudentProfileStore() {
         super("studentProfiles");
@@ -30,7 +33,7 @@ public class StudentProfileStore extends DataStore {
         StudentProfileDO studentProfile = null;
         DBObject doc = (DBObject)this.collection.find(new BasicDBObject("_id", user_id)).first();
         if (doc != null) {
-            studentProfile = (StudentProfileDO) new Gson().fromJson((doc).toString(), StudentProfileDO.class);
+            studentProfile = (StudentProfileDO) this.serializer.deSerialize(doc.toString(), StudentProfileDO.class);
         }
         return studentProfile;
     }
