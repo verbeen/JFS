@@ -7,14 +7,14 @@ import jfs.data.dataobjects.enums.JobType;
  */
 public class StudentSubscriptionsDO extends DataObject {
 
-    public JobType types;
+    public JobType type;
     public String location;
     public String skills;
     public long lastView;
 
-    public StudentSubscriptionsDO(String userId, JobType types, String location, String skills, long lastView) {
+    public StudentSubscriptionsDO(String userId, JobType type, String location, String skills, long lastView) {
         super(userId);
-        this.types = types;
+        this.type = type;
         this.location = location;
         this.skills = skills;
         this.lastView = lastView;

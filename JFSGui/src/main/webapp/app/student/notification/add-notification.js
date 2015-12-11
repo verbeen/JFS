@@ -28,7 +28,7 @@
                 {"value": "contract", "label": "Contract"}
             ]
         };
-        $scope.types = "all";
+        $scope.type = "all";
         $scope.checkSub();
         //Setting redirection navigation for main page
         $scope.sample = "sample";
@@ -57,7 +57,7 @@
             //Creating DTO
             var obj = {
                 "userId": $rootScope.globals.currentUser.username,
-                "types": $scope.types,
+                "type": $scope.type,
                 "location": $scope.location,
                 "skills": $scope.skills,
                 "lastView": $scope.time
@@ -89,7 +89,7 @@
             //Creating DTO
             var obj = {
                 "userId": $rootScope.globals.currentUser.username,
-                "types": $scope.types,
+                "type": $scope.type,
                 "location": $scope.location,
                 "skills": $scope.skills,
                 "lastView": $scope.time
@@ -118,22 +118,22 @@
                         $scope.location = response.data.location;
                         $scope.skills = response.data.skills;
                         //Setting default values for the dropdown values
-                        if (response.data.types) {
-                            $scope.types = response.data.types;
+                        if (response.data.type) {
+                            $scope.type = response.data.type;
                         }
 
-                       /* if (response.data.types == "master_thesis") {
-                            $scope.types = "master_thesis";
-                        } else if (response.data.types == "bachelor_thesis") {
-                            $scope.types = "bachelor_thesis";
-                        } else if (response.data.types == "part_time") {
-                            $scope.types = "part_time";
-                        } else if (response.data.types == "full_time") {
-                            $scope.types = "full_time";
-                        } else if (response.data.types == "internship") {
-                            $scope.types = "internship";
-                        } else if (response.data.types == "contract") {
-                            $scope.types = "contract";
+                       /* if (response.data.type == "master_thesis") {
+                            $scope.type = "master_thesis";
+                        } else if (response.data.type == "bachelor_thesis") {
+                            $scope.type = "bachelor_thesis";
+                        } else if (response.data.type == "part_time") {
+                            $scope.type = "part_time";
+                        } else if (response.data.type == "full_time") {
+                            $scope.type = "full_time";
+                        } else if (response.data.type == "internship") {
+                            $scope.type = "internship";
+                        } else if (response.data.type == "contract") {
+                            $scope.type = "contract";
                         }*/
                     } else {
                         // backend service is not reachable (e.g. database down)

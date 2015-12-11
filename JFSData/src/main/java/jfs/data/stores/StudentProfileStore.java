@@ -15,8 +15,6 @@ import org.bson.Document;
 public class StudentProfileStore extends DataStore {
     public static final StudentProfileStore store = new StudentProfileStore();
 
-    protected Serializer serializer = Serializer.DefaultSerializer;
-
     public StudentProfileStore() {
         super("studentProfiles");
     }

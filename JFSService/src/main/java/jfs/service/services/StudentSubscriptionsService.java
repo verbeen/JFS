@@ -26,13 +26,13 @@ public class StudentSubscriptionsService {
 
     private StudentSubscriptionsDO createStudentSubscriptionDO(StudentSubscriptionsDTO studentSubscriptionsDTO){
         return new StudentSubscriptionsDO(
-                studentSubscriptionsDTO.userId, JobType.valueOf(studentSubscriptionsDTO.types.name()), studentSubscriptionsDTO.location , studentSubscriptionsDTO.skills, studentSubscriptionsDTO.lastView
+                studentSubscriptionsDTO.userId, JobType.valueOf(studentSubscriptionsDTO.type.name()), studentSubscriptionsDTO.location , studentSubscriptionsDTO.skills, studentSubscriptionsDTO.lastView
         );
     }
 
     private StudentSubscriptionsDTO createStudentSubscriptionsDTO(StudentSubscriptionsDO studentSubscriptionsDO){
         return new StudentSubscriptionsDTO(
-                studentSubscriptionsDO._id, JobTypeDTO.valueOf(studentSubscriptionsDO.types.name()), studentSubscriptionsDO.location , studentSubscriptionsDO.skills, studentSubscriptionsDO.lastView
+                studentSubscriptionsDO._id, JobTypeDTO.valueOf(studentSubscriptionsDO.type.name()), studentSubscriptionsDO.location , studentSubscriptionsDO.skills, studentSubscriptionsDO.lastView
         );
     }
 

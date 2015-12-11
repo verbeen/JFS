@@ -14,8 +14,6 @@ import jfs.data.serializers.Serializer;
 public class StudentSubscriptionsStore extends DataStore {
     public static final StudentSubscriptionsStore store = new StudentSubscriptionsStore();
 
-    protected Serializer serializer = Serializer.DefaultSerializer;
-
     public StudentSubscriptionsStore() {
         super("studentSubscription");
     }

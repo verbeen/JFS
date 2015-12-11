@@ -4,7 +4,6 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.MongoException;
 import com.mongodb.client.FindIterable;
-import com.mongodb.client.model.IndexOptions;
 import com.mongodb.client.model.Sorts;
 import jfs.data.dataobjects.JobOfferDO;
 import jfs.data.dataobjects.StudentSubscriptionsDO;
@@ -14,7 +13,6 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -103,8 +101,8 @@ public class JobOfferStore extends DataStore {
         //Format that the long lastView should be in seconds instead of milliseconds 1000000000
         // See: http://stackoverflow.com/questions/8749971/can-i-query-mongodb-objectid-by-date
 
-        if(studentSubscriptionsDO.types != null && !"".equals(studentSubscriptionsDO.types) && (studentSubscriptionsDO.types != JobType.all)){
-            pairs.add(new Pair("type", studentSubscriptionsDO.types.name()));
+        if(studentSubscriptionsDO.type != null && !"".equals(studentSubscriptionsDO.type) && (studentSubscriptionsDO.type != JobType.all)){
+            pairs.add(new Pair("type", studentSubscriptionsDO.type.name()));
         }
         if(studentSubscriptionsDO.location != null && !"".equals(studentSubscriptionsDO.location)){
             pairs.add(new Pair("location", studentSubscriptionsDO.location));
