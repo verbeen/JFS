@@ -14,6 +14,7 @@ angular
             // method declarations
             $scope.checkSub = checkSub;
             $scope.getJobsSubs = getJobsSubs;
+
             (function initController() {
                 $scope.dataLoading = false;
             })();

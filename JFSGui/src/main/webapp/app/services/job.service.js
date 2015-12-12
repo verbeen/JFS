@@ -53,7 +53,7 @@
         }
         function checkSubscription(user) {
             return $http.post('/service/studentsubscriptions/get', user)
-                .then(handleSuccess, handleError('Error adding job offers by "' + user + '"!'));
+                .then(handleSuccess, handleError('Error getting subscription "' + user + '"!'));
         }
         //This function is used to get all the
         function getJobsSubs(userDetails) {
