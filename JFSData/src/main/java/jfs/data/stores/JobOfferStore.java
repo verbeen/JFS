@@ -126,7 +126,20 @@ public class JobOfferStore extends DataStore {
         // See: http://stackoverflow.com/questions/8749971/can-i-query-mongodb-objectid-by-date
     }
 
-    public List<JobOfferDO> getJobOffers(List<Pair<String, Object>> pairs, List<Double> coordinates, int radius){
+    public List<JobOfferDO> getJobOffers(List<Pair<String, Object>> pairs){
+        List<JobOfferDO> offers = new ArrayList<JobOfferDO>();
+        Document query = new Document();
+        for(Pair<String, Object> pair : pairs){
+            query.append(pair.key, pair.value);
+        }
+        FindIterable<DBObject> results = this.collection.find(query);
+        for(DBObject obj : results){
+            offers.add(this.extractJobOffer(obj));
+        }
+        return offers;
+    }
+
+    public List<JobOfferDO> getJobOffersByRadius(List<Pair<String, Object>> pairs, List<Double> coordinates, int radius){
         List<JobOfferDO> offers = new ArrayList<JobOfferDO>();
         Document query = new Document();
         if (coordinates != null && radius !=0 ){

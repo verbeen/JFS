@@ -103,7 +103,7 @@ public class JobOfferService {
             pairs.add(new Pair("type", searchDTO.type.name()));
         }
 
-        List<JobOfferDO> doList = this.jobOfferStore.getJobOffers(pairs, coordinates, searchDTO.radius);
+        List<JobOfferDO> doList = this.jobOfferStore.getJobOffersByRadius(pairs, coordinates, searchDTO.radius);
         return this.createOfferDTOList(doList);
     }
 
