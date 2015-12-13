@@ -23,6 +23,14 @@
                     { "value": "full_time", "label": "Full time" },
                     { "value": "internship", "label": "Internship" },
                     { "value": "contract", "label": "Contract" }
+                ],
+                "radius":[
+                    { "value": "", "label": "All" },
+                    { "value": "5", "label": "5 km" },
+                    { "value": "10", "label": "10 km" },
+                    { "value": "20", "label": "20 km" },
+                    { "value": "50", "label": "50 km" },
+                    { "value": "100", "label": "100 km" }
                 ]
             };
 
@@ -63,7 +71,8 @@
 
             if (!$scope.selectedJobSearch
                 || $scope.selectedJobSearch.type == ""
-                || $scope.selectedJobSearch.location == "") {
+                || $scope.selectedJobSearch.address == ""
+                || $scope.selectedJobSearch.radius == "") {
                 $scope.selectedJobSearch = {};
             }
 

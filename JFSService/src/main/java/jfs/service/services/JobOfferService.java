@@ -1,5 +1,9 @@
 package jfs.service.services;
 
+import com.google.maps.GeoApiContext;
+import com.google.maps.GeocodingApi;
+import com.google.maps.model.GeocodingResult;
+import com.mongodb.BasicDBObject;
 import jfs.data.dataobjects.JobOfferDO;
 import jfs.data.dataobjects.enums.JobType;
 import jfs.data.dataobjects.helpers.Pair;
@@ -7,9 +11,11 @@ import jfs.data.stores.JobOfferStore;
 import jfs.transferdata.transferobjects.JobOfferDTO;
 import jfs.transferdata.transferobjects.SearchDTO;
 import jfs.transferdata.transferobjects.enums.JobTypeDTO;
+import org.bson.Document;
 
 import javax.ejb.Singleton;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -18,14 +24,14 @@ import java.util.List;
 @Singleton
 public class JobOfferService {
     private JobOfferStore jobOfferStore = JobOfferStore.store;
+    private static final String googleApiKey = "AIzaSyANAUSC2OFBrJXnqwzMeJtqU1JNnA47xto";
 
     private JobOfferDO createOfferDO(JobOfferDTO offerDTO, String userId){
         JobOfferDO offer = new JobOfferDO();
-
         offer.description = offerDTO.description;
         offer.duration = offerDTO.duration;
         offer.function = offerDTO.function;
-        offer.location = offerDTO.location;
+        offer.address = offerDTO.address;
         offer.name = offerDTO.name;
         offer.task = offerDTO.task;
         offer.skills = offerDTO.skills;
@@ -37,6 +43,8 @@ public class JobOfferService {
 
         offer.userId = userId;
 
+        // set the geo-location
+        offer.location.coordinates = offerDTO.location.coordinates;
         return offer;
     }
 
@@ -47,6 +55,9 @@ public class JobOfferService {
     }
 
     public Boolean addOffer(JobOfferDTO offerDTO, String userId){
+        String address = offerDTO.address;
+        List<Double> coordinates = this.getGeoCoordinates(address);
+        offerDTO.location.coordinates = coordinates;
         return this.jobOfferStore.addOffer(this.createOfferDO(offerDTO, userId));
     }
 
@@ -74,23 +85,39 @@ public class JobOfferService {
     }
 
     public List<JobOfferDTO> search(SearchDTO searchDTO){
+        Document locationQuery = null;
+        List<Double> coordinates = null;
+
+        if (searchDTO.address != null && searchDTO.radius != 0) {
+            // get the coordinates for the address
+            coordinates = getGeoCoordinates(searchDTO.address);
+            //remove the address from searchDTO
+            searchDTO.address = null;
+        }
+
         ArrayList<Pair<String, Object>> pairs = new ArrayList<Pair<String, Object>>();
-        if(searchDTO.location != null && !"".equals(searchDTO.location)){
-            pairs.add(new Pair("location", searchDTO.location));
+        if(searchDTO.address != null && !"".equals(searchDTO.address)) {
+            pairs.add(new Pair("address", searchDTO.address));
         }
         if(searchDTO.type != null){
             pairs.add(new Pair("type", searchDTO.type.name()));
         }
-        List<JobOfferDO> doList = this.jobOfferStore.getJobOffers(pairs);
+
+        List<JobOfferDO> doList = this.jobOfferStore.getJobOffersByRadius(pairs, coordinates, searchDTO.radius);
         return this.createOfferDTOList(doList);
     }
 
     private JobOfferDTO createOfferDTO(JobOfferDO offerDO){
-        return new JobOfferDTO(
+
+        JobOfferDTO jobOfferDTO =  new JobOfferDTO(
                 offerDO._id, offerDO.userId, offerDO.contactEmail, offerDO.name, offerDO.function, offerDO.description,
                 offerDO.task, offerDO.skills, offerDO.duration, offerDO.validUntil, offerDO.startDate,
-                offerDO.location, offerDO.website, JobTypeDTO.valueOf(offerDO.type.name())
-        );
+                offerDO.address, offerDO.website, JobTypeDTO.valueOf(offerDO.type.name()));
+        List<Double> coords = offerDO.location.coordinates;
+        Collections.reverse(coords);
+        jobOfferDTO.location.coordinates = coords;
+
+        return jobOfferDTO;
     }
 
     public List<JobOfferDTO> createOfferDTOList(List<JobOfferDO> offerDOs){
@@ -100,4 +127,32 @@ public class JobOfferService {
         }
         return offers;
     }
+
+    private List<Double> getGeoCoordinates(String address) {
+        // Call GeoCoding API
+        GeoApiContext context = new GeoApiContext();
+        context.setApiKey(googleApiKey);
+
+        try {
+
+            GeocodingResult[] results = GeocodingApi.newRequest(context).address(address).await();
+            if (results != null) {
+                if (results[0].geometry != null) {
+                    double latitude = results[0].geometry.location.lat;
+                    double longitude = results[0].geometry.location.lng;
+
+                    List<Double> coordinates = new ArrayList<>();
+                    coordinates.add(longitude);
+                    coordinates.add(latitude);
+
+                    return coordinates;
+                }
+            }
+        } catch (Exception ex) {
+
+        }
+        return null;
+    }
+
+
 }

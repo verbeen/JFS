@@ -29,9 +29,21 @@
 
                 <div class="form-group">
                     <div class="input-group">
-                        <input type="text" class="form-control" ng-model="selectedJobSearch.location" placeholder="Location">
+                        <input type="text" class="form-control" ng-model="selectedJobSearch.address" placeholder="Location">
                         <div class="searchButton input-group-addon">
                             <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <button aria-label="Select" type="button" class="btn btn-default form-control"
+                                ng-model="selectedJobSearch.radius" data-placeholder="Radius" data-html="1"
+                                bs-options="radius.value as radius.label for radius in jobSearch.radius" bs-select>
+                        </button>
+                        <div class="searchButton input-group-addon">
+                            <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
                         </div>
                     </div>
                 </div>
@@ -49,6 +61,10 @@
 
     <hr />
 
+    <!--
+    <div id="map-canvas"></div>
+    <div class container-fluid id="main"></div>
+    -->
     <div class="row">
 
         <!--
@@ -133,7 +149,7 @@
 
         </div>
         -->
-        <div class="col-md-12">
+        <div class="col-xs-6" id="left">
 
             <div ng-if="noResults.info || noResults.error">
                 <div class="alert" ng-class="{ 'alert-info': noResults.info, 'alert-danger': noResults.error }">
@@ -150,7 +166,7 @@
                         <div class="panel-body">
                             <ul class="list-unstyled jobOfferParameters">
                                 <li class="jobOfferCompany">{{ offer.companyId }}</li>
-                                <li class="jobOfferLocation">{{ offer.location }}</li>
+                                <li class="jobOfferLocation">{{ offer.address }}</li>
                                 <li class="jobOfferDuration">{{ offer.duration | duration }}</li>
                                 <!--<li class="jobOfferSalary">100,000</li>-->
                                 <li class="jobOfferStartDate">{{ offer.startDate | dateCheckedZero: 'yyyy-MM-dd' }}</li>
@@ -162,6 +178,16 @@
                 </div>
             </div>
 
+        </div>
+
+        <div class="col-xs-6">
+            <ng-map zoom="4" center="[51.119251, 10.100517]">
+                <marker ng-repeat="offer in offers"
+                        position="{{offer.location.coordinates}}"
+                        title="{{offer.name}}"
+                        animation="DROP">
+                </marker>
+            </ng-map>
         </div>
     </div>
 </div>
