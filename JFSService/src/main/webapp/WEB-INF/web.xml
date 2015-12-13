@@ -7,15 +7,6 @@
 
     <servlet>
         <servlet-name>javax.ws.rs.core.Application</servlet-name>
-        <!--
-        <init-param>
-            <param-name>jersey.config.server.provider.packages</param-name>
-            <param-value>
-                io.swagger.jaxrs.listing,
-                jfs.service.services
-            </param-value>
-        </init-param>
-        -->
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
@@ -24,25 +15,13 @@
     </servlet-mapping>
 
     <context-param>
-        <param-name>resteasy.providers</param-name>
-        <param-value>
-            io.swagger.jaxrs.listing.ApiListingResource,
-            io.swagger.jaxrs.listing.SwaggerSerializers,
-            jfs.service.services.UserWebService
-        </param-value>
+        <param-name>resteasy.scan</param-name>
+        <param-value>true</param-value>
     </context-param>
 
     <servlet>
-        <servlet-name>Jersey2Config</servlet-name>
-        <servlet-class>io.swagger.jaxrs.config.DefaultJaxrsConfig</servlet-class>
-        <init-param>
-            <param-name>api.version</param-name>
-            <param-value>1.0.0</param-value>
-        </init-param>
-        <init-param>
-            <param-name>swagger.api.basepath</param-name>
-            <param-value>http://localhost:8080/service</param-value>
-        </init-param>
+        <servlet-name>SwaggerServlet</servlet-name>
+        <servlet-class>jfs.service.services.SwaggerServlet</servlet-class>
         <load-on-startup>2</load-on-startup>
     </servlet>
 </web-app>
