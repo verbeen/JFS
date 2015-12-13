@@ -18,6 +18,7 @@
                 if (response.success) {
                     if (response.data) {
                         $scope.jobOffer = response.data;
+                        console.log(response.data);
                     } else {
                         $scope.jobOffer = {};
                         $scope.noResults.info = true;

@@ -11,8 +11,6 @@ public class UserDO extends DataObject {
     public String password;
     public UserType type;
 
-    public UserDO() {}
-
     public UserDO(String id, String password, UserType type) {
         super(id);
         this.password = password;
