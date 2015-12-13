@@ -29,9 +29,21 @@
 
                 <div class="form-group">
                     <div class="input-group">
-                        <input type="text" class="form-control" ng-model="selectedJobSearch.location" placeholder="Location">
+                        <input type="text" class="form-control" ng-model="selectedJobSearch.address" placeholder="Location">
                         <div class="searchButton input-group-addon">
                             <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <button aria-label="Select" type="button" class="btn btn-default form-control"
+                                ng-model="selectedJobSearch.radius" data-placeholder="Radius" data-html="1"
+                                bs-options="radius.value as radius.label for radius in jobSearch.radius" bs-select>
+                        </button>
+                        <div class="searchButton input-group-addon">
+                            <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
                         </div>
                     </div>
                 </div>
@@ -169,7 +181,7 @@
         </div>
 
         <div class="col-xs-6">
-            <ng-map zoom="6" center="[51.119251, 10.100517]">
+            <ng-map zoom="4" center="[51.119251, 10.100517]">
                 <marker ng-repeat="offer in offers"
                         position="{{offer.location.coordinates}}"
                         title="{{offer.name}}"
