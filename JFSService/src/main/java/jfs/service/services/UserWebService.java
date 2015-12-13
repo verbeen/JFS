@@ -24,22 +24,22 @@ public class UserWebService
 
     @POST @Path("/register/company") @Consumes("application/json") @Produces("application/json")
     public Boolean registerCompany(RegisterDTO register){
-        Boolean result = this.service.registerUser(register.email, register.password, UserType.COMPANY);
+        Boolean result = false;
+        result = this.service.registerUser(register.email, register.password, UserType.COMPANY);
         return result;
     }
 
     @POST @Path("/register/student") @Consumes("application/json") @Produces("application/json")
     public Boolean registerStudent(RegisterDTO register){
-        Boolean result = this.service.registerUser(register.email, register.password, UserType.STUDENT);
+        Boolean result = false;
+        result = this.service.registerUser(register.email, register.password, UserType.STUDENT);
         return result;
     }
 
     @POST @Path("/register/admin") @Consumes("application/json") @Produces("application/json")
     public Boolean registerAdmin(RegisterDTO register){
         Boolean result = false;
-        //if("ligljkbkjgbewrjgbewrgljewbgbwgbthbjrtbjrjkywrtn".equals(register.token)){
-            result = this.service.registerUser(register.email, register.password, UserType.ADMIN);
-        //}
+        result = this.service.registerUser(register.email, register.password, UserType.ADMIN);
         return result;
     }
 

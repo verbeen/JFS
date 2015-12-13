@@ -15,6 +15,7 @@ public class JobOfferDO extends DataObject{
     public String function;
     public String description;
     public String task;
+    public String skills;
     public Long duration;
     public Long validUntil;
     public Long startDate;
