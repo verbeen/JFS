@@ -28,7 +28,7 @@ public class JobOfferDO extends DataObject{
         location = new LocationDO();
     }
     public static class LocationDO{
-        public List<String> coordindates = new ArrayList<>();
+        public List<Double> coordinates = new ArrayList<>();
         public String type = "Point";
     }
 }

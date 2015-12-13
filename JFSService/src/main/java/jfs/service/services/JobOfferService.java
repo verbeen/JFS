@@ -3,6 +3,7 @@ package jfs.service.services;
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.model.GeocodingResult;
+import com.mongodb.BasicDBObject;
 import jfs.data.dataobjects.JobOfferDO;
 import jfs.data.dataobjects.enums.JobType;
 import jfs.data.dataobjects.helpers.Pair;
@@ -10,6 +11,7 @@ import jfs.data.stores.JobOfferStore;
 import jfs.transferdata.transferobjects.JobOfferDTO;
 import jfs.transferdata.transferobjects.SearchDTO;
 import jfs.transferdata.transferobjects.enums.JobTypeDTO;
+import org.bson.Document;
 
 import javax.ejb.Singleton;
 import java.util.ArrayList;
@@ -41,7 +43,7 @@ public class JobOfferService {
         offer.userId = userId;
 
         // set the geo-location
-        offer.location.coordindates = offerDTO.location.coordinates;
+        offer.location.coordinates = offerDTO.location.coordinates;
         return offer;
     }
 
@@ -52,30 +54,9 @@ public class JobOfferService {
     }
 
     public Boolean addOffer(JobOfferDTO offerDTO, String userId){
-        String location = offerDTO.address;
-
-        // Call GeoCoding API
-        GeoApiContext context = new GeoApiContext();
-        context.setApiKey(googleApiKey);
-
-        try {
-
-            GeocodingResult[] results = GeocodingApi.newRequest(context).address(location).await();
-            if (results != null) {
-                if (results[0].geometry != null) {
-                    String latitude = String.valueOf(results[0].geometry.location.lat);
-                    String longitude = String.valueOf(results[0].geometry.location.lng);
-
-                    List<String> coordinates = new ArrayList<>();
-                    coordinates.add(longitude);
-                    coordinates.add(latitude);
-                    offerDTO.location.coordinates = coordinates;
-                }
-            }
-        } catch (Exception ex) {
-
-        }
-        // update
+        String address = offerDTO.address;
+        List<Double> coordinates = this.getGeoCoordinates(address);
+        offerDTO.location.coordinates = coordinates;
         return this.jobOfferStore.addOffer(this.createOfferDO(offerDTO, userId));
     }
 
@@ -103,14 +84,25 @@ public class JobOfferService {
     }
 
     public List<JobOfferDTO> search(SearchDTO searchDTO){
+        Document locationQuery = null;
+        List<Double> coordinates = null;
+
+        if (searchDTO.address != null && searchDTO.radius != 0) {
+            // get the coordinates for the address
+            coordinates = getGeoCoordinates(searchDTO.address);
+            //remove the address from searchDTO
+            searchDTO.address = null;
+        }
+
         ArrayList<Pair<String, Object>> pairs = new ArrayList<Pair<String, Object>>();
-        if(searchDTO.location != null && !"".equals(searchDTO.location)){
-            pairs.add(new Pair("location", searchDTO.location));
+        if(searchDTO.address != null && !"".equals(searchDTO.address)) {
+            pairs.add(new Pair("address", searchDTO.address));
         }
         if(searchDTO.type != null){
             pairs.add(new Pair("type", searchDTO.type.name()));
         }
-        List<JobOfferDO> doList = this.jobOfferStore.getJobOffers(pairs);
+
+        List<JobOfferDO> doList = this.jobOfferStore.getJobOffers(pairs, coordinates, searchDTO.radius);
         return this.createOfferDTOList(doList);
     }
 
@@ -120,7 +112,7 @@ public class JobOfferService {
                 offerDO._id, offerDO.userId, offerDO.contactEmail, offerDO.name, offerDO.function, offerDO.description,
                 offerDO.task, offerDO.duration, offerDO.validUntil, offerDO.startDate,
                 offerDO.address, offerDO.website, JobTypeDTO.valueOf(offerDO.type.name()));
-        List<String> coords = offerDO.location.coordindates;
+        List<Double> coords = offerDO.location.coordinates;
         Collections.reverse(coords);
         jobOfferDTO.location.coordinates = coords;
 
@@ -134,4 +126,32 @@ public class JobOfferService {
         }
         return offers;
     }
+
+    private List<Double> getGeoCoordinates(String address) {
+        // Call GeoCoding API
+        GeoApiContext context = new GeoApiContext();
+        context.setApiKey(googleApiKey);
+
+        try {
+
+            GeocodingResult[] results = GeocodingApi.newRequest(context).address(address).await();
+            if (results != null) {
+                if (results[0].geometry != null) {
+                    double latitude = results[0].geometry.location.lat;
+                    double longitude = results[0].geometry.location.lng;
+
+                    List<Double> coordinates = new ArrayList<>();
+                    coordinates.add(longitude);
+                    coordinates.add(latitude);
+
+                    return coordinates;
+                }
+            }
+        } catch (Exception ex) {
+
+        }
+        return null;
+    }
+
+
 }

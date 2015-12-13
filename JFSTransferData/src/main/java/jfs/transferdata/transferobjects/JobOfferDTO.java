@@ -47,7 +47,7 @@ public class JobOfferDTO {
     }
 
     public static class LocationDTO{
-        public List<String> coordinates;
+        public List<Double> coordinates;
         public String type="Point";
 
         public LocationDTO(){

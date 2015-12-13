@@ -27,6 +27,10 @@ public class JobOfferStore extends DataStore {
                                        .append("name", "text")
                                        .append("function", "text");
         this.collection.createIndex(index, new IndexOptions().name("textSearch"));*/
+
+        //db.joboffers.createIndex({location:"2dsphere"})
+        Document index2dSphere = new Document("location", "2dsphere");
+        this.collection.createIndex(index2dSphere);
     }
 
     public List<JobOfferDO> getAllOffers(){
@@ -88,12 +92,31 @@ public class JobOfferStore extends DataStore {
         return offers;
     }
 
-    public List<JobOfferDO> getJobOffers(List<Pair<String, Object>> pairs){
+    public List<JobOfferDO> getJobOffers(List<Pair<String, Object>> pairs, List<Double> coordinates, int radius){
         List<JobOfferDO> offers = new ArrayList<JobOfferDO>();
         Document query = new Document();
+        if (coordinates != null && radius !=0 ){
+             /*	location: {
+            		$nearSphere: {
+			            $geometry: {
+				            type: "Point",
+				            coordinates: [ 10.89779, 48.3705449 ]
+			            },
+			            $maxDistance: 100000
+		            }
+	            }
+	        */
+            // prepare $nearsphere query
+            int maxDistance = radius * 1000; // meters
+            Document geometry = new Document("$geometry", new Document("type", "Point").append("coordinates", coordinates));
+            geometry.append("$maxDistance", maxDistance);
+            Document nearSphere = new Document("$nearSphere", geometry);
+            query = new Document("location", nearSphere);
+        }
         for(Pair<String, Object> pair : pairs){
             query.append(pair.key, pair.value);
         }
+
         FindIterable<DBObject> results = this.collection.find(query);
         for(DBObject obj : results){
             offers.add(this.extractJobOffer(obj));
@@ -101,7 +124,7 @@ public class JobOfferStore extends DataStore {
         return offers;
     }
 
-    private JobOfferDO extractJobOffer(DBObject object){
+     private JobOfferDO extractJobOffer(DBObject object){
         return this.serializer.deSerialize(object.toString(), JobOfferDO.class);
     }
 }
