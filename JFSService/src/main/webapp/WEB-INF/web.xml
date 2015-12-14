@@ -13,4 +13,15 @@
         <servlet-name>javax.ws.rs.core.Application</servlet-name>
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
+
+    <context-param>
+        <param-name>resteasy.scan</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
+    <servlet>
+        <servlet-name>SwaggerServlet</servlet-name>
+        <servlet-class>jfs.service.services.SwaggerServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
 </web-app>
