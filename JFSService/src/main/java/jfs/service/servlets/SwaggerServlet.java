@@ -13,8 +13,9 @@ public class SwaggerServlet extends HttpServlet {
         BeanConfig beanConfig = new BeanConfig();
         beanConfig.setVersion("1.0.0");
         beanConfig.setSchemes(new String[]{"http"});
-        beanConfig.setHost("localhost:8080");
-        beanConfig.setBasePath("/service");
+        beanConfig.setTitle("JFS REST services");
+        beanConfig.setHost("/");
+        beanConfig.setBasePath("service");
         beanConfig.setResourcePackage("jfs.service.services");
         beanConfig.setScan(true);
     }
