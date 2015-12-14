@@ -26,13 +26,13 @@ public class StudentSubscriptionsService {
 
     private StudentSubscriptionsDO createStudentSubscriptionDO(StudentSubscriptionsDTO studentSubscriptionsDTO){
         return new StudentSubscriptionsDO(
-                studentSubscriptionsDTO.userId, JobType.valueOf(studentSubscriptionsDTO.types.name()), studentSubscriptionsDTO.location , studentSubscriptionsDTO.skills, studentSubscriptionsDTO.lastView
+                studentSubscriptionsDTO.userId, JobType.valueOf(studentSubscriptionsDTO.type.name()), studentSubscriptionsDTO.location , studentSubscriptionsDTO.skills, studentSubscriptionsDTO.lastView
         );
     }
 
     private StudentSubscriptionsDTO createStudentSubscriptionsDTO(StudentSubscriptionsDO studentSubscriptionsDO){
         return new StudentSubscriptionsDTO(
-                studentSubscriptionsDO._id, JobTypeDTO.valueOf(studentSubscriptionsDO.types.name()), studentSubscriptionsDO.location , studentSubscriptionsDO.skills, studentSubscriptionsDO.lastView
+                studentSubscriptionsDO._id, JobTypeDTO.valueOf(studentSubscriptionsDO.type.name()), studentSubscriptionsDO.location , studentSubscriptionsDO.skills, studentSubscriptionsDO.lastView
         );
     }
 
@@ -41,7 +41,15 @@ public class StudentSubscriptionsService {
     }
 
     public StudentSubscriptionsDTO getStudentSubscriptions(String userId){
-        return createStudentSubscriptionsDTO(this.studentSubscriptionsStore.getStudentSubscriptions(userId));
+        StudentSubscriptionsDO studentSubscriptionsDO = this.studentSubscriptionsStore.getStudentSubscriptions(userId);
+        if(studentSubscriptionsDO != null){
+            return createStudentSubscriptionsDTO(studentSubscriptionsDO);
+        }
+        else {
+            //StudentSubscriptionsDO s = new StudentSubscriptionsDO(userId, JobType.all, "", "", 0);
+            //return createStudentSubscriptionsDTO(s);
+            return null;
+        }
     }
 
     public Boolean updateStudentSubscriptions(String userId, StudentSubscriptionsDTO studentSubscriptionsDTO){
@@ -53,7 +61,13 @@ public class StudentSubscriptionsService {
     }
 
     public List<JobOfferDTO> checkSubscriptions(String userId){
-        List<JobOfferDO> offerDOs = jobOfferStore.getJobOffersByCriteria(this.studentSubscriptionsStore.getStudentSubscriptions(userId), (60*60*24*3));
+        long jobOfferVisibilityBuffer = (60*60*24*3);
+        //jobOfferVisibilityBuffer: amount of time in seconds that results get shown after they were created
+        //(if they apply to the notification settings=
+        StudentSubscriptionsDO studentSubscriptionsDO = this.studentSubscriptionsStore.getStudentSubscriptions(userId);
+
+        List<JobOfferDO> offerDOs = jobOfferStore.getJobOffersByCriteria(studentSubscriptionsDO, jobOfferVisibilityBuffer);
         return jobOfferService.createOfferDTOList(offerDOs);
+
     }
 }
