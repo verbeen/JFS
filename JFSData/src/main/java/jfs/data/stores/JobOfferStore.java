@@ -101,13 +101,12 @@ public class JobOfferStore extends DataStore {
             pairs.add(new Pair("type", studentSubscriptionsDO.type.name()));
         }
         if(studentSubscriptionsDO.location != null && !"".equals(studentSubscriptionsDO.location)){
-            pairs.add(new Pair("location", studentSubscriptionsDO.location));
+            pairs.add(new Pair("location", new BasicDBObject("$regex", studentSubscriptionsDO.location)));
         }
         if(studentSubscriptionsDO.skills != null && !"".equals(studentSubscriptionsDO.skills)){
             //List<String> Skills = Arrays.asList(studentSubscriptionsDO.skills.split("\\s*,\\s*")); //also deleted any additional white spaces
             String skillsRegex = studentSubscriptionsDO.skills.replace(",", "|");
             skillsRegex = skillsRegex.replace(" ", "");
-            System.out.println(skillsRegex);
 
             pairs.add(new Pair("skills", new BasicDBObject("$regex", skillsRegex)));
         }
