@@ -45,7 +45,9 @@ public class StudentSubscriptionsService {
         if(studentSubscriptionsDO != null){
             return createStudentSubscriptionsDTO(studentSubscriptionsDO);
         }
-        else{
+        else {
+            //StudentSubscriptionsDO s = new StudentSubscriptionsDO(userId, JobType.all, "", "", 0);
+            //return createStudentSubscriptionsDTO(s);
             return null;
         }
     }
@@ -63,12 +65,9 @@ public class StudentSubscriptionsService {
         //jobOfferVisibilityBuffer: amount of time in seconds that results get shown after they were created
         //(if they apply to the notification settings=
         StudentSubscriptionsDO studentSubscriptionsDO = this.studentSubscriptionsStore.getStudentSubscriptions(userId);
-        if(studentSubscriptionsDO != null){
-            List<JobOfferDO> offerDOs = jobOfferStore.getJobOffersByCriteria(studentSubscriptionsDO, jobOfferVisibilityBuffer);
-            return jobOfferService.createOfferDTOList(offerDOs);
-        }
-        else{
-            return null;
-        }
+
+        List<JobOfferDO> offerDOs = jobOfferStore.getJobOffersByCriteria(studentSubscriptionsDO, jobOfferVisibilityBuffer);
+        return jobOfferService.createOfferDTOList(offerDOs);
+
     }
 }
