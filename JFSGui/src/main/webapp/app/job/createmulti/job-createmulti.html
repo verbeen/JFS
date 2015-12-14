@@ -1,0 +1,54 @@
+<div id="jfsCreateJobMulti" class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <h2>Upload multiple job offers</h2>
+        <hr>
+
+        <div ng-if="responseMessage.success || responseMessage.error">
+            <div class="alert" ng-class="{ 'alert-success': responseMessage.success, 'alert-danger': responseMessage.error }">
+                {{ responseMessage.text }}
+            </div>
+            <button ng-show="!responseMessage.showForm" class="btn btn-primary" ng-click="initializeNewJobOffers()">Upload more</button>
+        </div>
+
+        <form class="form-horizontal" ng-submit="create()" role="form" name="formCreateJobMulti" ng-show="responseMessage.showForm" novalidate>
+            <div class="form-group" show-errors>
+                <label for="jobOfferChooser" class="col-sm-3 col-md-3 control-label">Source file(s)</label>
+                <div class="col-sm-9 col-md-9">
+                    <input type="file" id="jobOfferChooser"
+                           class="filechooser filechooser-input"
+                           file-selected="handleFileSelection()"
+                           ng-model="jobOfferChooser"
+                           name="selectedFiles"
+                           multiple required>
+                    <label for="jobOfferChooser" class="btn btn-default filechooser filechooser-label">
+                        <div ng-if="files.length == 0">
+                            Click to select files.
+                        </div>
+                        <div ng-if="files.length == 1">
+                            Selected {{ files[0].name }}
+                        </div>
+                        <div ng-if="files.length > 1">
+                            Selected {{ files[0].name }}<br>
+                            + {{ files.length - 1 }} more.
+                        </div>
+                    </label>
+                    <button type="button" ng-click="parseFiles()" class="btn btn-default" style="margin-top:10px;">Parse selected files</button>
+                    <span ng-if="jobOffers.length > 0">
+                        &nbsp; {{ jobOffers.length }} offers ready for upload.
+                    </span>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Upload job offers</button>
+                <div ng-if="dataLoading" class="loadingAnimationWrapper">
+                    <div class="loadingAnimation">
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>

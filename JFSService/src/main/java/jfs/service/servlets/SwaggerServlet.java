@@ -1,4 +1,4 @@
-package jfs.service.services;
+package jfs.service.servlets;
 
 import io.swagger.jaxrs.config.BeanConfig;
 import javax.servlet.ServletConfig;

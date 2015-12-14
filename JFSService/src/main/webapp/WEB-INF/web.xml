@@ -21,7 +21,7 @@
 
     <servlet>
         <servlet-name>SwaggerServlet</servlet-name>
-        <servlet-class>jfs.service.services.SwaggerServlet</servlet-class>
+        <servlet-class>jfs.service.servlets.SwaggerServlet</servlet-class>
         <load-on-startup>2</load-on-startup>
     </servlet>
 </web-app>
