@@ -59,7 +59,7 @@ angular
                         $scope.noResults = {};
                         $scope.noResults.info = false;
                         $scope.noResults.error = false;
-                        if (response.success && response.data.offers != null) {
+                        if (response.success) {
                             $scope.subDetails=response.data;
                             getJobsSubs();
                         } else {

@@ -41,13 +41,7 @@ public class StudentSubscriptionsService {
     }
 
     public StudentSubscriptionsDTO getStudentSubscriptions(String userId){
-        StudentSubscriptionsDO studentSubscriptionsDO = this.studentSubscriptionsStore.getStudentSubscriptions(userId);
-        if(studentSubscriptionsDO != null){
-            return createStudentSubscriptionsDTO(studentSubscriptionsDO);
-        }
-        else{
-            return null;
-        }
+        return createStudentSubscriptionsDTO(this.studentSubscriptionsStore.getStudentSubscriptions(userId));
     }
 
     public Boolean updateStudentSubscriptions(String userId, StudentSubscriptionsDTO studentSubscriptionsDTO){
@@ -62,13 +56,7 @@ public class StudentSubscriptionsService {
         long jobOfferVisibilityBuffer = (60*60*24*3);
         //jobOfferVisibilityBuffer: amount of time in seconds that results get shown after they were created
         //(if they apply to the notification settings=
-        StudentSubscriptionsDO studentSubscriptionsDO = this.studentSubscriptionsStore.getStudentSubscriptions(userId);
-        if(studentSubscriptionsDO != null){
-            List<JobOfferDO> offerDOs = jobOfferStore.getJobOffersByCriteria(studentSubscriptionsDO, jobOfferVisibilityBuffer);
-            return jobOfferService.createOfferDTOList(offerDOs);
-        }
-        else{
-            return null;
-        }
+        List<JobOfferDO> offerDOs = jobOfferStore.getJobOffersByCriteria(this.studentSubscriptionsStore.getStudentSubscriptions(userId), jobOfferVisibilityBuffer);
+        return jobOfferService.createOfferDTOList(offerDOs);
     }
 }
