@@ -62,6 +62,10 @@
                 templateUrl: 'app/company/company_profile.html',
                 controller: 'CompanyProfileController as vm'
             })
+            .when('/company/jobmetrics', {
+                templateUrl: 'app/company/jobmetrics/company-jobmetrics.html',
+                controller: 'CompanyJobMetricsController'
+            })
             .when('/student', {
                 templateUrl: 'app/student/landing/student-landing.html',
                 controller: 'StudentLandingController as vm'

@@ -11,6 +11,7 @@
 
         service.getAllJobs = getAllJobs;
         service.getJobProfile = getJobProfile;
+        service.getAllJobMetricsByCompany = getAllJobMetricsByCompany;
         service.getRecentJobs = getRecentJobs;
         service.getJobsBySearch = getJobsBySearch;
         service.createJob = createJob;
@@ -22,6 +23,11 @@
 
 
         return service;
+
+        function getAllJobMetricsByCompany(token){
+            return $http.post('service/offers/metrics/company', token)
+                .then(handleSuccess, handleError('Error getting metrics for this user!'))
+        }
 
         function getAllJobs(token) {
             return $http.post('/service/offers/getall', token)

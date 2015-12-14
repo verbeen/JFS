@@ -4,7 +4,6 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.MongoException;
 import com.mongodb.client.FindIterable;
-import com.mongodb.client.model.IndexOptions;
 import com.mongodb.client.model.Sorts;
 import jfs.data.dataobjects.JobOfferDO;
 import jfs.data.dataobjects.StudentSubscriptionsDO;
@@ -14,7 +13,6 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -22,15 +20,10 @@ import java.util.List;
  */
 public class JobOfferStore extends DataStore {
     public static final JobOfferStore store = new JobOfferStore();
+    private JobOfferMetricsStore metricsStore = JobOfferMetricsStore.jobOfferMetricsStore;
 
     public JobOfferStore(){
         super("joboffers");
-        /*Document index = new Document().append("location", "text")
-                                       .append("function", "text")
-                                       .append("description", "text")
-                                       .append("name", "text")
-                                       .append("function", "text");
-        this.collection.createIndex(index, new IndexOptions().name("textSearch"));*/
     }
 
     public List<JobOfferDO> getAllOffers(){
@@ -42,18 +35,19 @@ public class JobOfferStore extends DataStore {
         return offers;
     }
 
-    public Boolean addOffer(JobOfferDO offer){
+    public Boolean addOffer(JobOfferDO offer, String companyId){
         if (offer != null) {
-            return this.insert(offer);
+            return this.insert(offer) && this.metricsStore.add(offer._id, companyId);
         } else {
             throw new NullPointerException("JobOfferDO offer parameter is null");
         }
     }
 
-    public Boolean addOffers(List<JobOfferDO> offers){
+    public Boolean addOffers(List<JobOfferDO> offers, String companyId){
         List<DBObject> docs = this.createDocumentList(offers);
         try{
             this.collection.insertMany(docs);
+            this.metricsStore.addManyByDO(offers, companyId);
             return true;
         }
         catch (MongoException ex){

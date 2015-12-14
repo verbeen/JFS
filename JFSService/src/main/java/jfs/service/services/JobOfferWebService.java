@@ -1,13 +1,19 @@
 package jfs.service.services;
 
 
+import jfs.data.dataobjects.JobOfferMetricsDO;
+import jfs.service.events.jobevents.*;
+import jfs.service.events.jobevents.annotations.*;
 import jfs.service.sessions.Session;
 import jfs.transferdata.transferobjects.*;
 import jfs.transferdata.transferobjects.enums.ResultTypeDTO;
 import jfs.transferdata.transferobjects.enums.UserTypeDTO;
 
+import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by lpuddu on 12-11-2015.
@@ -16,6 +22,15 @@ import javax.ws.rs.*;
 public class JobOfferWebService {
     @Inject
     private JobOfferService jobOfferService;
+    @Inject
+    private MetricsService metricsService;
+
+    @Inject @JobApply
+    private Event<JobApplyEvent> jobApplyEvent;
+    @Inject @JobDetailView
+    private Event<JobDetailViewEvent> jobDetailViewEvent;
+    @Inject @JobListView
+    private Event<JobListViewEvent> jobListViewEvent;
 
     @POST
     @Path("/add") @Consumes("application/json") @Produces("application/json")
@@ -79,6 +94,7 @@ public class JobOfferWebService {
     public JobOfferListDTO searchText(String term){
         JobOfferListDTO list = new JobOfferListDTO();
         list.offers = this.jobOfferService.searchText(term);
+        this.jobListViewEvent.fire(new JobListViewEvent(list.offers));
         return list;
     }
 
@@ -87,6 +103,7 @@ public class JobOfferWebService {
     public JobOfferListDTO getRecent(Integer amount){
         JobOfferListDTO list = new JobOfferListDTO();
         list.offers = this.jobOfferService.searchRecent(amount);
+        this.jobListViewEvent.fire(new JobListViewEvent(list.offers));
         return list;
     }
 
@@ -95,12 +112,28 @@ public class JobOfferWebService {
     public JobOfferListDTO search(SearchDTO searchDTO){
         JobOfferListDTO list = new JobOfferListDTO();
         list.offers = this.jobOfferService.search(searchDTO);
+        this.jobListViewEvent.fire(new JobListViewEvent(list.offers));
         return list;
+    }
+
+    @POST
+    @Path("/metrics/company") @Consumes("application/json") @Produces("application/json")
+    public List<JobOfferMetricsDTO> getMetricsByCompany(String token){
+        String companyId = SessionService.sessions.get(token).userId;
+        if(token == null){
+            return null;
+        }else{
+            return this.metricsService.getJobOfferMetricsByCompany(companyId);
+        }
     }
 
     @GET
     @Path("{id}")
     public JobOfferDTO getById(@PathParam("id") String id){
-        return this.jobOfferService.getById(id);
+        JobOfferDTO offerDTO = this.jobOfferService.getById(id);
+        if(offerDTO != null){
+            this.jobDetailViewEvent.fire(new JobDetailViewEvent(id));
+        }
+        return offerDTO;
     }
 }

@@ -47,7 +47,7 @@ public class JobOfferService {
     }
 
     public Boolean addOffer(JobOfferDTO offerDTO, String userId){
-        return this.jobOfferStore.addOffer(this.createOfferDO(offerDTO, userId));
+        return this.jobOfferStore.addOffer(this.createOfferDO(offerDTO, userId), userId);
     }
 
     public Boolean addOffers(List<JobOfferDTO> offerDTOs, String userId){
@@ -55,7 +55,7 @@ public class JobOfferService {
         for(JobOfferDTO offerDTO : offerDTOs){
             offers.add(this.createOfferDO(offerDTO, userId));
         }
-        return this.jobOfferStore.addOffers(offers);
+        return this.jobOfferStore.addOffers(offers, userId);
     }
 
     public List<JobOfferDTO> searchText(String term){
