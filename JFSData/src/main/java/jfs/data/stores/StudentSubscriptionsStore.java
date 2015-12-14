@@ -3,9 +3,12 @@ package jfs.data.stores;
 import com.google.gson.Gson;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import com.mongodb.client.model.UpdateOptions;
 import com.mongodb.client.result.UpdateResult;
 import jfs.data.dataobjects.StudentProfileDO;
 import jfs.data.dataobjects.StudentSubscriptionsDO;
+import jfs.data.serializers.Serializer;
+import org.bson.Document;
 
 /**
  * Created by Hulk-A on 10.11.2015.
@@ -29,14 +32,16 @@ public class StudentSubscriptionsStore extends DataStore {
         StudentSubscriptionsDO studentSubscription = null;
         DBObject doc = (DBObject)this.collection.find(new BasicDBObject("_id", userId)).first();
         if (doc != null) {
-            studentSubscription = (StudentSubscriptionsDO) new Gson().fromJson((doc).toString(), StudentSubscriptionsDO.class);
+            studentSubscription = (StudentSubscriptionsDO)  this.serializer.deSerialize((doc).toString(), StudentSubscriptionsDO.class);
         }
         return studentSubscription;
     }
 
     public Boolean updateStudentSubscription(String userId, StudentSubscriptionsDO studentSubscription){
         if (studentSubscription != null) {
-            return this.replace(userId, studentSubscription);
+            Document query = new Document().append("_id", studentSubscription._id);
+            DBObject obj = BasicDBObject.parse(this.serializer.serialize(studentSubscription));
+            return this.collection.replaceOne(query, obj, new UpdateOptions().upsert(true)).wasAcknowledged();
         } else {
             throw new NullPointerException("StudentSubscriptionsDO studentSubscription parameter is null");
         }

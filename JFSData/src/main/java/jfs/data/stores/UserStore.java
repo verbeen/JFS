@@ -31,7 +31,7 @@ public class UserStore extends DataStore {
         UserDO user = null;
         DBObject doc = (DBObject)this.collection.find(new BasicDBObject("_id", id)).first();
         if (doc != null) {
-            user = (UserDO) new Gson().fromJson((doc).toString(), UserDO.class);
+            user = (UserDO) this.serializer.deSerialize((doc).toString(), UserDO.class);
             if(user.password.equals(password)){
                 return user;
             }
