@@ -23,6 +23,7 @@ module.exports = function(config) {
         'vendor/angular-strap-2.3.5/angular-strap.min.js',
         'vendor/angular-strap-2.3.5/angular-strap.tpl.min.js',
         'vendor/angular-masonry-0.13.0/angular-masonry.min.js',
+        'vendor/ng-tags-input/ng-tags-input.min.js',
         'app/app.js',
         'app/**/*.js'
     ],
