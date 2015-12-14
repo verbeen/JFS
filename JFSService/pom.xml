@@ -28,6 +28,22 @@
             <artifactId>javaee-api</artifactId>
             <version>7.0</version>
         </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-core</artifactId>
+            <version>1.5.4</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-jaxrs</artifactId>
+            <version>1.5.4</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>1.5.4</version>
+        </dependency>
+
     </dependencies>
 
     <profiles>
@@ -42,8 +58,8 @@
                         <configuration>
                             <outputDirectory>deployments</outputDirectory>
                             <warName>service</warName>
-                            <source>1.8</source>
-                            <target>1.8</target>
+                            <!--<source>1.8</source>
+                            <target>1.8</target>-->
                         </configuration>
                     </plugin>
                 </plugins>

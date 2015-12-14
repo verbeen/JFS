@@ -108,7 +108,7 @@
                 '/job/list'
             ];
 
-            if(!loggedIn && allowedPages.indexOf(currentPath) == -1){
+            if (!loggedIn && allowedPages.indexOf(currentPath) == -1) {
                 $location.path('/authentication/login');
             }
 
