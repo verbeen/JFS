@@ -59,12 +59,11 @@ angular
                         $scope.noResults = {};
                         $scope.noResults.info = false;
                         $scope.noResults.error = false;
-                        if (response.success && response.data.offers != null) {
+                        if (response.success && response.data != null && response.data != "") {
                             $scope.subDetails=response.data;
                             getJobsSubs();
                         } else {
                             // backend service is not reachable (e.g. database down)
-                            console.error(response.message);
                             console.info("failed!No data retrieved");
                             //$scope.noResults.error = true;
                             $scope.noResults.info = true;
