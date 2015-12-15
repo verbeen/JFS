@@ -44,8 +44,8 @@
             <dd><a href="{{ jobOffer.website }}" target="_blank">{{ jobOffer.website }}</a></dd>
         </dl>
 
-        <hr>
+        <hr ng-if="showApplyBtn">
 
-        <a class="btn btn-primary" href="mailto:{{ jobOffer.contactEmail }}" role="button">Apply</a>
+        <a ng-if="showApplyBtn" class="btn btn-primary" href="mailto:{{ jobOffer.contactEmail }}" role="button">Apply</a>
     </div>
 </div>
