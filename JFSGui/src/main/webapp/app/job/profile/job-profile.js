@@ -5,9 +5,15 @@
         .module('app')
         .controller('JobProfileController', JobProfileController);
 
-    JobProfileController.$inject = ['$scope', '$routeParams', 'JobService'];
-    function JobProfileController($scope, $routeParams, JobService) {
+    JobProfileController.$inject = ['$scope', '$rootScope', '$routeParams', 'JobService'];
+    function JobProfileController($scope, $rootScope, $routeParams, JobService) {
         $scope.offerId = $routeParams.offerId;
+        $scope.userType = $rootScope.globals.currentUser.userType;
+        if ($scope.userType == 'STUDENT') {
+            $scope.showApplyBtn = true;
+        } else {
+            $scope.showApplyBtn = false;
+        }
 
         JobService.getJobProfile($routeParams.offerId)
             .then(function(response) {
@@ -18,7 +24,6 @@
                 if (response.success) {
                     if (response.data) {
                         $scope.jobOffer = response.data;
-                        console.log(response.data);
                     } else {
                         $scope.jobOffer = {};
                         $scope.noResults.info = true;
