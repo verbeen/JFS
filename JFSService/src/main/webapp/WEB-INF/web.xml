@@ -24,4 +24,8 @@
         <servlet-class>jfs.service.servlets.SwaggerServlet</servlet-class>
         <load-on-startup>2</load-on-startup>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>SwaggerServlet</servlet-name>
+        <url-pattern>/swagger</url-pattern>
+    </servlet-mapping>
 </web-app>

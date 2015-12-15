@@ -51,6 +51,9 @@
             $scope.responseMessage.error = false;
             $scope.files = [];
             $scope.jobOffers = [];
+            if($scope.jobOfferChooser.files != null) {
+                $scope.jobOfferChooser.value = "";
+            }
             $scope.$broadcast('show-errors-reset');
         }
 
