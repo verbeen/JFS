@@ -4,11 +4,13 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.MongoException;
 import com.mongodb.client.FindIterable;
-import com.mongodb.client.model.IndexOptions;
 import com.mongodb.client.model.Sorts;
 import jfs.data.dataobjects.JobOfferDO;
+import jfs.data.dataobjects.StudentSubscriptionsDO;
+import jfs.data.dataobjects.enums.JobType;
 import jfs.data.dataobjects.helpers.Pair;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,15 +20,10 @@ import java.util.List;
  */
 public class JobOfferStore extends DataStore {
     public static final JobOfferStore store = new JobOfferStore();
+    private JobOfferMetricsStore metricsStore = JobOfferMetricsStore.jobOfferMetricsStore;
 
     public JobOfferStore(){
         super("joboffers");
-        /*Document index = new Document().append("location", "text")
-                                       .append("function", "text")
-                                       .append("description", "text")
-                                       .append("name", "text")
-                                       .append("function", "text");
-        this.collection.createIndex(index, new IndexOptions().name("textSearch"));*/
     }
 
     public List<JobOfferDO> getAllOffers(){
@@ -38,18 +35,19 @@ public class JobOfferStore extends DataStore {
         return offers;
     }
 
-    public Boolean addOffer(JobOfferDO offer){
+    public Boolean addOffer(JobOfferDO offer, String companyId){
         if (offer != null) {
-            return this.insert(offer);
+            return this.insert(offer) && this.metricsStore.add(offer._id, companyId);
         } else {
             throw new NullPointerException("JobOfferDO offer parameter is null");
         }
     }
 
-    public Boolean addOffers(List<JobOfferDO> offers){
+    public Boolean addOffers(List<JobOfferDO> offers, String companyId){
         List<DBObject> docs = this.createDocumentList(offers);
         try{
             this.collection.insertMany(docs);
+            this.metricsStore.addManyByDO(offers, companyId);
             return true;
         }
         catch (MongoException ex){
@@ -86,6 +84,35 @@ public class JobOfferStore extends DataStore {
             offers.add(this.extractJobOffer(obj));
         }
         return offers;
+    }
+
+    public List<JobOfferDO> getJobOffersByCriteria(StudentSubscriptionsDO studentSubscriptionsDO, long jobOfferVisibilityBuffer){
+
+        ArrayList<Pair<String, Object>> pairs = new ArrayList<Pair<String, Object>>();
+
+        pairs.add(new Pair("_id", new BasicDBObject("$gt", new ObjectId(Long.toHexString((studentSubscriptionsDO.lastView / 1000) - jobOfferVisibilityBuffer) + "0000000000000000").toString())));
+
+        //Explanation for "_id" seach query
+        //"_id" Timestamp will be compared with $gt greater than an ObjectId(X).toString()
+        //Format that the long lastView should be in seconds instead of milliseconds 1000000000
+        // See: http://stackoverflow.com/questions/8749971/can-i-query-mongodb-objectid-by-date
+
+        if(studentSubscriptionsDO.type != null && !"".equals(studentSubscriptionsDO.type) && (studentSubscriptionsDO.type != JobType.all)){
+            pairs.add(new Pair("type", studentSubscriptionsDO.type.name()));
+        }
+        if(studentSubscriptionsDO.location != null && !"".equals(studentSubscriptionsDO.location)){
+            pairs.add(new Pair("location", new BasicDBObject("$regex", studentSubscriptionsDO.location)));
+        }
+        if(studentSubscriptionsDO.skills != null && !"".equals(studentSubscriptionsDO.skills)){
+            //List<String> Skills = Arrays.asList(studentSubscriptionsDO.skills.split("\\s*,\\s*")); //also deleted any additional white spaces
+            String skillsRegex = studentSubscriptionsDO.skills.replace(",", "|");
+            skillsRegex = skillsRegex.replace(" ", "");
+
+            pairs.add(new Pair("skills", new BasicDBObject("$regex", skillsRegex)));
+        }
+
+        List<JobOfferDO> doList = this.getJobOffers(pairs);
+        return doList;
     }
 
     public List<JobOfferDO> getJobOffers(List<Pair<String, Object>> pairs){

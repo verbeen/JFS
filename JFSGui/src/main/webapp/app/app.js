@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('app', ["ngRoute", "ngCookies", "ngSanitize", "mgcrea.ngStrap", "wu.masonry"])
+    angular.module('app', ["ngRoute", "ngCookies", "ngSanitize", "mgcrea.ngStrap", "wu.masonry","ngTagsInput"])
         .config(config)
         .run(run)
         .controller('HomeController', HomeController)
@@ -54,10 +54,27 @@
                 templateUrl: 'app/job/create/job-create.html',
                 controller: 'JobCreateController as vm'
             })
+            .when('/job/createmulti', {
+                templateUrl: 'app/job/createmulti/job-createmulti.html',
+                controller: 'JobCreateMultiController as vm'
+            })
             .when('/company', {
                 templateUrl: 'app/company/company_profile.html',
                 controller: 'CompanyProfileController as vm'
             })
+            .when('/company/jobmetrics', {
+                templateUrl: 'app/company/jobmetrics/company-jobmetrics.html',
+                controller: 'CompanyJobMetricsController'
+            })
+            .when('/student', {
+                templateUrl: 'app/student/landing/student-landing.html',
+                controller: 'StudentLandingController as vm'
+            })
+            .when('/student/notification', {
+                templateUrl: 'app/student/notification/add-notification.html',
+                controller: 'AddNotificationController as vm'
+            })
+
             .otherwise({redirectTo: '/'});
 
             //$locationProvider.html5Mode(true);
@@ -91,7 +108,7 @@
                 '/job/list'
             ];
 
-            if(!loggedIn && allowedPages.indexOf(currentPath) == -1){
+            if (!loggedIn && allowedPages.indexOf(currentPath) == -1) {
                 $location.path('/authentication/login');
             }
 

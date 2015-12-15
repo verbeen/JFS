@@ -11,11 +11,23 @@
 
         service.getAllJobs = getAllJobs;
         service.getJobProfile = getJobProfile;
+        service.getAllJobMetricsByCompany = getAllJobMetricsByCompany;
         service.getRecentJobs = getRecentJobs;
         service.getJobsBySearch = getJobsBySearch;
         service.createJob = createJob;
+        service.createJobMulti = createJobMulti;
+        service.addSubscription = addSubscription;
+        service.checkSubscription = checkSubscription;
+        service.getJobsSubs = getJobsSubs;
+        service.subsUpdate = subsUpdate;
+
 
         return service;
+
+        function getAllJobMetricsByCompany(token){
+            return $http.post('service/offers/metrics/company', token)
+                .then(handleSuccess, handleError('Error getting metrics for this user!'))
+        }
 
         function getAllJobs(token) {
             return $http.post('/service/offers/getall', token)
@@ -40,6 +52,34 @@
         function createJob(jobDetails) {
             return $http.post('/service/offers/add', jobDetails)
                 .then(handleSuccess, handleError('Error adding job offers by "' + jobDetails + '"!'));
+        }
+
+        function createJobMulti(jobsArray) {
+            return $http.post('/service/offers/addmulti', jobsArray)
+                .then(handleSuccess, handleError('Error adding job offers by "' + jobsArray + '"!'));
+        }
+
+        //function for subscription
+        function addSubscription(subDetails) {
+            return $http.post('/service/studentsubscriptions/add', subDetails)
+                .then(handleSuccess, handleError('Error adding job offers by "' + subDetails + '"!'));
+        }
+
+        function checkSubscription(user) {
+            return $http.post('/service/studentsubscriptions/get', user)
+                .then(handleSuccess, handleError('Error getting subscription "' + user + '"!'));
+        }
+
+        //This function is used to get all the
+        function getJobsSubs(userDetails) {
+            return $http.post('/service/studentsubscriptions/checkSubscriptions', userDetails)
+                .then(handleSuccess, handleError('Error getting jobs "' + userDetails + '"!'));
+        }
+
+        //updating existing subscription details
+        function subsUpdate(userDetails) {
+            return $http.post('/service/studentsubscriptions/update', userDetails)
+                .then(handleSuccess, handleError('Error updating subs "' + userDetails + '"!'));
         }
 
         // private functions

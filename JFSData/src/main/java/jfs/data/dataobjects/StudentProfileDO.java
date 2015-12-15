@@ -30,9 +30,6 @@ public class StudentProfileDO extends DataObject {
     public String resume; //URL!
     public String courseDetails;
 
-    public StudentProfileDO() {
-    }
-
     public StudentProfileDO(String user_id, String name, String email, String organization, String address, String skills, String experience, String resume, String courseDetails) {
         super(user_id);
         this.name = name;

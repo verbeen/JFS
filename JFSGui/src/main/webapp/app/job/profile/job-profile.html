@@ -10,6 +10,9 @@
         </div>
 
         <dl ng-if="!noResults.info && !noResults.error" class="dl-horizontal">
+            <dt>Company</dt>
+            <dd>{{ jobOffer.companyId }}</dd>
+
             <dt>Job type</dt>
             <dd>{{ jobOffer.type }}</dd>
 
@@ -18,6 +21,9 @@
 
             <dt>Job task</dt>
             <dd>{{ jobOffer.task | htmlToPlainText }}</dd>
+
+            <dt>Job Skills</dt>
+            <dd>{{ jobOffer.skills | htmlToPlainText }}</dd>
 
             <dt>Valid till date</dt>
             <dd>{{ jobOffer.validUntil | dateCheckedZero: 'yyyy-MM-dd' }}</dd>
@@ -38,8 +44,8 @@
             <dd><a href="{{ jobOffer.website }}" target="_blank">{{ jobOffer.website }}</a></dd>
         </dl>
 
-        <hr>
+        <hr ng-if="showApplyBtn">
 
-        <a class="btn btn-primary" href="mailto:{{ jobOffer.contactEmail }}" role="button">Apply</a>
+        <a ng-if="showApplyBtn" class="btn btn-primary" href="mailto:{{ jobOffer.contactEmail }}" role="button">Apply</a>
     </div>
 </div>

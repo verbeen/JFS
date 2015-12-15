@@ -28,6 +28,7 @@ public class JobOfferService {
         offer.location = offerDTO.location;
         offer.name = offerDTO.name;
         offer.task = offerDTO.task;
+        offer.skills = offerDTO.skills;
         offer.type = JobType.valueOf(offerDTO.type.name());
         offer.validUntil = offerDTO.validUntil;
         offer.startDate = offerDTO.startDate;
@@ -46,7 +47,7 @@ public class JobOfferService {
     }
 
     public Boolean addOffer(JobOfferDTO offerDTO, String userId){
-        return this.jobOfferStore.addOffer(this.createOfferDO(offerDTO, userId));
+        return this.jobOfferStore.addOffer(this.createOfferDO(offerDTO, userId), userId);
     }
 
     public Boolean addOffers(List<JobOfferDTO> offerDTOs, String userId){
@@ -54,7 +55,7 @@ public class JobOfferService {
         for(JobOfferDTO offerDTO : offerDTOs){
             offers.add(this.createOfferDO(offerDTO, userId));
         }
-        return this.jobOfferStore.addOffers(offers);
+        return this.jobOfferStore.addOffers(offers, userId);
     }
 
     public List<JobOfferDTO> searchText(String term){
@@ -87,12 +88,12 @@ public class JobOfferService {
     private JobOfferDTO createOfferDTO(JobOfferDO offerDO){
         return new JobOfferDTO(
                 offerDO._id, offerDO.userId, offerDO.contactEmail, offerDO.name, offerDO.function, offerDO.description,
-                offerDO.task, offerDO.duration, offerDO.validUntil, offerDO.startDate,
+                offerDO.task, offerDO.skills, offerDO.duration, offerDO.validUntil, offerDO.startDate,
                 offerDO.location, offerDO.website, JobTypeDTO.valueOf(offerDO.type.name())
         );
     }
 
-    private List<JobOfferDTO> createOfferDTOList(List<JobOfferDO> offerDOs){
+    public List<JobOfferDTO> createOfferDTOList(List<JobOfferDO> offerDOs){
         List<JobOfferDTO> offers = new ArrayList<JobOfferDTO>();
         for(JobOfferDO offerDO : offerDOs){
             offers.add(this.createOfferDTO(offerDO));

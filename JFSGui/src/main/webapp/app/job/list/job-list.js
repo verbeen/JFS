@@ -9,6 +9,7 @@
     function JobListController(JobService, $scope) {
         // method declarations
         $scope.search = search;
+        $scope.getRecentJobs = getRecentJobs;
 
         // gets executed on initial load
         (function initController() {
@@ -56,7 +57,7 @@
                         $scope.dataLoading = false;
                     }
                 });
-        }
+        };
 
         function search() {
             $scope.dataLoading = true;

@@ -13,6 +13,7 @@ public class JobOfferDTO {
     public String function;
     public String description;
     public String task;
+    public String skills;
     public long duration;
     public long validUntil;
     public long startDate;
@@ -24,7 +25,7 @@ public class JobOfferDTO {
 
     }
 
-    public JobOfferDTO(String offerId, String companyId, String contactEmail, String name, String function, String description, String task, long duration, long validUntil, long startDate, String location, String website, JobTypeDTO type) {
+    public JobOfferDTO(String offerId, String companyId, String contactEmail, String name, String function, String description, String task, String skills, long duration, long validUntil, long startDate, String location, String website, JobTypeDTO type) {
         this.offerId = offerId;
         this.companyId = companyId;
         this.contactEmail = contactEmail;
@@ -32,6 +33,7 @@ public class JobOfferDTO {
         this.function = function;
         this.description = description;
         this.task = task;
+        this.skills = skills;
         this.duration = duration;
         this.validUntil = validUntil;
         this.startDate = startDate;

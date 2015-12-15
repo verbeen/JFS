@@ -13,12 +13,28 @@
         </div>
 
         <div class="collapse navbar-collapse" bs-collapse-target>
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav navbar-left">
                 <li data-match-route="^/job/list.*"><a href="#/job/list">Job offers</a></li>
-                <li ng-show="isCompany" data-match-route="^/job/create.*"><a href="#/job/create">Create Job</a></li>
+                <li ng-show="isCompany" data-match-route="^/job/create$"><a href="#/job/create">Create job</a></li>
+                <li ng-show="isCompany" data-match-route="^/job/createmulti"><a href="#/job/createmulti">Upload multiple jobs</a></li>
+                <li ng-show="isCompany" data-match-route="^/company/jobmetrics"><a href="#/company/jobmetrics">Job metrics</a></li>
                 <li ng-show="isAdmin" data-match-route="^/administration/job/list.*"><a href="#/administration/job/list">Admin job offers</a></li>
                 <li ng-show="isAdmin" data-match-route="^/administration/user/list.*"><a href="#/administration/user/list">Admin users</a></li>
+
+            </ul>
+            <ul ng-show="!loggedIn" class="nav navbar-nav navbar-right">
                 <li><a ng-href="#/authentication/{{loggedIn ? 'logout' : 'login'}}">{{loggedIn ? "Logout" : "Login"}}</a></li>
+            </ul>
+            <ul ng-show="loggedIn" class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a bs-dropdown href="" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                       aria-haspopup="true" aria-expanded="false">Welcome {{ username }} <span class="caret"></span></a>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li ng-show="isStudent" data-match-route="^/student.*"><a href="#/student">Home</a></li>
+                        <li><a ng-href="#/authentication/{{loggedIn ? 'logout' : 'login'}}">{{loggedIn ? "Logout" : "Login"}}</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>

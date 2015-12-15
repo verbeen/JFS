@@ -7,7 +7,7 @@
             <div class="alert" ng-class="{ 'alert-success': responseMessage.success, 'alert-danger': responseMessage.error }">
                 {{ responseMessage.text }}
             </div>
-            <button class="btn btn-primary" ng-click="initializeNewJobOffer()">New job offer</button>
+            <button ng-show="!responseMessage.showForm" class="btn btn-primary" ng-click="initializeNewJobOffer()">New job offer</button>
         </div>
 
         <form class="form-horizontal" ng-submit="create()" role="form" name="formCreateJob" ng-show="responseMessage.showForm" novalidate>
@@ -50,6 +50,16 @@
                               ng-model="jobProfile.jobTask" placeholder="Job Task"></textarea>
                 </div>
             </div>
+
+            <!--------------------->
+            <div class="form-group">
+                <label for="jobSkill" class="col-sm-3 col-md-3 control-label">Skills</label>
+                <div class="col-sm-9 col-md-9">
+                    <input type="text" id="jobSkill" class="form-control" name="jobSkill"
+                           ng-model="jobProfile.jobSkill" placeholder="Skills">
+                </div>
+            </div>
+
 
             <div class="form-group" show-errors>
                 <label for="jobCreateValidTillDate" class="col-sm-3 col-md-3 control-label">Valid Till Date</label>

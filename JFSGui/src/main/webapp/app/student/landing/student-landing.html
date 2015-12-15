@@ -1,0 +1,45 @@
+<div class="col-md-12">
+    <div class="col-md-1">
+        <!--Left pane-->
+    </div>
+    <div class="col-md-11">  <!--Main pane is divided here to get a small right pane inside the main one-->
+        <div class="col-md-9"><!--This is the landing page pane-->
+
+
+            <h3>Recently added Jobs</h3>
+            <h5>(According to your notification settings)</h5>
+            <br>
+
+            <div ng-if="noResults.info || noResults.error">
+                <div class="alert" ng-class="{ 'alert-info': noResults.info, 'alert-danger': noResults.error }">
+                    <strong>{{ noResults.title }}</strong> {{ noResults.text }}
+                </div>
+            </div>
+
+            <div masonry class="row" masonry-options="{ percentPosition: true }">
+                <div class="masonry-brick col-xs-12 col-sm-6 col-md-4" ng-repeat="offer in offers">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><a href="#/job/profile/{{offer.offerId}}">{{ offer.name }}</a></h3>
+                        </div>
+                        <div class="panel-body">
+                            <ul class="list-unstyled jobOfferParameters">
+                                <li class="jobOfferCompany">{{ offer.companyId }}</li>
+                                <li class="jobOfferLocation">{{ offer.location }}</li>
+                                <li class="jobOfferDuration">{{ offer.duration | duration }}</li>
+                                <li class="jobOfferStartDate">{{ offer.startDate | dateCheckedZero: 'yyyy-MM-dd' }}</li>
+                            </ul>
+                            <p>{{ offer.description | htmlToPlainText | limitTo: 50 }}...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="col-md-2"><!--This is the landing right pane(inside main box)-->
+            <br>
+            <br>
+            <a class="btn  btn-info" href="#/student/notification">Manage Notifications</a>
+        </div>
+    </div>
