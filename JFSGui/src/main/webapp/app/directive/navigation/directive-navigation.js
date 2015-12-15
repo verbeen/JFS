@@ -13,6 +13,7 @@
                  $rootScope.$watch('globals.currentUser.userType', function(newVal, oldVal) {
                      if ($rootScope.globals.currentUser.loggedIn) {
                          $scope.loggedIn = true;
+                         $scope.username = $rootScope.globals.currentUser.username;
                      } else {
                          $scope.loggedIn = false;
                      }
