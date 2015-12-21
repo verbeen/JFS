@@ -1,5 +1,6 @@
 package jfs.service.services;
 
+import com.mongodb.BasicDBObject;
 import jfs.data.dataobjects.JobOfferDO;
 import jfs.data.dataobjects.enums.JobType;
 import jfs.data.dataobjects.helpers.Pair;
@@ -76,9 +77,15 @@ public class JobOfferService {
     public List<JobOfferDTO> search(SearchDTO searchDTO){
         ArrayList<Pair<String, Object>> pairs = new ArrayList<Pair<String, Object>>();
         if(searchDTO.location != null && !"".equals(searchDTO.location)){
-            pairs.add(new Pair("location", searchDTO.location));
+            pairs.add(new Pair("location", new BasicDBObject("$regex", searchDTO.location)));
         }
-        if(searchDTO.type != null){
+        if(searchDTO.skills != null && !"".equals(searchDTO.skills)){
+            String skillsRegex = searchDTO.skills.replace(",", "|");
+            System.out.println(skillsRegex);
+
+            pairs.add(new Pair("skills", new BasicDBObject("$regex", skillsRegex)));
+        }
+        if(searchDTO.type != null && searchDTO.type != JobTypeDTO.all){
             pairs.add(new Pair("type", searchDTO.type.name()));
         }
         List<JobOfferDO> doList = this.jobOfferStore.getJobOffers(pairs);
