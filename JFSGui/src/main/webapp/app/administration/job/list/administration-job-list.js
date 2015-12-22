@@ -36,8 +36,9 @@
             console.log("edit()");
         };
 
-        function remove() {
-            console.log("remove()");
+        function remove(jobOfferId) {
+            //console.log("remove()");
+            alert("Job Offer: " + jobOfferId);
         };
 
         function search() {
