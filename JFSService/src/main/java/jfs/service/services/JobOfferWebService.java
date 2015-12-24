@@ -143,4 +143,19 @@ public class JobOfferWebService {
         }
         return offerDTO;
     }
+
+    @DELETE @Path("/delete/{id}") @Consumes("application/json") @Produces("application/json")
+    public ActionResultDTO deleteJobOffer(@PathParam("id") String jobOfferId){
+        ActionResultDTO deleteJobOfferResult = new ActionResultDTO();
+        boolean result = this.jobOfferService.delete(jobOfferId);
+        deleteJobOfferResult.hasSucceeded =result;
+
+        if (result){
+            deleteJobOfferResult.type = ResultTypeDTO.success;
+        }
+        else{
+            deleteJobOfferResult.type = ResultTypeDTO.data_error;
+        }
+        return deleteJobOfferResult;
+    }
 }
