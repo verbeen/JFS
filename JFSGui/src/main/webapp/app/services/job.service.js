@@ -37,8 +37,8 @@
 
         }
 
-        function getAllJobsCompany(token) {
-            return $http.post('/service/offers/getallcompany', token)
+        function getAllJobsCompany(token,userId) {
+            return $http.post('/service/offers/getallcompany', token,userId)
                 .then(handleSuccess, handleError('Error getting all jobs!'));
 
         }

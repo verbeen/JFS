@@ -102,7 +102,7 @@
         function getAll() {
             $scope.dataLoading = true;
 
-            JobService.getAllJobsCompany($rootScope.globals.currentUser.authdata)
+            JobService.getAllJobsCompany($rootScope.globals.currentUser.authdata,$rootScope.globals.currentUser.username)
                 .then(function(response) {
                     console.log($rootScope.globals.currentUser.authdata);
                     $scope.noResults = {};

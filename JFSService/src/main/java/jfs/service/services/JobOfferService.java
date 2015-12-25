@@ -73,8 +73,8 @@ public class JobOfferService {
         return this.createOfferDTOList(offerDOs);
     }
 
-    public List<JobOfferDTO> getAllOffersCompany(){
-        List<JobOfferDO> offerDOs = this.jobOfferStore.getAllOffers();
+    public List<JobOfferDTO> getAllOffersCompany(String userId){
+        List<JobOfferDO> offerDOs = this.jobOfferStore.getAllOffersCompany(userId);
         return this.createOfferDTOList(offerDOs);
     }
 

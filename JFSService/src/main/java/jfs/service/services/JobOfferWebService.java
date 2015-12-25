@@ -96,12 +96,12 @@ public class JobOfferWebService {
     @POST
     @Path("/getallcompany") @Consumes("application/json") @Produces("application/json")
     @ApiOperation(value = "Get all offers for company", notes = "Returns an array of all offers.")
-    public JobOfferListDTO getAllOffersCompany(String token) {
+    public JobOfferListDTO getAllOffersCompany(String token , String userId) {
         if (token != null && token != "") {
             Session session = SessionService.sessions.get(token);
           // if (session != null) {
                 JobOfferListDTO list = new JobOfferListDTO();
-                list.offers = this.jobOfferService.getAllOffersCompany();
+                list.offers = this.jobOfferService.getAllOffersCompany(userId);
                 return list;
            // }
         }
