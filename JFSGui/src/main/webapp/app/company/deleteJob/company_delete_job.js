@@ -87,7 +87,6 @@
                     $scope.noResults.info = false;
                     $scope.noResults.error = false;
                     if (response.success) {
-                        console.log(response.data.offers);
                         if (response.data.offers.length > 0) {
                             $scope.offers = response.data.offers;
                         } else {
