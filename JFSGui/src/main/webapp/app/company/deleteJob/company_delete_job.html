@@ -60,10 +60,10 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="offer in offers | filter:{companyId:'c@c.com'} ">
+                    <tr ng-repeat="offer in offers ">
                         <td>{{ offer.name }}</td>
                         <td>{{ offer.type }}</td>
-                        <td>{{ offer.companyId }}</td>
+                        <td>{{ offer.companyId  }}</td>
                         <td>{{ offer.function }}</td>
                         <td>{{ offer.location }}</td>
                         <td>{{ offer.startDate | date:'yyyy-MM-dd'}}</td>
