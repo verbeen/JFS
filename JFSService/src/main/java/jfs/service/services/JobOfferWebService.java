@@ -99,9 +99,9 @@ public class JobOfferWebService {
     public JobOfferListDTO getAllOffersCompany(String token) {
         if (token != null && token != "") {
             Session session = SessionService.sessions.get(token);
-           // if (session != null) {
+          // if (session != null) {
                 JobOfferListDTO list = new JobOfferListDTO();
-                list.offers = this.jobOfferService.getAllOffers();
+                list.offers = this.jobOfferService.getAllOffersCompany();
                 return list;
            // }
         }

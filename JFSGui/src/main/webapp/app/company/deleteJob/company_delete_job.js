@@ -15,6 +15,8 @@
         $scope.getAll = getAll;
         $scope.remove = remove;
         $scope.search = search;
+        $scope.userIdNow = userIdNow;
+        var userIdNow;
 
         // gets executed on initial load
         (function initController() {
@@ -31,7 +33,8 @@
                     { "value": "contract", "label": "Contract" }
                 ]
             };
-
+            userIdNow = $rootScope.globals.currentUser.username;
+            console.log(userIdNow);
             getAll();
         })();
 
@@ -39,8 +42,26 @@
             console.log("edit()");
         };
 
-        function remove() {
+        function remove(jobOfferId) {
             console.log("remove()");
+            $scope.jobOfferId = jobOfferId;
+            JobService.deleteJobOffer($scope.jobOfferId)
+                .then(function(response) {
+                    $scope.noResults = {};
+                    $scope.noResults.info = false;
+                    $scope.noResults.error = false;
+                    if (response.success) {
+                        $scope.dataLoading = false;
+                        getAll();
+                    }
+                    else {
+                        console.error(response);
+                        $scope.noResults.error = true;
+                        $scope.noResults.title = "An error occurred!";
+                        $scope.noResults.text = "Please try again later.";
+                        $scope.dataLoading = false;
+                    }
+                });
         };
 
         function search() {
@@ -83,6 +104,7 @@
 
             JobService.getAllJobsCompany($rootScope.globals.currentUser.authdata)
                 .then(function(response) {
+                    console.log($rootScope.globals.currentUser.authdata);
                     $scope.noResults = {};
                     $scope.noResults.info = false;
                     $scope.noResults.error = false;

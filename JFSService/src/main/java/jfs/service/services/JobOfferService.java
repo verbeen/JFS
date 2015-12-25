@@ -73,6 +73,11 @@ public class JobOfferService {
         return this.createOfferDTOList(offerDOs);
     }
 
+    public List<JobOfferDTO> getAllOffersCompany(){
+        List<JobOfferDO> offerDOs = this.jobOfferStore.getAllOffers();
+        return this.createOfferDTOList(offerDOs);
+    }
+
     public List<JobOfferDTO> search(SearchDTO searchDTO){
         ArrayList<Pair<String, Object>> pairs = new ArrayList<Pair<String, Object>>();
         if(searchDTO.location != null && !"".equals(searchDTO.location)){
