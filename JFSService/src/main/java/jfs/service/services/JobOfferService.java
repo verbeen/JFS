@@ -11,6 +11,7 @@ import jfs.transferdata.transferobjects.enums.JobTypeDTO;
 
 import javax.ejb.Singleton;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -80,8 +81,26 @@ public class JobOfferService {
             pairs.add(new Pair("location", new BasicDBObject("$regex", searchDTO.location)));
         }
         if(searchDTO.skills != null && !"".equals(searchDTO.skills)){
-            String skillsRegex = searchDTO.skills.replace(",", "|");
-            System.out.println(skillsRegex);
+            /*
+                For easier creation of the search string and array is created
+                which also removes all whitespaces before or after commas that are seperating the skills
+                \\Q...\\E is used to quote string in Regex. This is necessary in order to not take e.g. the + character as a command
+                | is used to combine all skills by OR
+            */
+            List<String> myList = Arrays.asList(searchDTO.skills.split("\\s*,\\s*"));
+
+            String skillsRegex = "\\Q";
+            if (myList.size() > 1) {
+                for (int i = 0; i < myList.size(); i++){
+                    skillsRegex += myList.get(i);
+                    if (i != myList.size() -1) {
+                        skillsRegex += "\\E|\\Q";
+                    }
+                }
+            }else{
+                skillsRegex += myList.get(0);
+            }
+            skillsRegex += "\\E";
 
             pairs.add(new Pair("skills", new BasicDBObject("$regex", skillsRegex)));
         }
