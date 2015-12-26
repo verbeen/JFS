@@ -37,7 +37,6 @@
         };
 
         function remove(jobOfferId) {
-
             $scope.jobOfferId = jobOfferId;
             JobService.deleteJobOffer($scope.jobOfferId)
                 .then(function(response) {
