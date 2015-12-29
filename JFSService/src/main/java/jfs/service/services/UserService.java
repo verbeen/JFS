@@ -1,7 +1,11 @@
 package jfs.service.services;
 
+import com.mongodb.BasicDBObject;
 import jfs.data.dataobjects.UserDO;
 import jfs.data.dataobjects.enums.UserType;
+import jfs.data.stores.JobOfferMetricsStore;
+import jfs.data.stores.JobOfferStore;
+import jfs.data.stores.StudentSubscriptionsStore;
 import jfs.data.stores.UserStore;
 import jfs.transferdata.transferobjects.LoginResultDTO;
 import jfs.service.sessions.Session;
@@ -22,6 +26,9 @@ public class UserService {
     @Inject
     private SessionService sessionService;
     private UserStore userStore = UserStore.store;
+    private StudentSubscriptionsStore studentSubscriptionsStore = StudentSubscriptionsStore.store;
+    private JobOfferMetricsStore metricsStore = JobOfferMetricsStore.jobOfferMetricsStore;
+    private JobOfferStore jobOfferStore = JobOfferStore.store;
 
     public Boolean registerUser(String email, String password, UserType type){
         UserDO user = new UserDO(email, password, type);
@@ -48,6 +55,34 @@ public class UserService {
             users.add(this.createUserDTO(userDO));
         }
         return users;
+    }
+
+    public boolean deleteUser(String userId){
+        UserDO user = this.userStore.getUser(userId);
+        boolean result = false;
+        if (user != null){
+            switch (user.type){
+                case STUDENT:
+                    // delete student
+                    if (this.userStore.deleteUser(userId)){
+                        // delete student notifications
+                        studentSubscriptionsStore.deleteStudentSubscription(userId);
+                        result=true;
+                    }
+                    break;
+                case COMPANY:
+                    // delete company
+                    if (this.userStore.deleteUser(userId)){
+                        // delete job metrics
+                        metricsStore.deleteJobMetrics(userId);
+                        // delete job offers
+                        jobOfferStore.deleteJobOffers(userId);
+                        result = true;
+                    }
+                    break;
+            }
+        }
+        return result;
     }
 
     private UserDTO createUserDTO(UserDO userDO){
