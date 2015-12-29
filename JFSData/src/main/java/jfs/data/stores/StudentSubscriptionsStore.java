@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.client.model.UpdateOptions;
+import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import jfs.data.dataobjects.StudentProfileDO;
 import jfs.data.dataobjects.StudentSubscriptionsDO;
@@ -54,5 +55,16 @@ public class StudentSubscriptionsStore extends DataStore {
         } else {
             throw new NullPointerException("userId parameter is null");
         }
+    }
+
+    public Boolean deleteStudentSubscription(String userId){
+        if (userId != null || !userId.isEmpty()){
+            BasicDBObject filter = new BasicDBObject("_id", userId);
+            DeleteResult deleteResult = this.collection.deleteOne(filter);
+            return deleteResult.wasAcknowledged();
+        }else {
+            throw new NullPointerException("userId parameter is null or empty");
+        }
+
     }
 }

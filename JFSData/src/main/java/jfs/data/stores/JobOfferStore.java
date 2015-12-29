@@ -130,14 +130,22 @@ public class JobOfferStore extends DataStore {
     }
 
     public boolean delete(String jobOfferId){
-        BasicDBObject filter = new BasicDBObject("_id", jobOfferId);
-        DeleteResult result = this.collection.deleteOne(filter);
-        long count = result.getDeletedCount();
-        if (count == 1){
-            return true;
+        if (jobOfferId != null || !jobOfferId.isEmpty()) {
+            BasicDBObject filter = new BasicDBObject("_id", jobOfferId);
+            DeleteResult result = this.collection.deleteOne(filter);
+            return result.wasAcknowledged();
+        }else{
+            throw new NullPointerException("jobOfferId parameter is null");
         }
-        else{
-            return false;
+    }
+
+    public boolean deleteJobOffers(String companyId){
+        if (companyId != null || !companyId.isEmpty()) {
+            BasicDBObject filter = new BasicDBObject("userId", companyId);
+            DeleteResult result = this.collection.deleteMany(filter);
+            return result.wasAcknowledged();
+        }else{
+            throw new NullPointerException("companyId parameter is null or empty");
         }
     }
 
