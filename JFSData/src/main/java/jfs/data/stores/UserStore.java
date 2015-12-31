@@ -11,6 +11,10 @@ import java.util.List;
 
 /**
  * Created by lpuddu on 29-10-2015.
+ *
+ * Class used for access to the UserStore
+ * Extends DataStore class
+ *
  */
 public class UserStore extends DataStore {
     public static final UserStore store = new UserStore();

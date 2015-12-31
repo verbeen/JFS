@@ -15,6 +15,9 @@ import java.util.List;
 
 /**
  * Created by lpuddu on 13-12-2015.
+ *
+ * Class used for job offer metrics
+ *
  */
 public class JobOfferMetricsStore extends DataStore {
     public static final JobOfferMetricsStore jobOfferMetricsStore = new JobOfferMetricsStore();
