@@ -15,6 +15,8 @@ import java.util.List;
 
 /**
  * Created by lpuddu on 2-11-2015.
+ *
+ * Class used for access to the DataStore. All other store classes will inherit from this one.
  * MongoCollection is thread safe, as well as the serializer. So the class is thread safe.
  *
  */

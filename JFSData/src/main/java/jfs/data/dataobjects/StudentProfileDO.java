@@ -5,22 +5,6 @@ package jfs.data.dataobjects;
  */
 public class StudentProfileDO extends DataObject {
 
-    /*
-    FROM DATA MODEL:
-    DONE
-    user_id: The unique id of the user entity of type student connected to this profile.
-    name: The first last name of the user.
-    email: The email address the user wants to communicates with, this defaults to the email address
-    used for logging in, but can be changed.
-    organization: Recent organization(s) the student has worked at.
-    address
-    skills: A list or description of all the skills the student possesses.
-    experience
-    resume: A file containing the resume of the student. This can be uploaded by the student and is
-    restricted to the PDF format
-    courseDetails
-     */
-
     public String name;
     public String email;
     public String organization;

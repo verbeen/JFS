@@ -18,6 +18,9 @@ import java.util.List;
 
 /**
  * Created by lpuddu on 12-11-2015.
+ *
+ * Class used for access to the job offer store
+ *
  */
 public class JobOfferStore extends DataStore {
     public static final JobOfferStore store = new JobOfferStore();
@@ -27,6 +30,7 @@ public class JobOfferStore extends DataStore {
         super("joboffers");
     }
 
+    //Get all job offers
     public List<JobOfferDO> getAllOffers(){
         List<JobOfferDO> offers = new ArrayList<JobOfferDO>();
         FindIterable<DBObject> results = this.collection.find();
@@ -36,6 +40,7 @@ public class JobOfferStore extends DataStore {
         return offers;
     }
 
+    //Add a new job offer by JobOfferDO and companyId
     public Boolean addOffer(JobOfferDO offer, String companyId){
         if (offer != null) {
             return this.insert(offer) && this.metricsStore.add(offer._id, companyId);
@@ -44,6 +49,7 @@ public class JobOfferStore extends DataStore {
         }
     }
 
+    //Add a several job offer by List<JobOfferDO> and companyId
     public Boolean addOffers(List<JobOfferDO> offers, String companyId){
         List<DBObject> docs = this.createDocumentList(offers);
         try{
@@ -56,6 +62,7 @@ public class JobOfferStore extends DataStore {
         }
     }
 
+    //Get a specific job offer by id
     public JobOfferDO getById(String id){
         DBObject obj = (DBObject)this.collection.find(new BasicDBObject("_id", id)).first();
         if(obj != null){
@@ -65,10 +72,12 @@ public class JobOfferStore extends DataStore {
         }
     }
 
+    //Get a list of the job offers by a search term, limited to 100 findings
     public List<JobOfferDO> getJobOffersText(String term){
         return this.getJobOffersText(term, 100);
     }
 
+    //Get a list of the job offers by a search term and an amount
     public List<JobOfferDO> getJobOffersText(String term, int amount){
         List<JobOfferDO> offers = new ArrayList<JobOfferDO>();
         FindIterable<DBObject> results = this.collection.find(new BasicDBObject("textSearch", term)).limit(amount);
@@ -78,6 +87,7 @@ public class JobOfferStore extends DataStore {
         return offers;
     }
 
+    //Get a list of the job offers sorted by recency and a maximum amount
     public List<JobOfferDO> getJobOffersRecent(int amount){
         List<JobOfferDO> offers = new ArrayList<JobOfferDO>();
         FindIterable<DBObject> results = this.collection.find().sort(Sorts.descending("_id")).limit(amount);
@@ -87,6 +97,9 @@ public class JobOfferStore extends DataStore {
         return offers;
     }
 
+    //Get a list of the job offers by a specific studentSubscriptionDO and jobOfferVisibilityBuffer
+    //jobOfferVisibilityBuffer is giving as a long and represents the seconds since the job offer was created
+    //all offers that were created before the seconds will not be considered even if they would quality the criteria in the jobOfferVisibilityBuffer
     public List<JobOfferDO> getJobOffersByCriteria(StudentSubscriptionsDO studentSubscriptionsDO, long jobOfferVisibilityBuffer){
 
         ArrayList<Pair<String, Object>> pairs = new ArrayList<Pair<String, Object>>();
@@ -133,6 +146,8 @@ public class JobOfferStore extends DataStore {
         return doList;
     }
 
+    //Function to search for specific job offers by pairs of search terms
+    //Reused in other functions
     public List<JobOfferDO> getJobOffers(List<Pair<String, Object>> pairs){
         List<JobOfferDO> offers = new ArrayList<JobOfferDO>();
         Document query = new Document();
@@ -146,6 +161,8 @@ public class JobOfferStore extends DataStore {
         return offers;
     }
 
+    //deserialize a JobOfferDO from a DBObject
+    //Reused in other functions
     private JobOfferDO extractJobOffer(DBObject object){
         return this.serializer.deSerialize(object.toString(), JobOfferDO.class);
     }
