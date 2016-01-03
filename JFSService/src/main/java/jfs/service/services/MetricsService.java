@@ -10,6 +10,9 @@ import java.util.List;
 
 /**
  * Created by lpuddu on 14-12-2015.
+ *
+ * Job offer metrics wrapper for jobOfferMetricsStore
+ *
  */
 @Singleton
 public class MetricsService {

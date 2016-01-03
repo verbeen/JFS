@@ -9,6 +9,9 @@ import javax.ejb.Singleton;
 
 /**
  * Created by Hulk-A on 13.11.2015.
+ *
+ * Student profile service wrapper for studentProfileStore
+ *
  */
 @Singleton
 public class StudentProfileService {

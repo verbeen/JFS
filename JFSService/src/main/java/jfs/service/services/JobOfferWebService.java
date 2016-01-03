@@ -19,6 +19,10 @@ import java.util.List;
 
 /**
  * Created by lpuddu on 12-11-2015.
+ *
+ * Wrapper for jobOfferService and metricsService. Accessible through @Path
+ * This WebService trigger events jobApplyEvent, jobDetailViewEvent and jobListViewEvent
+ *
  */
 @Path("/offers")
 @Api(value = "/offers")

@@ -14,6 +14,9 @@ import javax.ws.rs.Produces;
 
 /**
  * Created by Hulk-A on 13.11.2015.
+ *
+ * Wrapper for studentSubscriptionsService. Accessible through @Path
+ *
  */
 @Path("/studentsubscriptions")
 public class StudentSubscriptionsWebService {

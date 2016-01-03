@@ -16,6 +16,9 @@ import java.util.UUID;
 
 /**
  * Created by lpuddu on 29-10-2015.
+ *
+ * User service wrapper for userStore
+ *
  */
 @Singleton
 public class UserService {

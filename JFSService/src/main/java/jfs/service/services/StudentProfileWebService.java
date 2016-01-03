@@ -10,6 +10,9 @@ import javax.ws.rs.Produces;
 
 /**
  * Created by Hulk-A on 13.11.2015.
+ *
+ * Wrapper for studentProfileService. Accessible through @Path
+ *
  */
 @Path("/studentprofile")
 public class StudentProfileWebService {

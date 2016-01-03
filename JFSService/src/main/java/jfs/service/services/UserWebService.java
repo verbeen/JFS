@@ -16,6 +16,9 @@ import java.util.List;
 
 /**
  * Created by zade on 26-10-2015.
+ *
+ * Wrapper for UserService. Accessible through @Path
+ *
  */
 @Path("/users")
 @Api(value = "/users")

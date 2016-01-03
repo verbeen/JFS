@@ -16,6 +16,9 @@ import java.util.List;
 
 /**
  * Created by lpuddu on 12-11-2015.
+ *
+ * Job offer service wrapper for jobOfferStore
+ *
  */
 @Singleton
 public class JobOfferService {

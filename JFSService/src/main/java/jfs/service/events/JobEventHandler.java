@@ -14,6 +14,9 @@ import java.util.List;
 
 /**
  * Created by lpuddu on 14-12-2015.
+ *
+ * EventHandler for JobOfferMetricsStore
+ *
  */
 @Singleton @Asynchronous
 public class JobEventHandler {

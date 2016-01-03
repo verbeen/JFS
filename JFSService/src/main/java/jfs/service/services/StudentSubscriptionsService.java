@@ -15,6 +15,9 @@ import java.util.List;
 
 /**
  * Created by Hulk-A on 13.11.2015.
+ *
+ * Student subscription service wrapper for studentSubscriptionStore
+ *
  */
 @Singleton
 public class StudentSubscriptionsService {
