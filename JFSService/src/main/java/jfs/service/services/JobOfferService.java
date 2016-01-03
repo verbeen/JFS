@@ -24,6 +24,7 @@ import java.util.List;
 public class JobOfferService {
     private JobOfferStore jobOfferStore = JobOfferStore.store;
 
+    //Used for creating an JobOfferDO out of an JobOfferDTO
     private JobOfferDO createOfferDO(JobOfferDTO offerDTO, String userId){
         JobOfferDO offer = new JobOfferDO();
 
@@ -39,22 +40,27 @@ public class JobOfferService {
         offer.startDate = offerDTO.startDate;
         offer.contactEmail = offerDTO.contactEmail;
         offer.website = offerDTO.website;
-
         offer.userId = userId;
 
         return offer;
     }
 
+    //Get JobOfferDTO by id
+    //Query the jobOfferStore and create an JobOfferDTO
     public JobOfferDTO getById(String id){
         JobOfferDO offerDO = this.jobOfferStore.getById(id);
         JobOfferDTO offer = this.createOfferDTO(offerDO);
         return offer;
     }
 
+    //Add an job offer from an JobOfferDTO and userId
+    //Returns boolean for success
     public Boolean addOffer(JobOfferDTO offerDTO, String userId){
         return this.jobOfferStore.addOffer(this.createOfferDO(offerDTO, userId), userId);
     }
 
+    //Add a list of job offers with List<JobOfferDTO
+    //Returns boolean for success
     public Boolean addOffers(List<JobOfferDTO> offerDTOs, String userId){
         List<JobOfferDO> offers = new ArrayList<JobOfferDO>();
         for(JobOfferDTO offerDTO : offerDTOs){
@@ -63,21 +69,26 @@ public class JobOfferService {
         return this.jobOfferStore.addOffers(offers, userId);
     }
 
+    //Get job offers by seach term as List<JobOfferDTO>
     public List<JobOfferDTO> searchText(String term){
         List<JobOfferDO> offerDOs = this.jobOfferStore.getJobOffersText(term);
         return this.createOfferDTOList(offerDOs);
     }
 
+    //Get recent job offers limited by amount as List<JobOfferDTO>
     public List<JobOfferDTO> searchRecent(int amount){
         List<JobOfferDO> offerDOs = this.jobOfferStore.getJobOffersRecent(amount);
         return this.createOfferDTOList(offerDOs);
     }
 
+    //Get all available job offers as List<JobOfferDTO>
     public List<JobOfferDTO> getAllOffers(){
         List<JobOfferDO> offerDOs = this.jobOfferStore.getAllOffers();
         return this.createOfferDTOList(offerDOs);
     }
 
+    //Search for specific job offers by search criteria specified in SearchDTO
+    //Returns a list of job offers as List<JobOfferDTO>
     public List<JobOfferDTO> search(SearchDTO searchDTO){
         ArrayList<Pair<String, Object>> pairs = new ArrayList<Pair<String, Object>>();
         if(searchDTO.location != null && !"".equals(searchDTO.location)){
@@ -114,6 +125,7 @@ public class JobOfferService {
         return this.createOfferDTOList(doList);
     }
 
+    //Create an JobOfferDTO out of an JobOfferDO
     private JobOfferDTO createOfferDTO(JobOfferDO offerDO){
         return new JobOfferDTO(
                 offerDO._id, offerDO.userId, offerDO.contactEmail, offerDO.name, offerDO.function, offerDO.description,
@@ -122,6 +134,7 @@ public class JobOfferService {
         );
     }
 
+    //Create a List<JobOfferDTO> out of List<JobOfferDO>
     public List<JobOfferDTO> createOfferDTOList(List<JobOfferDO> offerDOs){
         List<JobOfferDTO> offers = new ArrayList<JobOfferDTO>();
         for(JobOfferDO offerDO : offerDOs){

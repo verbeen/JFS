@@ -23,12 +23,15 @@ public class StudentSubscriptionsWebService {
     @Inject
     StudentSubscriptionsService studentSubscriptionsService;
 
+    //Add a studet subscription
     @POST
     @Path("/add") @Consumes("application/json") @Produces("application/json")
     public Boolean addStudentSubscriptions(StudentSubscriptionsDTO subscriptionsDTO){
         Boolean result = this.studentSubscriptionsService.addStudentSubscriptions(subscriptionsDTO);
         return result;
     }
+
+    //Get a student subscription
     @POST
     @Path("/get") @Consumes("application/json") @Produces("application/json")
     public StudentSubscriptionsDTO getStudentSubscriptions(String userId){
@@ -36,19 +39,21 @@ public class StudentSubscriptionsWebService {
         return result;
     }
 
+    //Update a student subscription
     @POST
     @Path("/update") @Consumes("application/json") @Produces("application/json")
     public Boolean updateStudentSubscriptions(StudentSubscriptionsDTO subscriptionsDTO){
         return this.studentSubscriptionsService.updateStudentSubscriptions(subscriptionsDTO.userId, subscriptionsDTO);
     }
 
-    //might not be needed...
+    //Update last view field for a student subscription
     @POST
     @Path("/updateLastView") @Consumes("application/json") @Produces("application/json")
     public Boolean updateLastView(String userId, long lastView){
         return this.studentSubscriptionsService.updateLastView(userId, lastView);
     }
 
+    //Get all job offers that fit a student subscription
     @POST
     @Path("/checkSubscriptions") @Consumes("application/json") @Produces("application/json")
     public JobOfferListDTO checkSubscriptions(String userId){

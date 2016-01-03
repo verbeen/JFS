@@ -18,6 +18,7 @@ import java.util.List;
 public class MetricsService {
     private JobOfferMetricsStore store = JobOfferMetricsStore.jobOfferMetricsStore;
 
+    //Get job offer metrics for a company by companyID
     public List<JobOfferMetricsDTO> getJobOfferMetricsByCompany(String companyId){
         List<JobOfferMetricsDO> metricsDOList = this.store.getAllMetricsByCompanyId(companyId);
 
@@ -28,6 +29,7 @@ public class MetricsService {
         return metrics;
     }
 
+    //Used for creating JobOfferMetricsDTO out of JobOfferMetricsDO
     private JobOfferMetricsDTO createDTO(JobOfferMetricsDO metricsDO){
         JobOfferMetricsDTO metricsDTO = new JobOfferMetricsDTO();
         metricsDTO.offerId = metricsDO._id;

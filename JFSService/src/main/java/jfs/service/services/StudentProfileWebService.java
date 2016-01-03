@@ -19,18 +19,19 @@ public class StudentProfileWebService {
     @Inject
     StudentProfileService studentProfileService;
 
+    //Add a student profile
     @POST
     @Path("/add") @Consumes("application/json") @Produces("application/json")
     public Boolean addStudentProfile(StudentProfileDTO profileDTO){
         Boolean result = this.studentProfileService.addStudentProfile(profileDTO);
         return result;
     }
+
+    //Get a student profile
     @POST
     @Path("/get") @Consumes("application/json") @Produces("application/json")
     public StudentProfileDTO getStudentProfile(String userId){
         StudentProfileDTO result = this.studentProfileService.getStudentProfile(userId);
         return result;
     }
-
-    //TODO update
 }
