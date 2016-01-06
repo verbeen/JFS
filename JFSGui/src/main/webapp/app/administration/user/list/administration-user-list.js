@@ -48,17 +48,17 @@
             $scope.userId = userId;
             UserService.deleteUser(userId)
                 .then(function (response){
-                    $scope.noResults = {};
-                    $scope.noResults.info = false;
-                    $scope.noResults.error = false;
+                    $scope.responseMessage = {};
                     if (response.success) {
+                        $scope.responseMessage.success = true;
+                        $scope.responseMessage.text = "The user has been deleted successfully.";
                         getAllUsers();
                     } else {
                         console.error(response);
                         $scope.users = [];
-                        $scope.noResults.error = true;
-                        $scope.noResults.title = "An error occurred!";
-                        $scope.noResults.text = "Please try again later.";
+                        $scope.responseMessage.error = true;
+                        $scope.responseMessage.title = "An error occurred!";
+                        $scope.responseMessage.text = "Please try again later.";
                         $scope.dataLoading = false;
                     }
                 });

@@ -35,6 +35,13 @@
                 </div>
             </div>
 
+            <div ng-if="responseMessage.success || responseMessage.error">
+                <div class="alert" ng-class="{ 'alert-success': responseMessage.success, 'alert-danger': responseMessage.error }">
+                    {{ responseMessage.text }}
+                </div>
+            </div>
+
+
             <div ng-if="!noResults.info && !noResults.error" class="table-responsive">
                 <table class="table table-striped">
                     <thead>

@@ -40,18 +40,18 @@
             $scope.jobOfferId = jobOfferId;
             JobService.deleteJobOffer($scope.jobOfferId)
                 .then(function(response) {
-                    $scope.noResults = {};
-                    $scope.noResults.info = false;
-                    $scope.noResults.error = false;
+                    $scope.responseMessage = {};
                     if (response.success) {
                         $scope.dataLoading = false;
+                        $scope.responseMessage.success = true;
+                        $scope.responseMessage.text = "The job offer has been deleted successfully.";
                         getAll();
                     }
                     else {
                         console.error(response);
-                        $scope.noResults.error = true;
-                        $scope.noResults.title = "An error occurred!";
-                        $scope.noResults.text = "Please try again later.";
+                        $scope.responseMessage.error = true;
+                        $scope.responseMessage.title = "An error occurred!";
+                        $scope.responseMessage.text = "Please try again later.";
                         $scope.dataLoading = false;
                     }
                 });
