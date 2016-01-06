@@ -16,6 +16,9 @@ import java.util.List;
 
 /**
  * Created by zade on 26-10-2015.
+ *
+ * Wrapper for UserService. Accessible through @Path
+ *
  */
 @Path("/users")
 @Api(value = "/users")
@@ -23,6 +26,7 @@ public class UserWebService {
     @Inject
     UserService service;
 
+    //Register a company
     @POST
     @Path("/register/company")
     @ApiOperation(value = "Register company",
@@ -35,6 +39,7 @@ public class UserWebService {
         return result;
     }
 
+    //Register a student
     @POST
     @Path("/register/student")
     @ApiOperation(value = "Register student",
@@ -47,6 +52,7 @@ public class UserWebService {
         return result;
     }
 
+    //Register an admin account
     @POST
     @Path("/register/admin")
     @ApiOperation(value = "Register admin",
@@ -59,6 +65,7 @@ public class UserWebService {
         return result;
     }
 
+    //Login
     @POST
     @Path("/login")
     @ApiOperation(value = "Login",
@@ -70,6 +77,7 @@ public class UserWebService {
         return result;
     }
 
+    //Get all user accounts
     @POST
     @Path("/all")
     @ApiOperation(value = "Get all user accounts",

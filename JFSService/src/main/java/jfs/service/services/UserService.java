@@ -16,6 +16,9 @@ import java.util.UUID;
 
 /**
  * Created by lpuddu on 29-10-2015.
+ *
+ * User service wrapper for userStore
+ *
  */
 @Singleton
 public class UserService {
@@ -23,11 +26,15 @@ public class UserService {
     private SessionService sessionService;
     private UserStore userStore = UserStore.store;
 
+    //Register a user by email, password and UserType
+    //Returns boolean for succcess
     public Boolean registerUser(String email, String password, UserType type){
         UserDO user = new UserDO(email, password, type);
         return this.userStore.addUser(user);
     }
 
+    //Login a user by email and password
+    //Returns a LoginResultDTO which can be verified
     public LoginResultDTO loginUser(String email, String password) {
         UserDO user = this.userStore.getUser(email, password);
         LoginResultDTO result = new LoginResultDTO();
@@ -42,6 +49,7 @@ public class UserService {
         return result;
     }
 
+    //Get all users as List<UserDTO>
     public List<UserDTO> getAllUsers(){
         List<UserDTO> users = new ArrayList<UserDTO>();
         for(UserDO userDO : this.userStore.getAllUsers()){
@@ -50,6 +58,7 @@ public class UserService {
         return users;
     }
 
+    //Used for creating a UserDTO out of a UserDO
     private UserDTO createUserDTO(UserDO userDO){
         return new UserDTO(
                 userDO._id, UserTypeDTO.valueOf(userDO.type.name())
