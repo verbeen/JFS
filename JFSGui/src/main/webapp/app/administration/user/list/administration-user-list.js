@@ -45,25 +45,23 @@
         };
 
         function remove(userId){
-            if (confirm("Are you sure you want to delete the user?")) {
-                $scope.userId = userId;
-                UserService.deleteUser(userId)
-                    .then(function (response) {
-                        $scope.noResults = {};
-                        $scope.noResults.info = false;
-                        $scope.noResults.error = false;
-                        if (response.success) {
-                            getAllUsers();
-                        } else {
-                            console.error(response);
-                            $scope.users = [];
-                            $scope.noResults.error = true;
-                            $scope.noResults.title = "An error occurred!";
-                            $scope.noResults.text = "Please try again later.";
-                            $scope.dataLoading = false;
-                        }
-                    });
-            }
+            $scope.userId = userId;
+            UserService.deleteUser(userId)
+                .then(function (response){
+                    $scope.noResults = {};
+                    $scope.noResults.info = false;
+                    $scope.noResults.error = false;
+                    if (response.success) {
+                        getAllUsers();
+                    } else {
+                        console.error(response);
+                        $scope.users = [];
+                        $scope.noResults.error = true;
+                        $scope.noResults.title = "An error occurred!";
+                        $scope.noResults.text = "Please try again later.";
+                        $scope.dataLoading = false;
+                    }
+                });
         };
     }
 })();
