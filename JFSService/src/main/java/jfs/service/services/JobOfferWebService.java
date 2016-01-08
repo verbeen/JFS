@@ -99,11 +99,11 @@ public class JobOfferWebService {
     public JobOfferListDTO getAllOffersCompany(String token) {
         if (token != null && token != "") {
             Session session = SessionService.sessions.get(token);
-          // if (session != null) {
-                JobOfferListDTO list = new JobOfferListDTO();
-                list.offers = this.jobOfferService.getAllOffersCompany();
-                return list;
-           // }
+          if (session != null) {
+              JobOfferListDTO list = new JobOfferListDTO();
+              list.offers = this.jobOfferService.getAllOffersCompany(session.userId);
+              return list;
+            }
         }
         return null;
     }
