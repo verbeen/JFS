@@ -48,14 +48,14 @@
                         <tr>
                             <th>User Name</th>
                             <th>User Type</th>
-                            <th ng-hide="true">&nbsp;</th>
+                            <th>&nbsp;</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="user in users">
                             <td>{{ user.userId }}</td>
                             <td>{{ user.type }}</td>
-                            <td ng-hide="false">
+                            <td>
                                 <button ng-click="remove(user.userId);" type="button" class="btn btn-default btn-xs jfsAdminButton">
                                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                 </button>
