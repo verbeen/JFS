@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.client.FindIterable;
+import com.mongodb.client.result.DeleteResult;
 import jfs.data.dataobjects.UserDO;
 
 import java.util.ArrayList;
@@ -52,6 +53,27 @@ public class UserStore extends DataStore {
             users.add(this.serializer.deSerialize(obj.toString(), UserDO.class));
         }
         return users;
+    }
+
+    public UserDO getUser(String userId){
+        DBObject user = this.getOneDocument("_id", userId);
+        if (user != null){
+            UserDO userDO = this.serializer.deSerialize(user.toString(),UserDO.class);
+            return userDO;
+        }
+        else{
+            return null;
+        }
+    }
+
+    public boolean deleteUser(String userId){
+        if (userId != null || !userId.isEmpty()) {
+            BasicDBObject filter = new BasicDBObject("_id", userId);
+            DeleteResult userDeleteResult = this.collection.deleteOne(filter);
+            return userDeleteResult.wasAcknowledged();
+        }else{
+            throw new NullPointerException("userId parameter is null or empty");
+        }
     }
 }
 

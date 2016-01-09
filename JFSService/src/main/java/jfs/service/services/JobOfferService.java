@@ -142,4 +142,9 @@ public class JobOfferService {
         }
         return offers;
     }
+
+    public boolean delete(String jobOfferId){
+        boolean result = this.jobOfferStore.delete(jobOfferId);
+        return result;
+    }
 }

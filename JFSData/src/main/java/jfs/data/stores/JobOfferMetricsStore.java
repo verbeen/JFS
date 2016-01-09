@@ -4,6 +4,7 @@ import com.mongodb.*;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Projections;
+import com.mongodb.client.result.DeleteResult;
 import jfs.data.dataobjects.JobOfferDO;
 import jfs.data.dataobjects.JobOfferMetricsDO;
 import org.bson.Document;
@@ -99,5 +100,15 @@ public class JobOfferMetricsStore extends DataStore {
         }
 
         return metricsDOList;
+    }
+
+    public boolean deleteJobMetrics(String companyId){
+        if (companyId != null || !companyId.isEmpty()){
+            BasicDBObject filter = new BasicDBObject("companyId", companyId);
+            DeleteResult deleteResult = this.collection.deleteMany(filter);
+            return deleteResult.wasAcknowledged();
+        }else {
+            throw new NullPointerException("companyId parameter is null or empty");
+        }
     }
 }

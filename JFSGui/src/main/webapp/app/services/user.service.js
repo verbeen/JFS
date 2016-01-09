@@ -11,6 +11,7 @@
 
         service.Create = Create;
         service.getAllUsers = getAllUsers;
+        service.deleteUser = deleteUser;
 
         return service;
 
@@ -21,6 +22,11 @@
         function getAllUsers(token) {
             return $http.post('/service/users/all/', token)
                 .then(handleSuccess, handleError('Got all jobs "' + token + '"!'));
+        }
+
+        function deleteUser(userId){
+            return $http.delete('/service/users/delete/' + userId)
+                .then(handleSuccess,handleError('Deleting user failed'));
         }
 
         // private functions

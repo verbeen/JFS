@@ -5,6 +5,7 @@ import com.mongodb.DBObject;
 import com.mongodb.MongoException;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.model.Sorts;
+import com.mongodb.client.result.DeleteResult;
 import jfs.data.dataobjects.JobOfferDO;
 import jfs.data.dataobjects.StudentSubscriptionsDO;
 import jfs.data.dataobjects.enums.JobType;
@@ -159,6 +160,26 @@ public class JobOfferStore extends DataStore {
             offers.add(this.extractJobOffer(obj));
         }
         return offers;
+    }
+
+    public boolean delete(String jobOfferId){
+        if (jobOfferId != null || !jobOfferId.isEmpty()) {
+            BasicDBObject filter = new BasicDBObject("_id", jobOfferId);
+            DeleteResult result = this.collection.deleteOne(filter);
+            return result.wasAcknowledged();
+        }else{
+            throw new NullPointerException("jobOfferId parameter is null");
+        }
+    }
+
+    public boolean deleteJobOffers(String companyId){
+        if (companyId != null || !companyId.isEmpty()) {
+            BasicDBObject filter = new BasicDBObject("userId", companyId);
+            DeleteResult result = this.collection.deleteMany(filter);
+            return result.wasAcknowledged();
+        }else{
+            throw new NullPointerException("companyId parameter is null or empty");
+        }
     }
 
     //deserialize a JobOfferDO from a DBObject
