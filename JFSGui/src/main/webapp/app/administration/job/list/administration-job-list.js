@@ -19,13 +19,14 @@
 
             $scope.jobSearch = {
                 "type": [
-                    { "value": "", "label": "All" },
+                    { "value": "all", "label": "All" },
                     { "value": "master_thesis", "label": "Master thesis" },
                     { "value": "bachelor_thesis", "label": "Bachelor thesis" },
                     { "value": "part_time", "label": "Part time" },
                     { "value": "full_time", "label": "Full time" },
                     { "value": "internship", "label": "Internship" },
-                    { "value": "contract", "label": "Contract" }
+                    { "value": "contract", "label": "Contract" },
+                    { "value": "others", "label": "Others" }
                 ]
             };
 
@@ -36,16 +37,31 @@
             console.log("edit()");
         };
 
-        function remove() {
-            console.log("remove()");
+        function remove(jobOfferId) {
+            $scope.jobOfferId = jobOfferId;
+            JobService.deleteJobOffer($scope.jobOfferId)
+                .then(function(response) {
+                    $scope.responseMessage = {};
+                    if (response.success) {
+                        $scope.dataLoading = false;
+                        $scope.responseMessage.success = true;
+                        $scope.responseMessage.text = "The job offer has been deleted successfully.";
+                        getAll();
+                    }
+                    else {
+                        console.error(response);
+                        $scope.responseMessage.error = true;
+                        $scope.responseMessage.title = "An error occurred!";
+                        $scope.responseMessage.text = "Please try again later.";
+                        $scope.dataLoading = false;
+                    }
+                });
         };
 
         function search() {
             $scope.dataLoading = true;
 
-            if (!$scope.selectedJobSearch
-                || $scope.selectedJobSearch.type == ""
-                || $scope.selectedJobSearch.location == "") {
+            if (!$scope.selectedJobSearch) {
                 $scope.selectedJobSearch = {};
             }
 

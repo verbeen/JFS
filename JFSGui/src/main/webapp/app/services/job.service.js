@@ -20,6 +20,7 @@
         service.checkSubscription = checkSubscription;
         service.getJobsSubs = getJobsSubs;
         service.subsUpdate = subsUpdate;
+        service.deleteJobOffer = deleteJobOffer;
 
 
         return service;
@@ -80,6 +81,11 @@
         function subsUpdate(userDetails) {
             return $http.post('/service/studentsubscriptions/update', userDetails)
                 .then(handleSuccess, handleError('Error updating subs "' + userDetails + '"!'));
+        }
+
+        function deleteJobOffer(jobOfferId){
+            return $http.delete('/service/offers/delete/' + jobOfferId)
+                .then(handleSuccess, handleError('Error deleting the job offer'));
         }
 
         // private functions

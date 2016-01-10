@@ -36,6 +36,15 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" class="form-control" ng-model="selectedJobSearch.skills" placeholder="Skills">
+                        <div class="searchButton input-group-addon">
+                            <span class="glyphicon glyphicon-education" aria-hidden="true"></span>
+                        </div>
+                    </div>
+                </div>
+
                 <button type="submit" class="btn btn-primary">Search</button>
 
                 <div ng-if="dataLoading" class="form-group">

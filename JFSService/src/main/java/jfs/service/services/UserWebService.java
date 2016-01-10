@@ -6,16 +6,17 @@ import jfs.data.dataobjects.UserDO;
 import jfs.data.dataobjects.enums.UserType;
 import jfs.service.sessions.Session;
 import jfs.transferdata.transferobjects.*;
+import jfs.transferdata.transferobjects.enums.ResultTypeDTO;
 
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import java.util.List;
 
 /**
  * Created by zade on 26-10-2015.
+ *
+ * Wrapper for UserService. Accessible through @Path
+ *
  */
 @Path("/users")
 @Api(value = "/users")
@@ -23,6 +24,7 @@ public class UserWebService {
     @Inject
     UserService service;
 
+    //Register a company
     @POST
     @Path("/register/company")
     @ApiOperation(value = "Register company",
@@ -35,6 +37,7 @@ public class UserWebService {
         return result;
     }
 
+    //Register a student
     @POST
     @Path("/register/student")
     @ApiOperation(value = "Register student",
@@ -47,6 +50,7 @@ public class UserWebService {
         return result;
     }
 
+    //Register an admin account
     @POST
     @Path("/register/admin")
     @ApiOperation(value = "Register admin",
@@ -59,6 +63,7 @@ public class UserWebService {
         return result;
     }
 
+    //Login
     @POST
     @Path("/login")
     @ApiOperation(value = "Login",
@@ -70,6 +75,7 @@ public class UserWebService {
         return result;
     }
 
+    //Get all user accounts
     @POST
     @Path("/all")
     @ApiOperation(value = "Get all user accounts",
@@ -85,5 +91,21 @@ public class UserWebService {
             }
         }
         return null;
+    }
+
+    @DELETE
+    @Path("/delete/{id}") @Consumes("application/json") @Produces("application/json")
+    public ActionResultDTO deleteUser(@PathParam("id") String userId){
+        ActionResultDTO deleteUserResult = new ActionResultDTO();
+        boolean result = this.service.deleteUser(userId);
+        deleteUserResult.hasSucceeded =result;
+
+        if (result){
+            deleteUserResult.type = ResultTypeDTO.success;
+        }
+        else{
+            deleteUserResult.type = ResultTypeDTO.data_error;
+        }
+        return deleteUserResult;
     }
 }

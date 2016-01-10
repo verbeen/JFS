@@ -19,6 +19,10 @@ import java.util.List;
 
 /**
  * Created by lpuddu on 12-11-2015.
+ *
+ * Wrapper for jobOfferService and metricsService. Accessible through @Path
+ * This WebService trigger events jobApplyEvent, jobDetailViewEvent and jobListViewEvent
+ *
  */
 @Path("/offers")
 @Api(value = "/offers")
@@ -35,6 +39,7 @@ public class JobOfferWebService {
     @Inject @JobListView
     private Event<JobListViewEvent> jobListViewEvent;
 
+    //Add a single job offers
     @POST
     @Path("/add") @Consumes("application/json") @Produces("application/json")
     @ApiOperation(value = "Add offer", notes = "A offer will be created.")
@@ -54,14 +59,11 @@ public class JobOfferWebService {
                     result.type = ResultTypeDTO.data_error;
                 }
             }
-            /*if (session != null && session.type == UserTypeDTO.COMPANY) {
-                return this.jobOfferService.addOffer(offerDTO.jobOffer, offerDTO.companyId);
-            }*/
         }
-        //return false;
         return result;
     }
 
+    //Add several job offers
     @POST
     @Path("/addmulti") @Consumes("application/json") @Produces("application/json")
     @ApiOperation(value = "Add multiple offers", notes = "Multiple offers will be created. For formatting of the required CSV file, see the manual.")
@@ -78,6 +80,7 @@ public class JobOfferWebService {
         return false;
     }
 
+    //Get all job offers existing
     @POST
     @Path("/getall") @Consumes("application/json") @Produces("application/json")
     @ApiOperation(value = "Get all offers", notes = "Returns an array of all offers.")
@@ -93,6 +96,7 @@ public class JobOfferWebService {
         return null;
     }
 
+    //Seach by a specific search term
     @POST
     @Path("/search/text") @Consumes("application/json") @Produces("application/json")
     @ApiOperation(value = "Search by text", notes = "Returns an array of offers that match exactly a specific string.")
@@ -103,6 +107,7 @@ public class JobOfferWebService {
         return list;
     }
 
+    //Get recent job offers limited by input parameter amount
     @POST
     @Path("/search/recent") @Consumes("application/json") @Produces("application/json")
     @ApiOperation(value = "Recent offers", notes = "Returns an array of offers.")
@@ -113,6 +118,7 @@ public class JobOfferWebService {
         return list;
     }
 
+    //Search by criteria specified in SearchDTO
     @POST
     @Path("/search") @Consumes("application/json") @Produces("application/json")
     @ApiOperation(value = "Search offer", notes = "Returns an array of offers that match a set of specified criteria")
@@ -123,6 +129,7 @@ public class JobOfferWebService {
         return list;
     }
 
+    //Get all job offer metrics for a specific company
     @POST
     @Path("/metrics/company") @Consumes("application/json") @Produces("application/json")
     @ApiOperation(value = "Get job metrics", notes = "Returns all available metrics of all the job offers created by the logged in user. Will return null if the user is not logged in or the user account is not of the Company type.")
@@ -135,6 +142,7 @@ public class JobOfferWebService {
         }
     }
 
+    //Get a specific job offer by id
     @GET @Path("{id}")
     @ApiOperation(value = "Get offer", notes = "Returns one specific offer.")
     public JobOfferDTO getById(@PathParam("id") String id) {
@@ -143,5 +151,20 @@ public class JobOfferWebService {
             this.jobDetailViewEvent.fire(new JobDetailViewEvent(id));
         }
         return offerDTO;
+    }
+
+    @DELETE @Path("/delete/{id}") @Consumes("application/json") @Produces("application/json")
+    public ActionResultDTO deleteJobOffer(@PathParam("id") String jobOfferId){
+        ActionResultDTO deleteJobOfferResult = new ActionResultDTO();
+        boolean result = this.jobOfferService.delete(jobOfferId);
+        deleteJobOfferResult.hasSucceeded =result;
+
+        if (result){
+            deleteJobOfferResult.type = ResultTypeDTO.success;
+        }
+        else{
+            deleteJobOfferResult.type = ResultTypeDTO.data_error;
+        }
+        return deleteJobOfferResult;
     }
 }
