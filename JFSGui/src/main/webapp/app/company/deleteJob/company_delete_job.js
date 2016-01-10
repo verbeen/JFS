@@ -1,17 +1,22 @@
+/**
+ * Created by Kernal on 12/25/2015.
+ */
 (function () {
     'use strict';
 
     angular
         .module('app')
-        .controller('AdministrationJobListController', AdministrationJobListController);
+        .controller('CompanyDeleteJobs', CompanyDeleteJobs);
 
-    AdministrationJobListController.$inject = ['JobService', '$scope', '$rootScope'];
-    function AdministrationJobListController(JobService, $scope, $rootScope) {
+    CompanyDeleteJobs.$inject = ['JobService', '$scope', '$rootScope'];
+    function CompanyDeleteJobs(JobService, $scope, $rootScope) {
         // method declarations
         $scope.edit = edit;
         $scope.getAll = getAll;
         $scope.remove = remove;
         $scope.search = search;
+        $scope.responseMessage = {};
+
 
         // gets executed on initial load
         (function initController() {
@@ -29,6 +34,7 @@
                 ]
             };
 
+
             getAll();
         })();
 
@@ -37,18 +43,22 @@
         };
 
         function remove(jobOfferId) {
-
             $scope.jobOfferId = jobOfferId;
             JobService.deleteJobOffer($scope.jobOfferId)
                 .then(function(response) {
                     $scope.noResults = {};
                     $scope.noResults.info = false;
                     $scope.noResults.error = false;
+                    $scope.responseMessage = {};
                     if (response.success) {
+                        console.log("deleted");
                         $scope.dataLoading = false;
+                        $scope.responseMessage.success = true;
+                        $scope.responseMessage.text = "The job has been deleted successfully.";
                         getAll();
                     }
                     else {
+                        console.log("not deleted");
                         console.error(response);
                         $scope.noResults.error = true;
                         $scope.noResults.title = "An error occurred!";
@@ -75,6 +85,7 @@
                     if (response.success) {
                         if (response.data.offers.length > 0) {
                             $scope.offers = response.data.offers;
+
                         } else {
                             $scope.offers = [];
                             $scope.noResults.info = true;
@@ -96,8 +107,9 @@
         function getAll() {
             $scope.dataLoading = true;
 
-            JobService.getAllJobs($rootScope.globals.currentUser.authdata)
+            JobService.getAllJobsCompany($rootScope.globals.currentUser.authdata)
                 .then(function(response) {
+                    console.log($rootScope.globals.currentUser.authdata);
                     $scope.noResults = {};
                     $scope.noResults.info = false;
                     $scope.noResults.error = false;

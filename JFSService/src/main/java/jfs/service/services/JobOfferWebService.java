@@ -94,6 +94,21 @@ public class JobOfferWebService {
     }
 
     @POST
+    @Path("/getallcompany") @Consumes("application/json") @Produces("application/json")
+    @ApiOperation(value = "Get all offers for company", notes = "Returns an array of all offers.")
+    public JobOfferListDTO getAllOffersCompany(String token) {
+        if (token != null && token != "") {
+            Session session = SessionService.sessions.get(token);
+          if (session != null) {
+              JobOfferListDTO list = new JobOfferListDTO();
+              list.offers = this.jobOfferService.getAllOffersCompany(session.userId);
+              return list;
+            }
+        }
+        return null;
+    }
+
+    @POST
     @Path("/search/text") @Consumes("application/json") @Produces("application/json")
     @ApiOperation(value = "Search by text", notes = "Returns an array of offers that match exactly a specific string.")
     public JobOfferListDTO searchText(String term) {
@@ -142,5 +157,20 @@ public class JobOfferWebService {
             this.jobDetailViewEvent.fire(new JobDetailViewEvent(id));
         }
         return offerDTO;
+    }
+
+    @DELETE @Path("/delete/{id}") @Consumes("application/json") @Produces("application/json")
+    public ActionResultDTO deleteJobOffer(@PathParam("id") String jobOfferId){
+        ActionResultDTO deleteJobOfferResult = new ActionResultDTO();
+        boolean result = this.jobOfferService.delete(jobOfferId);
+        deleteJobOfferResult.hasSucceeded =result;
+
+        if (result){
+            deleteJobOfferResult.type = ResultTypeDTO.success;
+        }
+        else{
+            deleteJobOfferResult.type = ResultTypeDTO.data_error;
+        }
+        return deleteJobOfferResult;
     }
 }

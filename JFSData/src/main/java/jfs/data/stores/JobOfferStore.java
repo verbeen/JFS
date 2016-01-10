@@ -5,6 +5,7 @@ import com.mongodb.DBObject;
 import com.mongodb.MongoException;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.model.Sorts;
+import com.mongodb.client.result.DeleteResult;
 import jfs.data.dataobjects.JobOfferDO;
 import jfs.data.dataobjects.StudentSubscriptionsDO;
 import jfs.data.dataobjects.enums.JobType;
@@ -29,6 +30,15 @@ public class JobOfferStore extends DataStore {
     public List<JobOfferDO> getAllOffers(){
         List<JobOfferDO> offers = new ArrayList<JobOfferDO>();
         FindIterable<DBObject> results = this.collection.find();
+        for(DBObject obj : results){
+            offers.add(this.extractJobOffer(obj));
+        }
+        return offers;
+    }
+    public List<JobOfferDO> getAllOffersCompany(String companyId){
+        List<JobOfferDO> offers = new ArrayList<JobOfferDO>();
+        Document select = new Document("userId", companyId);
+        FindIterable<DBObject> results = this.collection.find(select);
         for(DBObject obj : results){
             offers.add(this.extractJobOffer(obj));
         }
@@ -126,6 +136,18 @@ public class JobOfferStore extends DataStore {
             offers.add(this.extractJobOffer(obj));
         }
         return offers;
+    }
+
+    public boolean delete(String jobOfferId){
+        BasicDBObject filter = new BasicDBObject("_id", jobOfferId);
+        DeleteResult result = this.collection.deleteOne(filter);
+        long count = result.getDeletedCount();
+        if (count == 1){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     private JobOfferDO extractJobOffer(DBObject object){

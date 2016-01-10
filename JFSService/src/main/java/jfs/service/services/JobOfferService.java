@@ -73,6 +73,11 @@ public class JobOfferService {
         return this.createOfferDTOList(offerDOs);
     }
 
+    public List<JobOfferDTO> getAllOffersCompany(String companyId){
+        List<JobOfferDO> offerDOs = this.jobOfferStore.getAllOffersCompany(companyId);
+        return this.createOfferDTOList(offerDOs);
+    }
+
     public List<JobOfferDTO> search(SearchDTO searchDTO){
         ArrayList<Pair<String, Object>> pairs = new ArrayList<Pair<String, Object>>();
         if(searchDTO.location != null && !"".equals(searchDTO.location)){
@@ -99,5 +104,10 @@ public class JobOfferService {
             offers.add(this.createOfferDTO(offerDO));
         }
         return offers;
+    }
+
+    public boolean delete(String jobOfferId){
+        boolean result = this.jobOfferStore.delete(jobOfferId);
+        return result;
     }
 }
