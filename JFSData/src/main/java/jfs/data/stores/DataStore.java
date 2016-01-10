@@ -12,6 +12,8 @@ import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Mongocollection is thread safe, as well as the serializer. So this class is thread safe.
@@ -38,13 +40,14 @@ public abstract class DataStore<T> {
             return true;
         }
         catch(MongoWriteException ex) {
-            if(ex.getError().getCode() == 11000){
-                return false;
+            if(ex.getError().getCode() == 11000){ // 11000 represents a duplicate key error
+                Logger.getLogger(this.getClass().getName()).log(Level.INFO, ex.getMessage(), ex);
             }else {
-                //Logger.getLogger(this.getClass()).log(Level.INFO, ex.getMessage(), ex);
-                return false;
+                Logger.getLogger(this.getClass().getName()).log(Level.WARNING, ex.getMessage(), ex);
             }
         }
+
+        return false;
     }
 
     public <T> Boolean replace(String key, T value){

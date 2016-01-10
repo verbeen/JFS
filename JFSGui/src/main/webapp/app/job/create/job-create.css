@@ -1,3 +1,46 @@
 #jfsCreateJob .form-actions {
     margin-bottom: 20px;
 }
+#jfsCreateJob .mapselection {
+    padding:0px;
+    height:100%;
+    background-color:#F5F5F5;
+    z-index:0;
+    opacity:0.99;
+    overflow:hidden;
+}
+
+#jfsCreateJob .mapinfo {
+    padding-left:12px;
+    padding-right:12px;
+    padding-bottom:6px;
+    padding-top: 6px;
+    overflow:hidden;
+    height:100%;
+}
+
+#jfsCreateJob .mapelement {
+    height:300px;
+}
+
+#jfsCreateJob .map-address-search-btn{
+    height:100%;
+    border:0px;
+    /*font:inherit;*/
+    padding-top:0px;
+    padding-bottom:0px;
+    border-radius:0px;
+    line-height:31px;
+    vertical-align: middle;
+    overflow:hidden;
+    /*padding-top:4px;
+    padding-bottom:0px;*/
+    position:relative;
+    /*display:table-cell;
+    vertical-align: middle;*/
+}
+
+#jfsCreateJob .map-address-search-input-addon{
+    padding:0px;
+    overflow:hidden;
+}

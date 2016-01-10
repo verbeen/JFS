@@ -5,8 +5,8 @@
         .module('app')
         .controller('JobCreateController', JobCreateController);
 
-    JobCreateController.$inject = ['JobService', '$scope', '$rootScope'];
-    function JobCreateController(JobService, $scope, $rootScope) {
+    JobCreateController.$inject = ['JobService', 'GeoService', '$scope', '$rootScope', '$compile'];
+    function JobCreateController(JobService, GeoService, $scope, $rootScope, $compile) {
         $scope.jobProfileParams = {
             "type": [
                 { "value": "master_thesis", "label": "Master thesis" },
@@ -36,9 +36,13 @@
         $scope.initializeNewJobOffer = initializeNewJobOffer;
         $scope.create = create;
         $scope.reset = reset;
+        $scope.useAddress = useAddress;
+        $scope.useCoordinates = useCoordinates;
 
         // gets executed on initial load
         (function initController() {
+            //recreate leaflet map
+            initializeMap();
             // reset job create view
             initializeNewJobOffer();
         })();
@@ -49,6 +53,89 @@
             $scope.responseMessage.success = false;
             $scope.responseMessage.error = false;
             $scope.reset();
+        }
+
+        function initializeMap() {
+            $scope.map = L.map('jobCreateLocationMap').setView([48.7758459,9.1829321], 13);
+            L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo($scope.map);
+            $scope.map.on('click', mapClick);
+
+
+            $scope.markers = new L.FeatureGroup();
+            $scope.suggestedMarkers = new L.FeatureGroup();
+
+            $scope.map.addLayer($scope.markers);
+            $scope.map.addLayer($scope.suggestedMarkers);
+        }
+
+        function mapClick(e){
+            $scope.markers.clearLayers();
+            $scope.suggestedMarkers.clearLayers();
+
+            var iconOrange = new L.Icon.Default({
+                iconUrl: 'vendor/leaflet-0.7.7/images/marker-icon-orange.png',
+                iconRetinaUrl: 'vendor/leaflet-0.7.7/images/marker-icon-orange-2x.png'
+            });
+
+            var clickedMarker = L.marker(e.latlng, {icon: iconOrange});
+            clickedMarker.bindPopup('Searching for closest address...');
+            clickedMarker.setOpacity(0.5);
+            $scope.markers.addLayer(clickedMarker);
+
+            GeoService.getAddresses(e.latlng.lat, e.latlng.lng).then(function (response) {
+                var data = response.data;
+                var popupText = "";
+                if(response.data != null){
+                    popupText = 'Search complete, ' + response.data.results.length + ' compatible locations found.';
+                    setSuggestionMarkers(response.data.results);
+                }else{
+                    popupText = 'Something went wrong when searching for addresses, please try again.';
+                }
+                clickedMarker.setPopupContent(popupText);
+            });
+        }
+
+        function useAddress(id){
+            $scope.suggestedMarkers.eachLayer(function(marker){
+                if(marker._leaflet_id == id){
+                    marker.setPopupContent("Using address");
+                }
+            });
+        }
+
+        function useCoordinates(id){
+            $scope.suggestedMarkers.eachLayer(function(marker){
+               if(marker._leaflet_id == id){
+                   marker.setPopupContent("Using coordinates");
+               }
+            });
+        }
+
+        function setSuggestionMarkers(googleAddressList){
+            var iconPurple = new L.Icon.Default({
+                iconUrl: 'vendor/leaflet-0.7.7/images/marker-icon-purple.png',
+                iconRetinaUrl: 'vendor/leaflet-0.7.7/images/marker-icon-purple-2x.png'
+            });
+
+            for(var index = 0; index < googleAddressList.length; ++index){
+                var address = googleAddressList[index];
+                var location = address.geometry.location;
+                var marker = L.marker([location.lat, location.lng], {icon: iconPurple});
+                $scope.suggestedMarkers.addLayer(marker)
+
+                var html = "<div style='text-align: center;'>";
+                html += "<div style='display: inline-block;'>" + address.formatted_address + "</div>";
+                html += "<br><br>";
+                html += '<button type="button" class="btn btn-default" style="font: inherit;" ng-click="useAddress(' + marker._leaflet_id + ')">Use address</button>';
+                html += '<button type="button" class="btn btn-default" style="font: inherit;" ng-click="useCoordinates(' + marker._leaflet_id + ' )">Use coordinates</button>';
+                html += "</div>"
+                var markerContent = $compile(html)($scope);
+
+                marker.bindPopup(markerContent[0]);
+                marker.setOpacity(0.5);
+            }
         }
 
         function create() {

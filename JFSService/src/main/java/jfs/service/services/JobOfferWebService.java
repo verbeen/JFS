@@ -125,12 +125,13 @@ public class JobOfferWebService {
 
     @POST
     @Path("/metrics/company") @Consumes("application/json") @Produces("application/json")
+    @ApiOperation(value = "Get job metrics", notes = "Returns all available metrics of all the job offers created by the logged in user. Will return null if the user is not logged in or the user account is not of the Company type.")
     public List<JobOfferMetricsDTO> getMetricsByCompany(String token){
-        String companyId = SessionService.sessions.get(token).userId;
-        if(token == null){
+        Session session = SessionService.sessions.get(token);
+        if(session == null || session.type != UserTypeDTO.COMPANY){
             return null;
         }else{
-            return this.metricsService.getJobOfferMetricsByCompany(companyId);
+            return this.metricsService.getJobOfferMetricsByCompany(session.userId);
         }
     }
 
