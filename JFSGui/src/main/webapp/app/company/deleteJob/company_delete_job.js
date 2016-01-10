@@ -16,6 +16,7 @@
         $scope.remove = remove;
         $scope.search = search;
         $scope.userIdNow = userIdNow;
+        $scope.responseMessage = {};
         var userIdNow;
 
         // gets executed on initial load
@@ -50,11 +51,19 @@
                     $scope.noResults = {};
                     $scope.noResults.info = false;
                     $scope.noResults.error = false;
+                    $scope.responseMessage = {};
+                    console.log("info");
                     if (response.success) {
+                        console.log("deleted");
                         $scope.dataLoading = false;
+                        $scope.responseMessage.success = true;
+                        $scope.responseMessage.text = "The job has been deleted successfully.";
+                        console.log($scope.responseMessage.text);
+                        console.log("deleted");
                         getAll();
                     }
                     else {
+                        console.log("not deleted");
                         console.error(response);
                         $scope.noResults.error = true;
                         $scope.noResults.title = "An error occurred!";
@@ -81,6 +90,7 @@
                     if (response.success) {
                         if (response.data.offers.length > 0) {
                             $scope.offers = response.data.offers;
+
                         } else {
                             $scope.offers = [];
                             $scope.noResults.info = true;

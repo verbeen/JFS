@@ -10,6 +10,12 @@
                 </div>
             </div>
 
+            <div ng-if="responseMessage.success">
+                <div class="alert" ng-class="{ 'alert-info': responseMessage.success, 'alert-danger': noResults.error }">
+                    <strong>{{ responseMessage.text }}</strong>
+                </div>
+            </div>
+
             <div ng-if="!noResults.info && !noResults.error" class="table-responsive">
                 <table class="table table-striped">
                     <thead>
