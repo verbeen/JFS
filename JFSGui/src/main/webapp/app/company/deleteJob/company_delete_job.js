@@ -15,9 +15,8 @@
         $scope.getAll = getAll;
         $scope.remove = remove;
         $scope.search = search;
-        $scope.userIdNow = userIdNow;
         $scope.responseMessage = {};
-        var userIdNow;
+
 
         // gets executed on initial load
         (function initController() {
@@ -34,8 +33,8 @@
                     { "value": "contract", "label": "Contract" }
                 ]
             };
-            userIdNow = $rootScope.globals.currentUser.username;
-            console.log(userIdNow);
+
+
             getAll();
         })();
 
@@ -44,7 +43,6 @@
         };
 
         function remove(jobOfferId) {
-            console.log("remove()");
             $scope.jobOfferId = jobOfferId;
             JobService.deleteJobOffer($scope.jobOfferId)
                 .then(function(response) {
@@ -52,14 +50,11 @@
                     $scope.noResults.info = false;
                     $scope.noResults.error = false;
                     $scope.responseMessage = {};
-                    console.log("info");
                     if (response.success) {
                         console.log("deleted");
                         $scope.dataLoading = false;
                         $scope.responseMessage.success = true;
                         $scope.responseMessage.text = "The job has been deleted successfully.";
-                        console.log($scope.responseMessage.text);
-                        console.log("deleted");
                         getAll();
                     }
                     else {
