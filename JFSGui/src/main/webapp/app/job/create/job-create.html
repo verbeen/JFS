@@ -38,7 +38,7 @@
             <div class="form-group" show-errors>
                 <label for="jobDescription" class="col-sm-3 col-md-3 control-label">Job Description *</label>
                 <div class="col-sm-9 col-md-9">
-                    <textarea id="jobDescription" class="form-control" name="jobDescription" rows="3"
+                    <textarea id="jobDescription" class="form-control" name="jobDescription" rows="3" style="resize:vertical;"
                               ng-model="jobProfile.jobDescription" placeholder="Job Description" required></textarea>
                 </div>
             </div>
@@ -46,7 +46,7 @@
             <div class="form-group">
                 <label for="jobTask" class="col-sm-3 col-md-3 control-label">Job Task</label>
                 <div class="col-sm-9 col-md-9">
-                    <textarea id="jobTask" class="form-control" rows="3" name="jobTask"
+                    <textarea id="jobTask" class="form-control" rows="3" name="jobTask" style="resize:vertical;"
                               ng-model="jobProfile.jobTask" placeholder="Job Task"></textarea>
                 </div>
             </div>
@@ -107,10 +107,10 @@
                 <div class="col-sm-9 col-md-9">
                     <div class="input-group">
                         <textarea id="jobCreateLocation" name="jobCreateLocation" class="form-control ng-pristine ng-untouched ng-valid"
-                               ng-model="jobProfile.location" placeholder="Type here to search for a location by address."
+                               ng-model="jobProfile.location" placeholder="Type here to search for a location by address. Click on the map to find an address by its location."
                                style="resize:none;"></textarea>
-                        <div class="input-group-addon map-address-search-input-addon">
-                            <span class="btn btn-default map-address-search-btn">Search</span>
+                        <div class="searchButton input-group-addon">
+                            <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
                         </div>
                     </div>
                 </div>
@@ -120,7 +120,6 @@
                 <label for="jobCreateLocationSection" class="col-sm-3 col-md-3 control-label">&nbsp;</label>
                 <div class="col-sm-9 col-md-9">
                     <div id="jobCreateLocationSection" class="form-control mapselection">
-                        <div class="mapinfo">Selected location</div>
                         <div id="jobCreateLocationMap" class="mapelement" />
                     </div>
                 </div>

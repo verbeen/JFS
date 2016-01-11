@@ -37,6 +37,10 @@
         $scope.initializeNewJobOffer = initializeNewJobOffer;
         $scope.create = create;
         $scope.reset = reset;
+
+        $scope.setSuggestedMarkers = setSuggestedMarkers;
+        $scope.addSuggestedMarker = addSuggestedMarker;
+        $scope.clearSuggestedMarkers = clearSuggestedMarkers;
         $scope.useAddress = useAddress;
         $scope.useCoordinates = useCoordinates;
 
@@ -63,79 +67,113 @@
             }).addTo($scope.map);
             $scope.map.on('click', mapClick);
 
+            $scope.locationMarkerLayer = new L.FeatureGroup();
+            $scope.locationMarker = "";
+            $scope.map.addLayer($scope.locationMarkerLayer);
 
-            $scope.markers = new L.FeatureGroup();
-            $scope.suggestedMarkers = new L.FeatureGroup();
+            $scope.suggestedMarkerLayer = new L.FeatureGroup();
+            $scope.suggestedMarkerTable = {};
+            $scope.map.addLayer($scope.suggestedMarkerLayer);
 
-            $scope.map.addLayer($scope.markers);
-            $scope.map.addLayer($scope.suggestedMarkers);
+            var clearButton = L.easyButton('&curvearrowleft;', function(btn, map){
+                $scope.locationMarkerLayer.clearLayers();
+                $scope.clearSuggestedMarkers();
+            });
+            clearButton.button.title = 'Clear markers';
+            $scope.map.addControl(clearButton);
         }
 
         function mapClick(e){
-            $scope.markers.clearLayers();
-            $scope.suggestedMarkers.clearLayers();
+            $scope.locationMarkerLayer.clearLayers();
+            $scope.clearSuggestedMarkers();
 
-            var iconOrange = new L.Icon.Default({
-                iconUrl: 'vendor/leaflet-0.7.7/images/marker-icon-orange.png',
-                iconRetinaUrl: 'vendor/leaflet-0.7.7/images/marker-icon-orange-2x.png'
+            var iconGreen = new L.Icon.Default({
+                iconUrl: 'vendor/leaflet-0.7.7/images/marker-icon-green.png',
+                iconRetinaUrl: 'vendor/leaflet-0.7.7/images/marker-icon-green-2x.png'
             });
 
-            var clickedMarker = L.marker(e.latlng, {icon: iconOrange});
-            clickedMarker.bindPopup('Searching for closest address...');
-            clickedMarker.setOpacity(0.5);
-            $scope.markers.addLayer(clickedMarker);
+            $scope.locationMarker = L.marker(e.latlng, {icon: iconGreen});
+            $scope.locationMarker .bindPopup('Coordinates selected.<br>Loading address suggestions...');
+            $scope.locationMarkerLayer.addLayer($scope.locationMarker);
 
             GeoService.getAddresses(e.latlng.lat, e.latlng.lng).then(function (response) {
                 var data = response.data;
                 var popupText = "";
                 if(response.data != null){
-                    popupText = 'Search complete, ' + response.data.results.length + ' compatible locations found.';
-                    setSuggestionMarkers(response.data.results);
+                    popupText = 'Coordinates selected.';
+                    popupText += "<br>";
+                    popupText += response.data.results.length + ' addresses found.';
+                    $scope.setSuggestedMarkers(response.data.results);
                 }else{
                     popupText = 'Something went wrong when searching for addresses, please try again.';
                 }
-                clickedMarker.setPopupContent(popupText);
+                $scope.locationMarker.setPopupContent(popupText);
+                $scope.locationMarker.setZIndexOffset(-1000);
             });
         }
 
-        function useAddress(id){
-            $scope.suggestedMarkers.eachLayer(function(marker){
-                if(marker._leaflet_id == id){
-                    marker.setPopupContent("Using address");
-                }
-            });
-        }
-
-        function useCoordinates(id){
-            $scope.suggestedMarkers.eachLayer(function(marker){
-               if(marker._leaflet_id == id){
-                   marker.setPopupContent("Using coordinates");
-               }
-            });
-        }
-
-        function setSuggestionMarkers(googleAddressList){
+        function setSuggestedMarkers(googleAddressList){
             var iconPurple = new L.Icon.Default({
-                iconUrl: 'vendor/leaflet-0.7.7/images/marker-icon-purple.png',
-                iconRetinaUrl: 'vendor/leaflet-0.7.7/images/marker-icon-purple-2x.png'
+                iconUrl: 'vendor/leaflet-0.7.7/images/marker-icon-violet.png',
+                iconRetinaUrl: 'vendor/leaflet-0.7.7/images/marker-icon-violet-2x.png'
             });
 
             for(var index = 0; index < googleAddressList.length; ++index){
-                var address = googleAddressList[index];
-                var location = address.geometry.location;
-                var marker = L.marker([location.lat, location.lng], {icon: iconPurple});
-                $scope.suggestedMarkers.addLayer(marker)
+                var location = googleAddressList[index];
+                var coords = location.geometry.location;
+                var marker = L.marker([coords.lat, coords.lng], {icon: iconPurple});
 
-                var html = "<div style='text-align: center;'>";
-                html += "<div style='display: inline-block;'>" + address.formatted_address + "</div>";
-                html += "<br><br>";
-                html += '<button type="button" class="btn btn-default" style="font: inherit;" ng-click="useAddress(' + marker._leaflet_id + ')">Use address</button>';
-                html += '<button type="button" class="btn btn-default" style="font: inherit;" ng-click="useCoordinates(' + marker._leaflet_id + ' )">Use coordinates</button>';
-                html += "</div>"
-                var markerContent = $compile(html)($scope);
+                var level = index / googleAddressList.length;
+                if(level == 0){
+                    marker.setOpacity(0.7);
+                }
+                else if(0 < level && level < 0.33){
+                    marker.setOpacity(0.5);
+                }
+                else if(0.33 <= level && level < 0.66){
+                    marker.setOpacity(0.4);
+                }
+                else if(0.66 <= level){
+                    marker.setOpacity(0.3);
+                }
 
-                marker.bindPopup(markerContent[0]);
-                marker.setOpacity(0.5);
+                $scope.addSuggestedMarker(marker, location);
+            }
+        }
+
+        function addSuggestedMarker(marker, location){
+            $scope.suggestedMarkerLayer.addLayer(marker);
+            $scope.suggestedMarkerTable[marker._leaflet_id] = { marker: marker, location: location };
+
+            var html = "<div style='text-align: center;'>";
+            html += "<div style='display: inline-block;'>" + location.formatted_address + "</div>";
+            html += "<br><br>";
+            html += '<button type="button" class="btn btn-default" style="font: inherit;" ng-click="useAddress(' + marker._leaflet_id + ')">Use address</button>';
+            html += '<button type="button" class="btn btn-default" style="font: inherit;" ng-click="useCoordinates(' + marker._leaflet_id + ' )">Use coordinates</button>';
+            html += "</div>"
+            var markerContent = $compile(html)($scope);
+
+            marker.bindPopup(markerContent[0]);
+        }
+
+        function clearSuggestedMarkers(){
+            $scope.suggestedMarkerLayer.clearLayers();
+            $scope.suggestedMarkerTable = {};
+        }
+
+        function useAddress(id){
+            var entry = $scope.suggestedMarkerTable[id];
+
+            if(entry != null){
+                $scope.jobProfile = { location: entry.location.formatted_address };
+            }
+        }
+
+        function useCoordinates(id){
+            var entry = $scope.suggestedMarkerTable[id];
+
+            if(entry != null){
+                $scope.locationMarker.setLatLng(entry.marker.getLatLng());
             }
         }
 
@@ -204,6 +242,10 @@
                 "jobWebsite": "",
                 "jobContactEmail": ""
             };
+
+            $scope.locationMarkerLayer.clearLayers();
+            $scope.clearSuggestedMarkers;
+
             $scope.$broadcast('show-errors-reset');
         }
     }
