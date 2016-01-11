@@ -3,6 +3,8 @@ package jfs.service.services;
 import com.mongodb.BasicDBObject;
 import jfs.data.dataobjects.JobOfferDO;
 import jfs.data.dataobjects.enums.JobType;
+import jfs.data.dataobjects.helpers.GeoJSONPoint;
+import jfs.data.dataobjects.helpers.Location;
 import jfs.data.dataobjects.helpers.Pair;
 import jfs.data.stores.JobOfferStore;
 import jfs.transferdata.transferobjects.JobOfferDTO;
@@ -31,7 +33,7 @@ public class JobOfferService {
         offer.description = offerDTO.description;
         offer.duration = offerDTO.duration;
         offer.function = offerDTO.function;
-        offer.location = offerDTO.location;
+        offer.location = new Location(offerDTO.address, new GeoJSONPoint(offerDTO.lat, offerDTO.lng));
         offer.name = offerDTO.name;
         offer.task = offerDTO.task;
         offer.skills = offerDTO.skills;
@@ -127,10 +129,13 @@ public class JobOfferService {
 
     //Create an JobOfferDTO out of an JobOfferDO
     private JobOfferDTO createOfferDTO(JobOfferDO offerDO){
+        Double[] coordinates = offerDO.location.coordinates.coordinates;
         return new JobOfferDTO(
-                offerDO._id, offerDO.userId, offerDO.contactEmail, offerDO.name, offerDO.function, offerDO.description,
-                offerDO.task, offerDO.skills, offerDO.duration, offerDO.validUntil, offerDO.startDate,
-                offerDO.location, offerDO.website, JobTypeDTO.valueOf(offerDO.type.name())
+                offerDO._id, offerDO.userId, offerDO.contactEmail, offerDO.name,
+                offerDO.function, offerDO.description, offerDO.task, offerDO.skills,
+                offerDO.duration, offerDO.validUntil, offerDO.startDate,
+                offerDO.location.address, coordinates[0], coordinates[1],
+                offerDO.website, JobTypeDTO.valueOf(offerDO.type.name())
         );
     }
 

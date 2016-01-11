@@ -50,11 +50,15 @@ public class GitHubConnection {
 
     //Converts the GitHubJobDTO type to JobOfferDTO. Some fields are filled with dummy values.
     public JobOfferDTO createJobOfferDTO(GitHubJobDTO githubJob){
+        Double[] coords = new Double[] { new Random().nextDouble() + 48, new Random().nextDouble() + 8 };
+
+
         JobOfferDTO offer = new JobOfferDTO(
-                "", githubJob.company, githubJob.company, githubJob.title, githubJob.title, githubJob.description, githubJob.how_to_apply,
-                "C#, Java, Mobile", this.getDuration(12), new GregorianCalendar().getTimeInMillis() + this.getDuration(4),
+                "", githubJob.company, githubJob.company, githubJob.title, githubJob.title,
+                githubJob.description, githubJob.how_to_apply, "C#, Java, Mobile", this.getDuration(12),
+                new GregorianCalendar().getTimeInMillis() + this.getDuration(4),
                 new GregorianCalendar().getTimeInMillis() + this.getDuration(6), githubJob.location,
-                githubJob.company_url, this.getType(githubJob.type)
+                coords[0], coords[1], githubJob.company_url, this.getType(githubJob.type)
         );
         return offer;
     }

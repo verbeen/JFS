@@ -264,7 +264,9 @@
                     "duration": $scope.jobProfile.duration,
                     "validUntil": Date.parse($scope.jobProfile.validTilldate),
                     "startDate": Date.parse($scope.jobProfile.startDate),
-                    "location": $scope.jobProfile.location,
+                    "address": $scope.jobProfile.location.address,
+                    "lat": $scope.jobProfile.location.coordinates.lat,
+                    "lng": $scope.jobProfile.location.coordinates.lng,
                     "website": $scope.jobProfile.jobWebsite,
                     "contactEmail": $scope.jobProfile.jobContactEmail,
                     "type": $scope.jobProfile.type

@@ -29,6 +29,9 @@ public class JobOfferStore extends DataStore {
 
     public JobOfferStore(){
         super("joboffers");
+
+        Document index2dSphere = new Document("location.coordinates", "2dsphere");
+        this.collection.createIndex(index2dSphere);
     }
 
     //Get all job offers
