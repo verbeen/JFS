@@ -87,6 +87,11 @@ public class JobOfferService {
         return this.createOfferDTOList(offerDOs);
     }
 
+    public List<JobOfferDTO> getAllOffersCompany(String companyId){
+        List<JobOfferDO> offerDOs = this.jobOfferStore.getAllOffersCompany(companyId);
+        return this.createOfferDTOList(offerDOs);
+    }
+
     //Search for specific job offers by search criteria specified in SearchDTO
     //Returns a list of job offers as List<JobOfferDTO>
     public List<JobOfferDTO> search(SearchDTO searchDTO){

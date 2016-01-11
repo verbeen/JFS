@@ -10,6 +10,7 @@
         var service = {};
 
         service.getAllJobs = getAllJobs;
+        service.getAllJobsCompany = getAllJobsCompany;
         service.getJobProfile = getJobProfile;
         service.getAllJobMetricsByCompany = getAllJobMetricsByCompany;
         service.getRecentJobs = getRecentJobs;
@@ -33,6 +34,13 @@
         function getAllJobs(token) {
             return $http.post('/service/offers/getall', token)
                 .then(handleSuccess, handleError('Error getting all jobs!'));
+
+        }
+
+        function getAllJobsCompany(token) {
+            return $http.post('/service/offers/getallcompany', token)
+                .then(handleSuccess, handleError('Error getting all jobs!'));
+
         }
 
         function getJobProfile(offerId) {
