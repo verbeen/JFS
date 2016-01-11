@@ -1,6 +1,7 @@
 package jfs.service.services;
 
 import com.sun.org.apache.xpath.internal.operations.Bool;
+import io.swagger.annotations.ApiOperation;
 import jfs.transferdata.transferobjects.JobOfferListDTO;
 import jfs.transferdata.transferobjects.SearchDTO;
 import jfs.transferdata.transferobjects.StudentProfileDTO;
@@ -26,6 +27,7 @@ public class StudentSubscriptionsWebService {
     //Add a studet subscription
     @POST
     @Path("/add") @Consumes("application/json") @Produces("application/json")
+    @ApiOperation(value = "Add a student subscription", notes = "Returns boolean for success")
     public Boolean addStudentSubscriptions(StudentSubscriptionsDTO subscriptionsDTO){
         Boolean result = this.studentSubscriptionsService.addStudentSubscriptions(subscriptionsDTO);
         return result;
@@ -34,6 +36,7 @@ public class StudentSubscriptionsWebService {
     //Get a student subscription
     @POST
     @Path("/get") @Consumes("application/json") @Produces("application/json")
+    @ApiOperation(value = "Get a student subscription", notes = "Returns a student subscription")
     public StudentSubscriptionsDTO getStudentSubscriptions(String userId){
         StudentSubscriptionsDTO result = this.studentSubscriptionsService.getStudentSubscriptions(userId);
         return result;
@@ -42,6 +45,7 @@ public class StudentSubscriptionsWebService {
     //Update a student subscription
     @POST
     @Path("/update") @Consumes("application/json") @Produces("application/json")
+    @ApiOperation(value = "Update a student subscription", notes = "Returns boolean for success")
     public Boolean updateStudentSubscriptions(StudentSubscriptionsDTO subscriptionsDTO){
         return this.studentSubscriptionsService.updateStudentSubscriptions(subscriptionsDTO.userId, subscriptionsDTO);
     }
@@ -49,6 +53,7 @@ public class StudentSubscriptionsWebService {
     //Update last view field for a student subscription
     @POST
     @Path("/updateLastView") @Consumes("application/json") @Produces("application/json")
+    @ApiOperation(value = "Update the lastView field of a student subscription", notes = "Returns boolean for success")
     public Boolean updateLastView(String userId, long lastView){
         return this.studentSubscriptionsService.updateLastView(userId, lastView);
     }
@@ -56,6 +61,7 @@ public class StudentSubscriptionsWebService {
     //Get all job offers that fit a student subscription
     @POST
     @Path("/checkSubscriptions") @Consumes("application/json") @Produces("application/json")
+    @ApiOperation(value = "Search for job offers by a student subscription", notes = "Returns a list of job offers that match the student subscription criteria")
     public JobOfferListDTO checkSubscriptions(String userId){
         //1. get job offers by userId -> type, location, skills
         JobOfferListDTO list = new JobOfferListDTO();

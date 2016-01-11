@@ -65,6 +65,7 @@ public class UserService {
         return users;
     }
 
+    //Delete a user by userId
     public boolean deleteUser(String userId){
         UserDO user = this.userStore.getUser(userId);
         boolean result = false;

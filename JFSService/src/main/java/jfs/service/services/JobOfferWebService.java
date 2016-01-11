@@ -132,6 +132,7 @@ public class JobOfferWebService {
     //Get all job offer metrics for a specific company
     @POST
     @Path("/metrics/company") @Consumes("application/json") @Produces("application/json")
+    @ApiOperation(value = "Get job metrics by company", notes = "Returns an array of job offers metrics")
     public List<JobOfferMetricsDTO> getMetricsByCompany(String token){
         String companyId = SessionService.sessions.get(token).userId;
         if(token == null){
@@ -142,7 +143,8 @@ public class JobOfferWebService {
     }
 
     //Get a specific job offer by id
-    @GET @Path("{id}")
+    @GET
+    @Path("{id}")
     @ApiOperation(value = "Get offer", notes = "Returns one specific offer.")
     public JobOfferDTO getById(@PathParam("id") String id) {
         JobOfferDTO offerDTO = this.jobOfferService.getById(id);
@@ -152,7 +154,10 @@ public class JobOfferWebService {
         return offerDTO;
     }
 
-    @DELETE @Path("/delete/{id}") @Consumes("application/json") @Produces("application/json")
+    //Delete a job offer by jobOfferId
+    @DELETE
+    @Path("/delete/{id}") @Consumes("application/json") @Produces("application/json")
+    @ApiOperation(value = "Delete a job offer", notes = "Returns an ActionResultDTO type that indicates the result.")
     public ActionResultDTO deleteJobOffer(@PathParam("id") String jobOfferId){
         ActionResultDTO deleteJobOfferResult = new ActionResultDTO();
         boolean result = this.jobOfferService.delete(jobOfferId);

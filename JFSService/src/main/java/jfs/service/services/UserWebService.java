@@ -93,8 +93,13 @@ public class UserWebService {
         return null;
     }
 
+    //Delete a user by userId
     @DELETE
-    @Path("/delete/{id}") @Consumes("application/json") @Produces("application/json")
+    @Path("/delete/{id}")
+    @ApiOperation(value = "Delete a user account",
+            notes = "Returns an ActionResultDTO type that indicates the result.")
+    @Consumes("application/json")
+    @Produces("application/json")
     public ActionResultDTO deleteUser(@PathParam("id") String userId){
         ActionResultDTO deleteUserResult = new ActionResultDTO();
         boolean result = this.service.deleteUser(userId);
