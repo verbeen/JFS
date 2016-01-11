@@ -41,8 +41,23 @@
         $scope.setSuggestedMarkers = setSuggestedMarkers;
         $scope.addSuggestedMarker = addSuggestedMarker;
         $scope.clearSuggestedMarkers = clearSuggestedMarkers;
+        $scope.addLocationMarker = addLocationMarker;
+        $scope.clearLocationMarker = clearLocationMarker;
         $scope.useAddress = useAddress;
         $scope.useCoordinates = useCoordinates;
+        $scope.locationSelected = locationSelected;
+
+        $scope.searchLocations = "";
+
+        $scope.iconGreen = new L.Icon.Default({
+            iconUrl: 'vendor/leaflet-0.7.7/images/marker-icon-green.png',
+            iconRetinaUrl: 'vendor/leaflet-0.7.7/images/marker-icon-green-2x.png'
+        });
+
+        $scope.iconViolet = new L.Icon.Default({
+            iconUrl: 'vendor/leaflet-0.7.7/images/marker-icon-violet.png',
+            iconRetinaUrl: 'vendor/leaflet-0.7.7/images/marker-icon-violet-2x.png'
+        });
 
         // gets executed on initial load
         (function initController() {
@@ -75,26 +90,47 @@
             $scope.suggestedMarkerTable = {};
             $scope.map.addLayer($scope.suggestedMarkerLayer);
 
-            var clearButton = L.easyButton('&curvearrowleft;', function(btn, map){
-                $scope.locationMarkerLayer.clearLayers();
+            var clearLocationButton = L.easyButton('<span class="glyphicon glyphicon-remove" />', function(btn, map){
+                $scope.clearLocationMarker();
+            });
+            clearLocationButton.button.title = 'Clear selected coordinates.';
+            $scope.map.addControl(clearLocationButton);
+
+            var clearSuggestionsButton = L.easyButton('&curvearrowleft;', function(btn, map){
                 $scope.clearSuggestedMarkers();
             });
-            clearButton.button.title = 'Clear markers';
-            $scope.map.addControl(clearButton);
+            clearSuggestionsButton.button.title = 'Clear suggestion markers.';
+            $scope.map.addControl(clearSuggestionsButton);
+        }
+
+        $scope.$watch('jobProfile.location.address', function(){
+            if($scope.jobProfile.location.address != ""){
+                GeoService.getLocations($scope.jobProfile.location.address).then(function(response){
+                   var results = response.data.results;
+                    setSuggestedLocations(response.data.results);
+                });
+            }
+        });
+
+        function locationSelected(location){
+            $scope.jobProfile.location.address = location.formatted_address;
+            setCoordinates(location.geometry.location);
+        }
+
+        function setSuggestedLocations(locations){
+            if(locations != null && locations.length > 0){
+                $scope.searchLocations = locations;
+            }else{
+                $scope.searchLocations = "";
+            }
+
         }
 
         function mapClick(e){
-            $scope.locationMarkerLayer.clearLayers();
+            $scope.clearLocationMarker();
             $scope.clearSuggestedMarkers();
 
-            var iconGreen = new L.Icon.Default({
-                iconUrl: 'vendor/leaflet-0.7.7/images/marker-icon-green.png',
-                iconRetinaUrl: 'vendor/leaflet-0.7.7/images/marker-icon-green-2x.png'
-            });
-
-            $scope.locationMarker = L.marker(e.latlng, {icon: iconGreen});
-            $scope.locationMarker .bindPopup('Coordinates selected.<br>Loading address suggestions...');
-            $scope.locationMarkerLayer.addLayer($scope.locationMarker);
+            $scope.addLocationMarker(e.latlng, 'Coordinates selected.<br>Loading address suggestions...');
 
             GeoService.getAddresses(e.latlng.lat, e.latlng.lng).then(function (response) {
                 var data = response.data;
@@ -108,24 +144,27 @@
                     popupText = 'Something went wrong when searching for addresses, please try again.';
                 }
                 $scope.locationMarker.setPopupContent(popupText);
-                $scope.locationMarker.setZIndexOffset(-1000);
             });
         }
 
-        function setSuggestedMarkers(googleAddressList){
-            var iconPurple = new L.Icon.Default({
-                iconUrl: 'vendor/leaflet-0.7.7/images/marker-icon-violet.png',
-                iconRetinaUrl: 'vendor/leaflet-0.7.7/images/marker-icon-violet-2x.png'
-            });
+        function addLocationMarker(latlng, text){
+            $scope.jobProfile.location.coordinates = latlng;
 
+            $scope.locationMarker = L.marker(latlng, {icon: $scope.iconGreen});
+            $scope.locationMarker .bindPopup(text);
+            $scope.locationMarkerLayer.addLayer($scope.locationMarker);
+            $scope.locationMarker.setZIndexOffset(-1000);
+        }
+
+        function setSuggestedMarkers(googleAddressList){
             for(var index = 0; index < googleAddressList.length; ++index){
                 var location = googleAddressList[index];
                 var coords = location.geometry.location;
-                var marker = L.marker([coords.lat, coords.lng], {icon: iconPurple});
+                var marker = L.marker([coords.lat, coords.lng], {icon: $scope.iconViolet});
 
                 var level = index / googleAddressList.length;
                 if(level == 0){
-                    marker.setOpacity(0.7);
+                    marker.setOpacity(0.6);
                 }
                 else if(0 < level && level < 0.33){
                     marker.setOpacity(0.5);
@@ -156,16 +195,11 @@
             marker.bindPopup(markerContent[0]);
         }
 
-        function clearSuggestedMarkers(){
-            $scope.suggestedMarkerLayer.clearLayers();
-            $scope.suggestedMarkerTable = {};
-        }
-
         function useAddress(id){
             var entry = $scope.suggestedMarkerTable[id];
 
             if(entry != null){
-                $scope.jobProfile = { location: entry.location.formatted_address };
+                $scope.jobProfile.location.address = entry.location.formatted_address;
             }
         }
 
@@ -173,8 +207,30 @@
             var entry = $scope.suggestedMarkerTable[id];
 
             if(entry != null){
-                $scope.locationMarker.setLatLng(entry.marker.getLatLng());
+                setCoordinates(entry.marker.getLatLng());
             }
+        }
+
+        function setCoordinates(latlng){
+            if($scope.locationMarker == null || $scope.locationMarker == "") {
+                $scope.addLocationMarker(latlng, 'Coordinates selected.');
+            }
+            else{
+                $scope.locationMarker.setLatLng(latlng);
+            }
+
+            $scope.jobProfile.location.coordinates = latlng;
+        }
+
+        function clearSuggestedMarkers(){
+            $scope.suggestedMarkerLayer.clearLayers();
+            $scope.suggestedMarkerTable = {};
+        }
+
+        function clearLocationMarker(){
+            $scope.locationMarkerLayer.clearLayers();
+            $scope.locationMarker = "";
+            $scope.jobProfile.location.coordinates = "";
         }
 
         function create() {
@@ -238,13 +294,13 @@
                 "validTilldate": "",
                 "startDate": "",
                 "duration": "",
-                "location": "",
+                "location": { address: "", coordinates: ""},
                 "jobWebsite": "",
                 "jobContactEmail": ""
             };
 
-            $scope.locationMarkerLayer.clearLayers();
-            $scope.clearSuggestedMarkers;
+            $scope.clearLocationMarker();
+            $scope.clearSuggestedMarkers();
 
             $scope.$broadcast('show-errors-reset');
         }

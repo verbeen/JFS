@@ -14,7 +14,7 @@
 
         var service = {};
 
-        service.getCoordinates = getCoordinates;
+        service.getLocations = getLocations;
         service.getAddresses = getAddresses;
 
         return service;
@@ -23,13 +23,13 @@
          * functions that this service provides
          */
 
-        function getCoordinates(address) {
-            return $http.get('http://maps.googleapis.com/maps/api/geocode/json?&address=' + address)
+        function getLocations(address) {
+            return $http.get('http://maps.googleapis.com/maps/api/geocode/json?address=' + address)
                 .then(handleSuccess, handleError('Error getting coordinates!'));
         }
 
         function getAddresses(lat, lng) {
-            return $http.get('http://maps.googleapis.com/maps/api/geocode/json?&latlng=' + lat + ',' + lng)
+            return $http.get('http://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng)
                 .then(handleSuccess, handleError('Error getting nearby addresses!'));
         }
 
