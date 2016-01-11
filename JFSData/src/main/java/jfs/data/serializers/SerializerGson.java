@@ -4,6 +4,9 @@ import com.google.gson.Gson;
 
 /**
  * Created by lpuddu on 2-11-2015.
+ *
+ * Class that extends Serializer and Overrides serialize and deSerialize methods
+ *
  */
 public class SerializerGson extends Serializer {
     private Gson gson = new Gson();

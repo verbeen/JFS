@@ -8,5 +8,6 @@ import jfs.transferdata.transferobjects.enums.JobTypeDTO;
  */
 public class SearchDTO {
     public String location;
+    public String skills;
     public JobTypeDTO type;
 }
