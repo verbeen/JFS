@@ -34,7 +34,7 @@ public class UserService {
     private JobOfferStore jobOfferStore = JobOfferStore.store;
 
     //Register a user by email, password and UserType
-    //Returns boolean for succcess
+    //Returns boolean for success
     public Boolean registerUser(String email, String password, UserType type){
         UserDO user = new UserDO(email, password, type);
         return this.userStore.addUser(user);
