@@ -35,7 +35,12 @@
             <dd>{{ jobOffer.startDate | dateCheckedZero: 'yyyy-MM-dd' }}</dd>
 
             <dt>Location</dt>
-            <dd>{{ jobOffer.location }}</dd>
+            <dd>
+                <div id="jobCreateLocationSection" class="form-control mapselection">
+                    <div id="jobProfileMap" class="mapelement">
+                    </div>
+                </div>
+            </dd>
 
             <dt>Contact Email</dt>
             <dd><a href="mailto:{{ jobOffer.contactEmail }}">{{ jobOffer.contactEmail }}</a></dd>

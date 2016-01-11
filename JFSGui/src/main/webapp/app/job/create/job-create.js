@@ -49,15 +49,8 @@
 
         $scope.searchLocations = "";
 
-        $scope.iconGreen = new L.Icon.Default({
-            iconUrl: 'vendor/leaflet-0.7.7/images/marker-icon-green.png',
-            iconRetinaUrl: 'vendor/leaflet-0.7.7/images/marker-icon-green-2x.png'
-        });
-
-        $scope.iconViolet = new L.Icon.Default({
-            iconUrl: 'vendor/leaflet-0.7.7/images/marker-icon-violet.png',
-            iconRetinaUrl: 'vendor/leaflet-0.7.7/images/marker-icon-violet-2x.png'
-        });
+        $scope.iconGreen = GeoService.createGreenIcon();
+        $scope.iconViolet = GeoService.createVioletIcon();
 
         // gets executed on initial load
         (function initController() {
@@ -76,11 +69,7 @@
         }
 
         function initializeMap() {
-            $scope.map = L.map('jobCreateLocationMap').setView([48.7758459,9.1829321], 13);
-            L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo($scope.map);
-            $scope.map.on('click', mapClick);
+            $scope.map = GeoService.createMap('jobCreateLocationMap', mapClick);
 
             $scope.locationMarkerLayer = new L.FeatureGroup();
             $scope.locationMarker = "";
