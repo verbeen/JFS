@@ -104,11 +104,14 @@
         }
 
         $scope.$watch('jobProfile.location.address', function(){
-            if($scope.jobProfile.location.address != ""){
-                GeoService.getLocations($scope.jobProfile.location.address).then(function(response){
+            var address = $scope.jobProfile.location.address;
+            if(address != null && address != ""){
+                GeoService.getLocations(address).then(function(response){
                    var results = response.data.results;
                     setSuggestedLocations(response.data.results);
                 });
+            }else{
+                setSuggestedLocations(null);
             }
         });
 
@@ -154,6 +157,8 @@
             $scope.locationMarker .bindPopup(text);
             $scope.locationMarkerLayer.addLayer($scope.locationMarker);
             $scope.locationMarker.setZIndexOffset(-1000);
+
+            $scope.map.panTo(latlng, {animate: true});
         }
 
         function setSuggestedMarkers(googleAddressList){
@@ -220,6 +225,7 @@
             }
 
             $scope.jobProfile.location.coordinates = latlng;
+            $scope.map.panTo(latlng, {animate: true});
         }
 
         function clearSuggestedMarkers(){

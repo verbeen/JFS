@@ -110,23 +110,17 @@
                                   ng-model="jobProfile.location.address" ng-model-options="{debounce: 500 }"
                                   ng-change="locationInputChanged" ng-focus="isLocationFocused = true" ng-blur="isLocationFocused = false"
                                   placeholder="Type here to search for a location by address. Click on the map to find an address by its location."
-                                  style="resize:none;" required></textarea>
-                            <!--<angucomplete-alt id="jobCreateLocation" name="jobCreateLocation"
-                                    input-class="form-control form-control-small" minlength="1"
-                                    selected-object="jobProfile.location.address" pause="400"
-                                    remote-url="http://maps.googleapis.com/maps/api/geocode/json?&address="
-                                    remote-url-data-field="results" title-field="formatted_address"
-                                    placeholder="Type here to search for a location by address. Click on the map to find an address by its location."
-                                    input-changed="locationInputChanged"
-                                    field-required="jobProfile.location.address" required>
-                            </angucomplete-alt>-->
+                                  style="resize:none;" required data-toggle="dropdown"></textarea>
                         <div class="searchButton input-group-addon">
                             <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
                         </div>
                     </div>
-                    <ul class="list-group" ng-show="isLocationFocused"  style="position:absolute; z-index:1000;">
-                        <li ng-mousedown="locationSelected(row)" class="list-group-item btn btn-default" ng-repeat="row in searchLocations">{{row.formatted_address}}</li>
-                    </ul>
+                    <div ng-show="isLocationFocused" style="z-index: 1000; position: absolute; width:85%;">
+                        <div class="btn btn-default" style="width:100%; overflow:hidden;"
+                             ng-mousedown="locationSelected(row)" ng-repeat="row in searchLocations">
+                            {{row.formatted_address}}
+                        </div>
+                    </div>
                 </div>
             </div>
 
