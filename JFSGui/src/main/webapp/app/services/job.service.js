@@ -21,6 +21,7 @@
         service.getJobsSubs = getJobsSubs;
         service.subsUpdate = subsUpdate;
         service.deleteJobOffer = deleteJobOffer;
+        service.createEmptyJobObject = createEmptyJobObject;
 
 
         return service;
@@ -86,6 +87,22 @@
         function deleteJobOffer(jobOfferId){
             return $http.delete('/service/offers/delete/' + jobOfferId)
                 .then(handleSuccess, handleError('Error deleting the job offer'));
+        }
+
+        function createEmptyJobObject(){
+            return {
+                "jobName": "",
+                "type": "",
+                "jobDescription": "",
+                "jobTask": "",
+                "jobSkill": "",
+                "validTilldate": "",
+                "startDate": "",
+                "duration": "",
+                "location": { address: "", coordinates: ""},
+                "jobWebsite": "",
+                "jobContactEmail": ""
+            };
         }
 
         // private functions

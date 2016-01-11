@@ -1,3 +1,25 @@
+#jfsCreateJob .jobOfferAddressDropdown{
+    z-index: 1000;
+    position: absolute;
+    margin-left: 1%;
+    width:50%;
+}
+
+#jfsCreateJob .jobOfferAddressDropdownItem{
+    overflow:hidden;
+    width: 100%;
+    white-space:normal;
+    font-size:10px;
+}
+
+#jfsCreateJob .jobOfferAddressDropdownItem:hover{
+    color:#333;
+    background-color:#e6e6e6;
+    border-color:#adadad;
+    cursor: hand;
+    cursor: pointer;
+}
+
 #jfsCreateJob .form-actions {
     margin-bottom: 20px;
 }

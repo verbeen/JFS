@@ -47,7 +47,7 @@
         $scope.useCoordinates = useCoordinates;
         $scope.locationSelected = locationSelected;
 
-        $scope.searchLocations = "";
+        $scope.dropdownSearchLocations = "";
 
         $scope.iconGreen = GeoService.createGreenIcon();
         $scope.iconViolet = GeoService.createVioletIcon();
@@ -111,11 +111,10 @@
 
         function setSuggestedLocations(locations){
             if(locations != null && locations.length > 0){
-                $scope.searchLocations = locations;
+                $scope.dropdownSearchLocations = locations;
             }else{
-                $scope.searchLocations = "";
+                $scope.dropdownSearchLocations = "";
             }
-
         }
 
         function mapClick(e){
@@ -282,19 +281,7 @@
         }
 
         function reset() {
-            $scope.jobProfile = {
-                "jobName": "",
-                "type": "",
-                "jobDescription": "",
-                "jobTask": "",
-                "jobSkill": "",
-                "validTilldate": "",
-                "startDate": "",
-                "duration": "",
-                "location": { address: "", coordinates: ""},
-                "jobWebsite": "",
-                "jobContactEmail": ""
-            };
+            $scope.jobProfile = JobService.createEmptyJobObject();
 
             $scope.clearLocationMarker();
             $scope.clearSuggestedMarkers();
