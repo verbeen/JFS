@@ -5,13 +5,15 @@
         .module('app')
         .factory('UserService', UserService);
 
-    UserService.$inject = ['$http'];
-    function UserService($http) {
+    UserService.$inject = ['$http', '$rootScope', '$location', '$cookieStore'];
+    function UserService($http, $rootScope, $location, $cookieStore) {
         var service = {};
 
         service.Create = Create;
         service.getAllUsers = getAllUsers;
-        service.deleteUser = deleteUser;
+        service.deleteUser = deleteUser
+        service.isLoggedIn = isLoggedIn;
+        service.logOut = logOut;
 
         return service;
 
@@ -27,6 +29,24 @@
         function deleteUser(userId){
             return $http.delete('/service/users/delete/' + userId)
                 .then(handleSuccess,handleError('Deleting user failed!'));
+        }
+
+        function isLoggedIn(token){
+            return $http.post('service/users/isloggedin/', token)
+                .then(handleSuccess, handleError('Something went wrong, maybe the server is down?'));
+        }
+
+        function logOut(){
+            $rootScope.globals = {
+                currentUser: {
+                    username: "",
+                    userType: "",
+                    authdata: "",
+                    loggedIn: false
+                }
+            };
+            $cookieStore.remove('globals');
+            $location.path('/authentication/logout');
         }
 
         // private functions
