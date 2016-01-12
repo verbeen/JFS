@@ -11,7 +11,7 @@
 
         service.Create = Create;
         service.getAllUsers = getAllUsers;
-        service.deleteUser = deleteUser
+        service.deleteUser = deleteUser;
         service.isLoggedIn = isLoggedIn;
         service.logOut = logOut;
 
@@ -21,22 +21,23 @@
             return $http.post('/service/users/register/' + user.type, user.authentication)
                 .then(handleSuccess, handleError('Registration not successful!'));
         }
+
         function getAllUsers(token) {
             return $http.post('/service/users/all/', token)
                 .then(handleSuccess, handleError('Got all jobs "' + token + '"!'));
         }
 
-        function deleteUser(userId){
+        function deleteUser(userId) {
             return $http.delete('/service/users/delete/' + userId)
                 .then(handleSuccess,handleError('Deleting user failed!'));
         }
 
-        function isLoggedIn(token){
+        function isLoggedIn(token) {
             return $http.post('service/users/isloggedin/', token)
                 .then(handleSuccess, handleError('Something went wrong, maybe the server is down?'));
         }
 
-        function logOut(){
+        function logOut() {
             $rootScope.globals = {
                 currentUser: {
                     username: "",
@@ -46,7 +47,7 @@
                 }
             };
             $cookieStore.remove('globals');
-            $location.path('/authentication/logout');
+            $location.path('/authentication/login');
         }
 
         // private functions
