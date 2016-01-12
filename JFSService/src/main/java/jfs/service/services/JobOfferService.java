@@ -148,8 +148,8 @@ public class JobOfferService {
         return offers;
     }
 
-    public boolean delete(String jobOfferId){
-        boolean result = this.jobOfferStore.delete(jobOfferId);
+    public boolean delete(String jobOfferId, String userType, String companyId){
+        boolean result = this.jobOfferStore.delete(jobOfferId, userType, companyId);
         return result;
     }
 }

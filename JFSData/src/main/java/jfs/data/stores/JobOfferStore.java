@@ -171,10 +171,16 @@ public class JobOfferStore extends DataStore {
         return offers;
     }
 
-    public boolean delete(String jobOfferId){
-        if (jobOfferId != null || !jobOfferId.isEmpty()) {
+    public boolean delete(String jobOfferId, String userType, String companyId){
+        if (jobOfferId != null || !jobOfferId.isEmpty() || companyId != null || !companyId.isEmpty()) {
+            DeleteResult result;
             BasicDBObject filter = new BasicDBObject("_id", jobOfferId);
-            DeleteResult result = this.collection.deleteOne(filter);
+            if (userType == "ADMIN") {
+                result = this.collection.deleteOne(filter);
+            } else {
+                filter.append("userId", companyId);
+                result = this.collection.deleteOne(filter);
+            }
             metricsStore.deleteSingleJobMetrics(jobOfferId);
             return result.wasAcknowledged();
         }else{
