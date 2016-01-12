@@ -19,6 +19,11 @@
     padding-top: 10px;
 }
 
+#jfsJobList .alert {
+    margin-top: 1rem;
+    margin-bottom: 0;
+}
+
 #jfsJobList .text-overflow {
     overflow: hidden;
     text-overflow: ellipsis;
