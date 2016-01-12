@@ -1,0 +1,13 @@
+#jfsJobProfile .mapselection {
+    padding:0px;
+    height:100%;
+    background-color:#F5F5F5;
+    z-index:0;
+    opacity:0.99;
+    overflow:hidden;
+    width: 50%;
+}
+
+#jfsJobProfile .mapelement {
+    height:150px;
+}

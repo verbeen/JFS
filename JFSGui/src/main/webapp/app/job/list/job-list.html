@@ -14,42 +14,80 @@
                 </div>
                 -->
 
-                <div class="form-group">
-                    <label id="jobSearchLabel" class="control-label">Search:</label>
-                    <div class="input-group">
-                        <button aria-label="Select" type="button" class="btn btn-default form-control"
-                                ng-model="selectedJobSearch.type" data-placeholder="Type" data-html="1"
-                                bs-options="type.value as type.label for type in jobSearch.type" bs-select>
-                        </button>
-                        <div class="searchButton input-group-addon">
-                            <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                <div class="row search-row">
+
+                    <div class="form-group">
+                        <!--<label id="jobSearchLabel" class="control-label">Search:</label>-->
+                        <div class="input-group">
+                            <button aria-label="Select" type="button" class="btn btn-default form-control"
+                                    ng-model="selectedJobSearch.type" data-placeholder="Type" data-html="1"
+                                    bs-options="type.value as type.label for type in jobSearch.type" bs-select>
+                            </button>
+                            <div class="searchButton input-group-addon">
+                                <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                            </div>
                         </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="selectedJobSearch.skills" placeholder="Skills">
+                            <div class="searchButton input-group-addon">
+                                <span class="glyphicon glyphicon-education" aria-hidden="true"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" id="jobSearchAddress" name="jobSearchAddress" class="form-control"
+                                   ng-model="searchAddress" ng-model-options="{ debounce: 500 }"
+                                   ng-focus="isAddressFocused = true" ng-blur="isAddressFocused = false"
+                                   placeholder="Type to search by address. Click on the map to search by location."
+                                   autocomplete="off" />
+                            <div class="searchButton input-group-addon" style="border-left: 0px;">
+                                <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+                            </div>
+                        </div>
+                        <div ng-show="isAddressFocused" class="list-group jobOfferAddressDropdown">
+                            <div class="list-group-item jobOfferAddressDropdownItem"
+                                 ng-mousedown="dropdownLocationSelected(row)" ng-repeat="row in dropdownSearchLocations">
+                                {{row.formatted_address}}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <button aria-label="Select" type="button" class="btn btn-default form-control" ng-change="radiusChanged()"
+                                    ng-model="selectedJobSearch.radius" data-placeholder="Radius" data-html="1"
+                                    bs-options="radius.value as radius.label for radius in jobSearch.radius" bs-select>
+                            </button>
+                            <div class="searchButton input-group-addon">
+                                <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row search-row">
+                    <div class="form-control mapselection">
+                        <div id="jobSearchMap" class="mapelement" />
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <div class="input-group">
-                        <input type="text" class="form-control" ng-model="selectedJobSearch.location" placeholder="Location">
-                        <div class="searchButton input-group-addon">
-                            <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+                <div class="row search-row">
+
+                    <button type="submit" class="btn btn-primary search-row-button">
+                        Search
+                    </button>
+
+                    <div ng-if="dataLoading" class="form-group search-row-button">
+                        <div class="loadingAnimation">
                         </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <div class="input-group">
-                        <input type="text" class="form-control" ng-model="selectedJobSearch.skills" placeholder="Skills">
-                        <div class="searchButton input-group-addon">
-                            <span class="glyphicon glyphicon-education" aria-hidden="true"></span>
-                        </div>
-                    </div>
-                </div>
-
-                <button type="submit" class="btn btn-primary">Search</button>
-
-                <div ng-if="dataLoading" class="form-group">
-                    <div class="loadingAnimation">
-                    </div>
                 </div>
 
             </form>
