@@ -44,6 +44,15 @@ public class JobOfferStore extends DataStore {
         }
         return offers;
     }
+    public List<JobOfferDO> getAllOffersCompany(String companyId){
+        List<JobOfferDO> offers = new ArrayList<JobOfferDO>();
+        Document select = new Document("userId", companyId);
+        FindIterable<DBObject> results = this.collection.find(select);
+        for(DBObject obj : results){
+            offers.add(this.extractJobOffer(obj));
+        }
+        return offers;
+    }
 
     //Add a new job offer by JobOfferDO and companyId
     public Boolean addOffer(JobOfferDO offer, String companyId){

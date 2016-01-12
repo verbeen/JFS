@@ -74,6 +74,10 @@
                 templateUrl: 'app/student/notification/add-notification.html',
                 controller: 'AddNotificationController as vm'
             })
+            .when('/company/deletejob', {
+                templateUrl: 'app/company/deletejob/company_delete_job.html',
+                controller: 'CompanyDeleteJobs as vm'
+            })
 
             .otherwise({redirectTo: '/'});
 
