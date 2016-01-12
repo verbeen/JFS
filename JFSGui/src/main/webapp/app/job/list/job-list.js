@@ -111,6 +111,7 @@
             $scope.mapMarker = null;
             $scope.mapMarkerCircleLayer.clearLayers();
             $scope.mapMarkerCircle = null;
+            $scope.selectedJobSearch.coordinates = null;
         }
 
         $scope.$watch('searchAddress', function(){
@@ -228,27 +229,5 @@
                     offersUpdated();
                 });
         };
-
-        /*
-        $scope.jobFilter = {
-            "type": [
-                { "value": "1", "label": "Part Time" },
-                { "value": "2", "label": "Full Time" },
-                { "value": "3", "label": "Master Thesis" }
-            ],
-            "salary": [
-                { "value": "s1", "label": "Less than 20" },
-                { "value": "s2", "label": "Between 20 and 40" },
-                { "value": "s3", "label": "More than 40" }
-            ],
-            "duration": [
-                { "value": "d1", "label": "Less than 6 month" },
-                { "value": "d2", "label": "Between 6 and 11 months" },
-                { "value": "d3", "label": "More than one year" }
-            ],
-            "company": ["Accenture","IBM","Google"],
-            "skill": ["CSS","Java","Angular JS"]
-        };
-        */
     }
 })();
