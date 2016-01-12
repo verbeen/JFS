@@ -93,7 +93,7 @@
 
         function deleteJobOffer(jobOfferId){
             return $http.delete('/service/offers/delete/' + jobOfferId)
-                .then(handleSuccess, handleError('Error deleting the job offer'));
+                .then(handleSuccess, handleError('Error deleting the job offer!'));
         }
 
         // private functions

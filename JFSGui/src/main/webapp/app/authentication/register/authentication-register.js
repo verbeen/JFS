@@ -19,7 +19,7 @@
                     if (response.success) {
                         if (response.data) {
                             // user is created
-                            console.info("Registration successful!");
+                            console.info("Registration successful.");
                             $location.path('/authentication/login');
                         } else {
                             // user is not created and backend returns false (e.g. already registered)

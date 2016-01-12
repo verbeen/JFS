@@ -69,12 +69,12 @@
             JobService.addSubscription(obj)
                 .then(function (response) {
                     if (response.success) {
-                        $scope.responseMessage = "Subscription Added Successfully !";
+                        $scope.responseMessage = "Subscription added successfully.";
                         $scope.responseMessageShow = true;
                     } else {
                         // backend service is not reachable (e.g. database down)
                         $scope.responseMessage.error = true;
-                        $scope.responseMessage.text = "An error occurred while creating your subscription.";
+                        $scope.responseMessage.text = "An error occurred while creating your subscription!";
                         $scope.dataLoading = false;
                         console.info("failed!");
                     }
@@ -99,7 +99,7 @@
             JobService.subsUpdate(obj)
                 .then(function (response) {
                     if (response.success) {
-                        $scope.responseMessage = "Subscription Updated Successfully!";
+                        $scope.responseMessage = "Subscription updated successfully.";
                         $scope.responseMessageShow = true;
                     } else {
                         // backend service is not reachable (e.g. database down)

@@ -23,7 +23,7 @@
                     if (response.success) {
                         if (response.data.isLoggedIn) {
                             // user is logged in
-                            console.info("Login successful!");
+                            console.info("Login successful.");
                             AuthenticationService.SetCredentials(vm.email, vm.password, response.data.type, response.data.token);
                             $location.path('/');
                         } else {
