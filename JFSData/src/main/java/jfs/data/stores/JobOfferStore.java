@@ -175,6 +175,7 @@ public class JobOfferStore extends DataStore {
         if (jobOfferId != null || !jobOfferId.isEmpty()) {
             BasicDBObject filter = new BasicDBObject("_id", jobOfferId);
             DeleteResult result = this.collection.deleteOne(filter);
+            metricsStore.deleteSingleJobMetrics(jobOfferId);
             return result.wasAcknowledged();
         }else{
             throw new NullPointerException("jobOfferId parameter is null");

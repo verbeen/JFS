@@ -1,3 +1,6 @@
+/*
+-Contains the route provider,cookie manager and controllers
+ */
 (function () {
     'use strict';
 

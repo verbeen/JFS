@@ -11,7 +11,7 @@
             </div>
 
             <div ng-if="responseMessage.success">
-                <div class="alert" ng-class="{ 'alert-info': responseMessage.success, 'alert-danger': noResults.error }">
+                <div class="alert" ng-class="{ 'alert-success': responseMessage.success, 'alert-danger': noResults.error }">
                     <strong>{{ responseMessage.text }}</strong>
                 </div>
             </div>
