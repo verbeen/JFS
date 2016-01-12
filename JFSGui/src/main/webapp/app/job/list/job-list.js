@@ -16,6 +16,7 @@
         // gets executed on initial load
         (function initController() {
             $scope.dataLoading = false;
+            $scope.errorSetMarker = false;
 
             $scope.jobSearch = {
                 "type": [
@@ -200,6 +201,12 @@
 
             if (!$scope.selectedJobSearch) {
                 $scope.selectedJobSearch = {};
+            }
+
+            if ($scope.selectedJobSearch.radius > 0 && $scope.selectedJobSearch.coordinates == null) {
+                $scope.errorSetMarker = true;
+            } else {
+                $scope.errorSetMarker = false;
             }
 
             JobService.getJobsBySearch($scope.selectedJobSearch)
