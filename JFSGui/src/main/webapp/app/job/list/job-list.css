@@ -36,11 +36,11 @@
 
 #jfsJobList #jobSearchForm .form-group {
     margin-right: 1rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
 }
 
 #jfsJobList #jobSearchForm .search-row-button {
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
 }
 
 #jfsJobList .masonry-brick {
