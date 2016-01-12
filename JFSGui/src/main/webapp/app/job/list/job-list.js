@@ -69,13 +69,10 @@
 
         $scope.dropdownLocationSelected = function(location){
             $scope.searchAddress = location.formatted_address;
-            var coordinates = [location.geometry.location.lat, location.geometry.location.lng];
-            $scope.selectedJobSearch.coordinates = coordinates;
             setMapMarker(location.geometry.location, location.formatted_address);
         };
 
         function mapClicked(e){
-            $scope.selectedJobSearch.coordinates = [e.latlng.lat, e.latlng.lng];
             var lat = parseFloat(e.latlng.lat.toFixed(6));
             var lng = parseFloat(e.latlng.lng.toFixed(6));
             setMapMarker(e.latlng, "[" + lat + "," + lng + "]");
@@ -83,6 +80,8 @@
 
         function setMapMarker(latlng, content){
             clearMapMarker();
+
+            $scope.selectedJobSearch.coordinates = [latlng.lat, latlng.lng];
 
             var icon = GeoService.createGreenIcon();
             $scope.mapMarker = L.marker(latlng, {icon: icon});
@@ -135,7 +134,6 @@
 
                 setMapMarkerCircle(latlng, $scope.selectedJobSearch.radius);
             }
-
         }
 
         function setSuggestedDropdownLocations(locations){
@@ -206,6 +204,8 @@
 
             if ($scope.selectedJobSearch.radius > 0 && $scope.selectedJobSearch.coordinates == null) {
                 $scope.errorSetMarker = true;
+                $scope.dataLoading = false;
+                return;
             } else {
                 $scope.errorSetMarker = false;
             }
