@@ -20,8 +20,8 @@ import java.util.logging.Logger;
  */
 public class UploadGitHubOffers {
     //Pick if localhost, dev-serve or master-server will be used:
-    //private String apiURL = "http://localhost:8080/service";
-    private String apiURL = "http://server-devforstudents.rhcloud.com/service";
+    private String apiURL = "http://localhost:8080/service";
+    //private String apiURL = "http://server-devforstudents.rhcloud.com/service";
     //private String apiURL = "http://server-jobsforstudents.rhcloud.com/service";
     private String addCompanyPATH = "/users/register/company";
     private String addOffersPATH = "/offers/addmore";
