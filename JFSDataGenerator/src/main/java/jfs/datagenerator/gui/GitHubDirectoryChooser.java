@@ -7,6 +7,9 @@ import java.awt.event.ActionListener;
 
 /**
  * Created by lpuddu on 7-12-2015.
+ *
+ * Class that allows to pick a directory from file system
+ *
  */
 public class GitHubDirectoryChooser {
     JFileChooser chooser;

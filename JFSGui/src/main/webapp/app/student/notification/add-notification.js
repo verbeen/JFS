@@ -25,7 +25,8 @@
                 {"value": "part_time", "label": "Part time"},
                 {"value": "full_time", "label": "Full time"},
                 {"value": "internship", "label": "Internship"},
-                {"value": "contract", "label": "Contract"}
+                {"value": "contract", "label": "Contract"},
+                {"value": "others", "label": "Others"}
             ]
         };
         $scope.type = "all";
@@ -35,6 +36,7 @@
         $scope.redirect = function () {
             window.location = "#/student";
         }
+
         function saveSub() {
             $scope.$watch('$scope.flag', function () {
                 if ($scope.flag > 0) {
@@ -43,10 +45,7 @@
                     createSub();
                 }
             });
-
-
         }
-
 
         function createSub() {
             //Getting current time and converting it to milliseconds
@@ -68,12 +67,12 @@
             JobService.addSubscription(obj)
                 .then(function (response) {
                     if (response.success) {
-                        $scope.responseMessage = "Subscription Added Successfully !";
+                        $scope.responseMessage = "Subscription added successfully.";
                         $scope.responseMessageShow = true;
                     } else {
                         // backend service is not reachable (e.g. database down)
                         $scope.responseMessage.error = true;
-                        $scope.responseMessage.text = "An error occurred while creating your subscription.";
+                        $scope.responseMessage.text = "An error occurred while creating your subscription!";
                         $scope.dataLoading = false;
                         console.info("failed!");
                     }
@@ -98,7 +97,7 @@
             JobService.subsUpdate(obj)
                 .then(function (response) {
                     if (response.success) {
-                        $scope.responseMessage = "Subscription Updated Successfully!";
+                        $scope.responseMessage = "Subscription updated successfully.";
                         $scope.responseMessageShow = true;
                     } else {
                         // backend service is not reachable (e.g. database down)
@@ -109,8 +108,7 @@
 
         //retrieving current subscription details and settings default values
         function checkSub() {
-            var user = $rootScope.globals.currentUser.username;
-            JobService.checkSubscription($rootScope.globals.currentUser.username)
+            JobService.checkSubscription($rootScope.globals.currentUser.authdata)
                 .then(function (response) {
                     if (response.success) {
                         $scope.subDetails = response.data;
@@ -121,20 +119,6 @@
                         if (response.data.type) {
                             $scope.type = response.data.type;
                         }
-
-                       /* if (response.data.type == "master_thesis") {
-                            $scope.type = "master_thesis";
-                        } else if (response.data.type == "bachelor_thesis") {
-                            $scope.type = "bachelor_thesis";
-                        } else if (response.data.type == "part_time") {
-                            $scope.type = "part_time";
-                        } else if (response.data.type == "full_time") {
-                            $scope.type = "full_time";
-                        } else if (response.data.type == "internship") {
-                            $scope.type = "internship";
-                        } else if (response.data.type == "contract") {
-                            $scope.type = "contract";
-                        }*/
                     } else {
                         // backend service is not reachable (e.g. database down)
 

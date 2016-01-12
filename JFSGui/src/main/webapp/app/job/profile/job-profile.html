@@ -22,7 +22,7 @@
             <dt>Job task</dt>
             <dd>{{ jobOffer.task | htmlToPlainText }}</dd>
 
-            <dt>Job Skills</dt>
+            <dt>Job skills</dt>
             <dd>{{ jobOffer.skills | htmlToPlainText }}</dd>
 
             <dt>Valid till date</dt>
@@ -35,9 +35,13 @@
             <dd>{{ jobOffer.startDate | dateCheckedZero: 'yyyy-MM-dd' }}</dd>
 
             <dt>Location</dt>
-            <dd>{{ jobOffer.location }}</dd>
+            <dd>
+                <div id="jobProfileLocationSection" class="form-control mapselection">
+                    <div id="jobProfileMap" class="mapelement"></div>
+                </div>
+            </dd>
 
-            <dt>Contact Email</dt>
+            <dt>Contact email</dt>
             <dd><a href="mailto:{{ jobOffer.contactEmail }}">{{ jobOffer.contactEmail }}</a></dd>
 
             <dt>Website</dt>

@@ -1,7 +1,10 @@
+/*
+-Contains the route provider,cookie manager and controllers
+ */
 (function () {
     'use strict';
 
-    angular.module('app', ["ngRoute", "ngCookies", "ngSanitize", "mgcrea.ngStrap", "wu.masonry","ngTagsInput"])
+    angular.module('app', ["ngRoute", "ngCookies", "ngSanitize", "mgcrea.ngStrap", "wu.masonry", "ngTagsInput"])
         .config(config)
         .run(run)
         .controller('HomeController', HomeController)
@@ -74,14 +77,18 @@
                 templateUrl: 'app/student/notification/add-notification.html',
                 controller: 'AddNotificationController as vm'
             })
+            .when('/company/deletejob', {
+                templateUrl: 'app/company/deletejob/company_delete_job.html',
+                controller: 'CompanyDeleteJobs as vm'
+            })
 
             .otherwise({redirectTo: '/'});
 
             //$locationProvider.html5Mode(true);
     }
 
-    run.$inject = ['$rootScope', '$location', '$cookieStore'];
-    function run($rootScope, $location, $cookieStore) {
+    run.$inject = ['$rootScope', '$location', '$cookieStore', 'UserService'];
+    function run($rootScope, $location, $cookieStore, UserService) {
         // keep user logged in after page refresh
         $rootScope.globals = $cookieStore.get('globals') || {};
 
@@ -102,22 +109,32 @@
             var currentPath = $location.path();
             var loggedIn = $rootScope.globals.currentUser.loggedIn;
 
+            if(loggedIn){
+                UserService.isLoggedIn($rootScope.globals.currentUser.authdata).then(
+                    function(response){
+                        if (response.success && response.data != null) {
+                            if(!response.data && $rootScope.globals.currentUser != null){
+                                UserService.logOut();
+                            }
+                        }
+                    });
+            }
+
             var allowedPages = [
                 '/authentication/register',
                 '/authentication/login',
                 '/job/list'
             ];
 
+
             if (!loggedIn && allowedPages.indexOf(currentPath) == -1) {
                 $location.path('/authentication/login');
             }
-
-            if (currentPath.indexOf('/administration/') > -1 && currentUser.userType != 'ADMIN') {
+            else if (currentPath.indexOf('/administration/') > -1 && currentUser.userType != 'ADMIN') {
                 console.warn("No access!");
                 $location.path('/');
             }
-
-            if (currentPath.indexOf('/job/create') > -1 && currentUser.userType != 'COMPANY') {
+            else if (currentPath.indexOf('/job/create') > -1 && currentUser.userType != 'COMPANY') {
                 console.warn("No access!");
                 $location.path('/');
             }

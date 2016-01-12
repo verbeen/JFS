@@ -14,12 +14,17 @@ import java.util.List;
 
 /**
  * Created by lpuddu on 14-12-2015.
+ *
+ * EventHandler for JobOfferMetricsStore
+ *
  */
 @Singleton @Asynchronous
 public class JobEventHandler {
     private JobOfferMetricsStore store = JobOfferMetricsStore.jobOfferMetricsStore;
 
-
+    /**
+     * Event that gets triggered when a job is viewed in list view
+     */
     public void viewJobList(@Observes @JobListView JobListViewEvent listViews){
         List<String> ids = new ArrayList<String>();
         for(JobOfferDTO offer : listViews.jobOffers){
@@ -28,6 +33,9 @@ public class JobEventHandler {
         this.store.incrementListViewCountMany(ids);
     }
 
+    /**
+     * Event that gets triggered when a jobs details are viewed
+     */
     public void viewJobDetail(@Observes @JobDetailView JobDetailViewEvent jobDetailView){
         this.store.incrementDetailViewCount(jobDetailView.jobOfferId);
     }

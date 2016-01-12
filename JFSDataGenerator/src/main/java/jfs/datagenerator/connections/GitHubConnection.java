@@ -15,21 +15,18 @@ import java.util.logging.Logger;
 
 /**
  * Created by lpuddu on 7-12-2015.
+ *
+ * Class used for connection to the git hub job page
+ *
  */
 public class GitHubConnection {
     private String githubApiUrl = "https://jobs.github.com/positions.json?description=&location=&page=";
     private Random random = new Random();
     private long monthInMillis = 2592000000l;
 
-
-    public CreateJobOfferDTO toJobOfferDTO(GitHubJobDTO gitHubJob, String token){
-        CreateJobOfferDTO createOffer = new CreateJobOfferDTO();
-        createOffer.companyId = gitHubJob.company;
-        createOffer.jobOffer = this.createJobOfferDTO(gitHubJob);
-        createOffer.token = token;
-        return createOffer;
-    }
-
+    /**
+     * Get job offers from GitHub through githubApiUrl
+     */
     public GitHubJobDTO[] doGithubCall(int page){
         GitHubJobDTO[] result = null;
         try {
@@ -44,20 +41,43 @@ public class GitHubConnection {
         return result;
     }
 
+    /**
+     * Converts the GitHubJobDTO type to the CreateJobOfferDTO
+     */
+    public CreateJobOfferDTO toJobOfferDTO(GitHubJobDTO gitHubJob, String token){
+        CreateJobOfferDTO createOffer = new CreateJobOfferDTO();
+        createOffer.companyId = gitHubJob.company;
+        createOffer.jobOffer = this.createJobOfferDTO(gitHubJob);
+        createOffer.token = token;
+        return createOffer;
+    }
+
+    /**
+     * Converts the GitHubJobDTO type to JobOfferDTO. Some fields are filled with dummy values.
+     */
     public JobOfferDTO createJobOfferDTO(GitHubJobDTO githubJob){
+        Double[] coords = new Double[] { new Random().nextDouble() + 48.5, new Random().nextDouble() + 8.5 };
+
         JobOfferDTO offer = new JobOfferDTO(
-                "", githubJob.company, githubJob.company, githubJob.title, githubJob.title, githubJob.description, githubJob.how_to_apply,
-                "C#, Java, Mobile", this.getDuration(12), new GregorianCalendar().getTimeInMillis() + this.getDuration(4),
+                "", githubJob.company, githubJob.company, githubJob.title, githubJob.title,
+                githubJob.description, githubJob.how_to_apply, "C#, Java, Mobile", this.getDuration(12),
+                new GregorianCalendar().getTimeInMillis() + this.getDuration(4),
                 new GregorianCalendar().getTimeInMillis() + this.getDuration(6), githubJob.location,
-                githubJob.company_url, this.getType(githubJob.type)
+                coords[0], coords[1], githubJob.company_url, this.getType(githubJob.type)
         );
         return offer;
     }
 
+    /**
+     * Helper function used to calculate a random value for duration
+     */
     private long getDuration(int maxMonths){
         return (this.random.nextInt(maxMonths - 1) + 1) * this.monthInMillis;
     }
 
+    /**
+     * Helper function for extracting JobTypeDTO from type
+     */
     private JobTypeDTO getType(String type){
         switch(type){
             case "Full Time":
@@ -70,5 +90,4 @@ public class GitHubConnection {
                 return JobTypeDTO.bachelor_thesis;
         }
     }
-
 }

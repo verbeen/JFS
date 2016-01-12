@@ -1,0 +1,55 @@
+<div id="jfsAdminJobList">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Company job offers</h2>
+            <hr>
+
+            <div ng-if="noResults.info || noResults.error">
+                <div class="alert" ng-class="{ 'alert-info': noResults.info, 'alert-danger': noResults.error }">
+                    <strong>{{ noResults.title }}</strong> {{ noResults.text }}
+                </div>
+            </div>
+
+            <div ng-if="responseMessage.success">
+                <div class="alert" ng-class="{ 'alert-success': responseMessage.success, 'alert-danger': noResults.error }">
+                    <strong>{{ responseMessage.text }}</strong>
+                </div>
+            </div>
+
+            <div ng-if="!noResults.info && !noResults.error" class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Company</th>
+                            <th>Function</th>
+                            <th>Address</th>
+                            <th>Start date</th>
+                            <th>Duration</th>
+                            <th>Valid until</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="offer in offers ">
+                            <td>{{ offer.name }}</td>
+                            <td>{{ offer.type }}</td>
+                            <td>{{ offer.companyId  }}</td>
+                            <td>{{ offer.function }}</td>
+                            <td>{{ offer.address }}</td>
+                            <td>{{ offer.startDate | dateCheckedZero: 'yyyy-MM-dd'}}</td>
+                            <td>{{ offer.duration | duration }}</td>
+                            <td>{{ offer.validUntil | dateCheckedZero: 'yyyy-MM-dd'}}</td>
+                            <td>
+                                <button ng-click="remove(offer.offerId);" type="button" class="btn btn-default btn-xs jfsAdminButton">
+                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

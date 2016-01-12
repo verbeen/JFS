@@ -26,7 +26,7 @@ angular
                 var t = new Date();
                 var time = new Date(t).getTime();
                 $scope.time = time;
-                JobService.getJobsSubs($rootScope.globals.currentUser.username)
+                JobService.getJobsSubs($rootScope.globals.currentUser.authdata)
                     .then(function(response) {
                         $scope.noResults = {};
                         $scope.noResults.info = false;
@@ -37,7 +37,7 @@ angular
                             } else {
                                 $scope.offers = [];
                                 $scope.noResults.info = true;
-                                $scope.noResults.title = "No new Offers!";
+                                $scope.noResults.title = "No new Offers.";
                                 $scope.noResults.text = "No job offers according to your notification settings.";
                             }
                             $scope.dataLoading = false;
@@ -53,8 +53,7 @@ angular
             };
 
             function checkSub() {
-                var user = $rootScope.globals.currentUser.username;
-                JobService.checkSubscription($rootScope.globals.currentUser.username)
+                JobService.checkSubscription($rootScope.globals.currentUser.authdata)
                     .then(function(response) {
                         $scope.noResults = {};
                         $scope.noResults.info = false;
@@ -67,7 +66,8 @@ angular
                             console.info("failed!No data retrieved");
                             //$scope.noResults.error = true;
                             $scope.noResults.info = true;
-                            $scope.noResults.title = "Please setup the notification!";
+                            // redundant message.
+                            //$scope.noResults.title = "Please setup the notification.";
                             $scope.noResults.text = "Please setup the notification settings for getting recent " +
                                 "job updates.";
                             $scope.dataLoading = false;

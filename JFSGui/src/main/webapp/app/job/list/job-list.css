@@ -1,7 +1,38 @@
+#jfsJobList .mapselection {
+    padding:0px;
+    height:100%;
+    background-color:#F5F5F5;
+    z-index:0;
+    opacity:0.99;
+    overflow:hidden;
+    width:100%;
+}
+
+#jfsJobList .mapelement {
+    width: 100%;
+    height:300px;
+}
+
+#jfsJobList .search-row {
+    margin-left: 0%;
+    margin-right: 0%;
+    padding-top: 10px;
+}
+
+#jfsJobList .alert {
+    margin-top: 1rem;
+    margin-bottom: 0;
+}
+
 #jfsJobList .text-overflow {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+@media (min-width: 768px) {
+    #jfsJobList #jobSearchAddress {
+        width: 250px;
+    }
 }
 
 #jfsJobList #jobSearchLabel {
@@ -10,6 +41,11 @@
 
 #jfsJobList #jobSearchForm .form-group {
     margin-right: 1rem;
+    margin-bottom: 1rem;
+}
+
+#jfsJobList #jobSearchForm .search-row-button {
+    margin-bottom: 1rem;
 }
 
 #jfsJobList .masonry-brick {
@@ -20,11 +56,34 @@
     display: block;
 }
 
-/*
-#jfsJobList #jobFilterParametersForm .control-label {
-    text-align: left;
+#jfsJobList .masonry-brick .panel-heading,
+#jfsJobList .masonry-brick .panel-body p,
+#jfsJobList .masonry-brick .panel-body ul li {
+    word-break: break-all;
 }
-*/
+
+#jfsJobList .jobOfferAddressDropdown{
+    z-index: 1000;
+    position: absolute;
+    margin-left: 0%;
+    width:20%;
+    opacity: 0.95;
+}
+
+#jfsJobList .jobOfferAddressDropdownItem{
+    overflow:hidden;
+    width: 100%;
+    white-space:normal;
+    font-size:10px;
+}
+
+#jfsJobList .jobOfferAddressDropdownItem:hover{
+    color:#333;
+    background-color:#e6e6e6;
+    border-color:#adadad;
+    cursor: hand;
+    cursor: pointer;
+}
 
 #jfsJobList .jobOfferParameters {
     padding-left: 20px;

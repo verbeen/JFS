@@ -10,6 +10,7 @@
         var service = {};
 
         service.getAllJobs = getAllJobs;
+        service.getAllJobsCompany = getAllJobsCompany;
         service.getJobProfile = getJobProfile;
         service.getAllJobMetricsByCompany = getAllJobMetricsByCompany;
         service.getRecentJobs = getRecentJobs;
@@ -20,6 +21,8 @@
         service.checkSubscription = checkSubscription;
         service.getJobsSubs = getJobsSubs;
         service.subsUpdate = subsUpdate;
+        service.deleteJobOffer = deleteJobOffer;
+        service.createEmptyJobObject = createEmptyJobObject;
 
 
         return service;
@@ -32,6 +35,13 @@
         function getAllJobs(token) {
             return $http.post('/service/offers/getall', token)
                 .then(handleSuccess, handleError('Error getting all jobs!'));
+
+        }
+
+        function getAllJobsCompany(token) {
+            return $http.post('/service/offers/getallcompany', token)
+                .then(handleSuccess, handleError('Error getting all jobs!'));
+
         }
 
         function getJobProfile(offerId) {
@@ -71,15 +81,36 @@
         }
 
         //This function is used to get all the
-        function getJobsSubs(userDetails) {
-            return $http.post('/service/studentsubscriptions/checkSubscriptions', userDetails)
-                .then(handleSuccess, handleError('Error getting jobs "' + userDetails + '"!'));
+        function getJobsSubs(token) {
+            return $http.post('/service/studentsubscriptions/checkSubscriptions', token)
+                .then(handleSuccess, handleError('Error getting jobs!'));
         }
 
         //updating existing subscription details
         function subsUpdate(userDetails) {
             return $http.post('/service/studentsubscriptions/update', userDetails)
                 .then(handleSuccess, handleError('Error updating subs "' + userDetails + '"!'));
+        }
+
+        function deleteJobOffer(obj){
+            return $http.post('/service/offers/delete', obj)
+                .then(handleSuccess, handleError('Error deleting the job offer'));
+        }
+
+        function createEmptyJobObject(){
+            return {
+                "jobName": "",
+                "type": "",
+                "jobDescription": "",
+                "jobTask": "",
+                "jobSkill": "",
+                "validTilldate": "",
+                "startDate": "",
+                "duration": "",
+                "location": { address: "", coordinates: ""},
+                "jobWebsite": "",
+                "jobContactEmail": ""
+            };
         }
 
         // private functions
