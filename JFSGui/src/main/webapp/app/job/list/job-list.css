@@ -19,14 +19,15 @@
     padding-top: 10px;
 }
 
-#jfsJobList .search-row-button {
-    float: right;
-}
-
 #jfsJobList .text-overflow {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+@media (min-width: 768px) {
+    #jfsJobList #jobSearchAddress {
+        width: 250px;
+    }
 }
 
 #jfsJobList #jobSearchLabel {
@@ -35,6 +36,11 @@
 
 #jfsJobList #jobSearchForm .form-group {
     margin-right: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+#jfsJobList #jobSearchForm .search-row-button {
+    margin-bottom: 0.5rem;
 }
 
 #jfsJobList .masonry-brick {
@@ -44,12 +50,6 @@
 #jfsJobList .masonry-brick.loaded {
     display: block;
 }
-
-/*
-#jfsJobList #jobFilterParametersForm .control-label {
-    text-align: left;
-}
-*/
 
 #jfsJobList .jobOfferAddressDropdown{
     z-index: 1000;
