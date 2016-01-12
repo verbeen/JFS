@@ -51,6 +51,7 @@
 
         $scope.iconGreen = GeoService.createGreenIcon();
         $scope.iconViolet = GeoService.createVioletIcon();
+        $scope.mapAnimatePanning = false;
 
         // gets executed on initial load
         (function initController() {
@@ -146,7 +147,11 @@
             $scope.locationMarkerLayer.addLayer($scope.locationMarker);
             $scope.locationMarker.setZIndexOffset(-1000);
 
-            $scope.map.panTo(latlng, {animate: true});
+            $scope.map.panTo(latlng, {animate: $scope.mapAnimatePanning});
+
+            if($scope.mapAnimatePanning == false){
+                $scope.mapAnimatePanning = true;
+            }
         }
 
         function setSuggestedMarkers(googleAddressList){

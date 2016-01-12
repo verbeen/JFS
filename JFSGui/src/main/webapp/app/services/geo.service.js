@@ -37,7 +37,7 @@
         }
 
         function createMap(elementId, clickFunction){
-            var map = L.map(elementId).setView([48.7758459,9.1829321], 13);
+            var map = L.map(elementId).setView([48.7758459,9.1829321], 11);
             L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(map);
