@@ -49,16 +49,15 @@
             UserService.deleteUser(userId)
                 .then(function (response){
                     $scope.responseMessage = {};
-                    if (response.success) {
+                    if (response.success && response.data.hasSucceeded) {
                         $scope.responseMessage.success = true;
                         $scope.responseMessage.text = "The user has been deleted successfully.";
                         getAllUsers();
                     } else {
                         console.error(response);
-                        $scope.users = [];
                         $scope.responseMessage.error = true;
                         $scope.responseMessage.title = "An error occurred!";
-                        $scope.responseMessage.text = "Please try again later.";
+                        $scope.responseMessage.text = "User could not be deleted. Check your input or try again later.";
                         $scope.dataLoading = false;
                     }
                 });
