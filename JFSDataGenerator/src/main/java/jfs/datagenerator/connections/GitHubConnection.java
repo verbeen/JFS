@@ -24,7 +24,9 @@ public class GitHubConnection {
     private Random random = new Random();
     private long monthInMillis = 2592000000l;
 
-    //Get job offers from GitHub through githubApiUrl
+    /**
+     * Get job offers from GitHub through githubApiUrl
+     */
     public GitHubJobDTO[] doGithubCall(int page){
         GitHubJobDTO[] result = null;
         try {
@@ -39,7 +41,9 @@ public class GitHubConnection {
         return result;
     }
 
-    //Converts the GitHubJobDTO type to the CreateJobOfferDTO
+    /**
+     * Converts the GitHubJobDTO type to the CreateJobOfferDTO
+     */
     public CreateJobOfferDTO toJobOfferDTO(GitHubJobDTO gitHubJob, String token){
         CreateJobOfferDTO createOffer = new CreateJobOfferDTO();
         createOffer.companyId = gitHubJob.company;
@@ -48,10 +52,11 @@ public class GitHubConnection {
         return createOffer;
     }
 
-    //Converts the GitHubJobDTO type to JobOfferDTO. Some fields are filled with dummy values.
+    /**
+     * Converts the GitHubJobDTO type to JobOfferDTO. Some fields are filled with dummy values.
+     */
     public JobOfferDTO createJobOfferDTO(GitHubJobDTO githubJob){
         Double[] coords = new Double[] { new Random().nextDouble() + 48.5, new Random().nextDouble() + 8.5 };
-
 
         JobOfferDTO offer = new JobOfferDTO(
                 "", githubJob.company, githubJob.company, githubJob.title, githubJob.title,
@@ -63,12 +68,16 @@ public class GitHubConnection {
         return offer;
     }
 
-    //Helper function used to calculate a random value for duration
+    /**
+     * Helper function used to calculate a random value for duration
+     */
     private long getDuration(int maxMonths){
         return (this.random.nextInt(maxMonths - 1) + 1) * this.monthInMillis;
     }
 
-    //Helper function for extracting JobTypeDTO from type
+    /**
+     * Helper function for extracting JobTypeDTO from type
+     */
     private JobTypeDTO getType(String type){
         switch(type){
             case "Full Time":
@@ -81,5 +90,4 @@ public class GitHubConnection {
                 return JobTypeDTO.bachelor_thesis;
         }
     }
-
 }

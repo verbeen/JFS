@@ -1,5 +1,6 @@
 package jfs.service.services;
 
+import io.swagger.annotations.ApiOperation;
 import jfs.transferdata.transferobjects.StudentProfileDTO;
 
 import javax.inject.Inject;
@@ -19,17 +20,23 @@ public class StudentProfileWebService {
     @Inject
     StudentProfileService studentProfileService;
 
-    //Add a student profile
+    /**
+     * Add a student profile
+     */
     @POST
     @Path("/add") @Consumes("application/json") @Produces("application/json")
+    @ApiOperation(value = "Add a student profile", notes = "Returns boolean for success")
     public Boolean addStudentProfile(StudentProfileDTO profileDTO){
         Boolean result = this.studentProfileService.addStudentProfile(profileDTO);
         return result;
     }
 
-    //Get a student profile
+    /**
+     * Get a student profile
+     */
     @POST
     @Path("/get") @Consumes("application/json") @Produces("application/json")
+    @ApiOperation(value = "Get a student profile", notes = "Returns the student profile")
     public StudentProfileDTO getStudentProfile(String userId){
         StudentProfileDTO result = this.studentProfileService.getStudentProfile(userId);
         return result;

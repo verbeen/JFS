@@ -12,7 +12,9 @@ public class Session {
     public String userId;
     public UserTypeDTO type;
 
-    //Session represents a userId and the UserType
+    /**
+     * Session represents a userId and the UserType
+     */
     public Session(String userId, UserTypeDTO type) {
         this.userId = userId;
         this.type = type;
