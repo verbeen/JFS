@@ -50,7 +50,7 @@ public class GitHubConnection {
 
     //Converts the GitHubJobDTO type to JobOfferDTO. Some fields are filled with dummy values.
     public JobOfferDTO createJobOfferDTO(GitHubJobDTO githubJob){
-        Double[] coords = new Double[] { new Random().nextDouble() + 48, new Random().nextDouble() + 8 };
+        Double[] coords = new Double[] { new Random().nextDouble() + 48.5, new Random().nextDouble() + 8.5 };
 
 
         JobOfferDTO offer = new JobOfferDTO(

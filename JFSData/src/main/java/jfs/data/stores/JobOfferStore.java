@@ -1,5 +1,6 @@
 package jfs.data.stores;
 
+import com.google.gson.Gson;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.MongoException;
@@ -148,6 +149,64 @@ public class JobOfferStore extends DataStore {
 
         List<JobOfferDO> doList = this.getJobOffers(pairs);
         return doList;
+    }
+
+    public void appendTypeQuery(Document doc, String type){
+        doc.append("type", type);
+    }
+
+    public void appendSkillsQuery(Document doc, String skills){
+        //For easier creation of the search string and array is created
+        //which also removes all whitespaces before or after commas that are seperating the skills
+        //\\Q...\\E is used to quote string in Regex. This is necessary in order to not take e.g. the + character as a command
+        //| is used to combine all skills by OR
+        List<String> myList = Arrays.asList(skills.split("\\s*,\\s*"));
+
+        String skillsRegex = "\\Q";
+        if (myList.size() > 1) {
+            for (int i = 0; i < myList.size(); i++){
+                skillsRegex += myList.get(i);
+                if (i != myList.size() -1) {
+                    skillsRegex += "\\E|\\Q";
+                }
+            }
+        }else{
+            skillsRegex += myList.get(0);
+        }
+        skillsRegex += "\\E";
+
+        doc.append("skills", new Document("$regex", skillsRegex));
+    }
+
+    /***
+     * Creates a pair that contains a proper search query that searches job offers for nearby coordinates
+     * @param lat latitude in WGS-84 coordinate double
+     * @param lng longitude in WGS-84 coordinate double
+     * @param radius radius of the circle to be searched in kilometers
+     * @return
+     */
+    public void appendGeoQuery(Document doc, Double lat, Double lng, int radius){
+        //convert radius of the circle to radians by dividing it by the radius of the earth
+        double radians = (double)radius / 6378.1d;
+
+        //using geoWithin and not nearSphere since geoWithing is faster because it doesn't sort the results
+        Document geo = new Document("$centerSphere", Arrays.asList(Arrays.asList(lng, lat), radians));
+        doc.append("location.coordinates", new Document("$geoWithin", geo));
+    }
+
+    public List<JobOfferDO> getJobOffers(Document doc, int amount){
+        List<JobOfferDO> offers = new ArrayList<JobOfferDO>();
+        FindIterable<DBObject> results;
+        if(amount == 0) {
+            results = this.collection.find(doc);
+        }
+        else{
+            results = this.collection.find(doc).limit(amount);
+        }
+        for(DBObject obj : results){
+            offers.add(this.extractJobOffer(obj));
+        }
+        return offers;
     }
 
     //Function to search for specific job offers by pairs of search terms

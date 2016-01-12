@@ -1,7 +1,7 @@
 #jfsCreateJob .jobOfferAddressDropdown{
     z-index: 1000;
     position: absolute;
-    margin-left: 1%;
+    margin-left: 0%;
     width:50%;
 }
 
@@ -10,6 +10,7 @@
     width: 100%;
     white-space:normal;
     font-size:10px;
+    opacity: 0.95;
 }
 
 #jfsCreateJob .jobOfferAddressDropdownItem:hover{

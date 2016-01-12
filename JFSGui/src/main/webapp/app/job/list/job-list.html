@@ -41,7 +41,7 @@
                     <div class="form-group">
                         <div class="input-group">
                             <input type="text" id="jobSearchAddress" name="jobSearchAddress" class="form-control"
-                                   ng-model="selectedJobSearch.location.address" ng-model-options="{ debounce: 500 }"
+                                   ng-model="searchAddress" ng-model-options="{ debounce: 500 }"
                                    ng-focus="isAddressFocused = true" ng-blur="isAddressFocused = false"
                                    placeholder="Type to search by address. Click on the map to search by location."
                                    autocomplete="off" />
@@ -59,7 +59,7 @@
 
                     <div class="form-group">
                         <div class="input-group">
-                            <button aria-label="Select" type="button" class="btn btn-default form-control"
+                            <button aria-label="Select" type="button" class="btn btn-default form-control" ng-change="radiusChanged()"
                                     ng-model="selectedJobSearch.radius" data-placeholder="Radius" data-html="1"
                                     bs-options="radius.value as radius.label for radius in jobSearch.radius" bs-select>
                             </button>
@@ -72,11 +72,9 @@
                 </div>
 
                 <div class="row search-row">
-
                     <div class="form-control mapselection">
                         <div id="jobSearchMap" class="mapelement" />
                     </div>
-
                 </div>
 
                 <div class="row search-row">
@@ -85,7 +83,7 @@
                         Search
                     </button>
 
-                    <div ng-if="dataLoading" class="form-group">
+                    <div ng-if="dataLoading" class="form-group search-row-button">
                         <div class="loadingAnimation">
                         </div>
                     </div>

@@ -14,9 +14,9 @@
 }
 
 #jfsJobList .search-row {
-    margin-left: 5%;
-    margin-right: 5%;
-    padding: 10px;
+    margin-left: 0%;
+    margin-right: 0%;
+    padding-top: 10px;
 }
 
 #jfsJobList .search-row-button {
@@ -56,6 +56,7 @@
     position: absolute;
     margin-left: 0%;
     width:20%;
+    opacity: 0.95;
 }
 
 #jfsJobList .jobOfferAddressDropdownItem{

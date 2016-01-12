@@ -11,6 +11,7 @@
         $scope.search = search;
         $scope.getRecentJobs = getRecentJobs;
         $scope.mapClicked = mapClicked;
+        $scope.radiusChanged = radiusChanged;
 
         // gets executed on initial load
         (function initController() {
@@ -42,52 +43,78 @@
                 ]
             };
 
-            $scope.selectedJobSearch = JobService.createEmptyJobObject();
+            $scope.selectedJobSearch = {};
 
             $scope.map = GeoService.createMap('jobSearchMap', $scope.mapClicked);
+
+            var clearLocationButton = L.easyButton('<span class="glyphicon glyphicon-remove" />', function(btn, map){
+                clearMapMarker();
+            });
+            clearLocationButton.button.title = 'Clear selected coordinates.';
+            $scope.map.addControl(clearLocationButton);
+
             $scope.mapMarkerLayer = new L.FeatureGroup();
+            $scope.mapMarker = null;
             $scope.map.addLayer($scope.mapMarkerLayer);
+            $scope.mapMarkerCircleLayer = new L.FeatureGroup();
+            $scope.mapMarkerCircle = null;
+            $scope.map.addLayer($scope.mapMarkerCircleLayer);
+
+            $scope.mapOfferLayer = L.markerClusterGroup();
+            $scope.map.addLayer($scope.mapOfferLayer);
 
             getRecentJobs();
         })();
 
         $scope.dropdownLocationSelected = function(location){
-            $scope.selectedJobSearch.location.address = location.formatted_address;
-            $scope.selectedJobSearch.location.coordinates = location.geometry.location;
+            $scope.searchAddress = location.formatted_address;
+            var coordinates = [location.geometry.location.lat, location.geometry.location.lng];
+            $scope.selectedJobSearch.coordinates = coordinates;
             setMapMarker(location.geometry.location, location.formatted_address);
         };
 
         function mapClicked(e){
-            $scope.selectedJobSearch.location.coordinates = e.latlng;
+            $scope.selectedJobSearch.coordinates = [e.latlng.lat, e.latlng.lng];
             var lat = parseFloat(e.latlng.lat.toFixed(6));
             var lng = parseFloat(e.latlng.lng.toFixed(6));
             setMapMarker(e.latlng, "[" + lat + "," + lng + "]");
         };
 
         function setMapMarker(latlng, content){
-            $scope.mapMarkerLayer.clearLayers();
+            clearMapMarker();
 
             var icon = GeoService.createGreenIcon();
-            var marker = L.marker(latlng, {icon: icon});
+            $scope.mapMarker = L.marker(latlng, {icon: icon});
             if(content != null){
-                marker.bindPopup(content);
+                $scope.mapMarker.bindPopup(content);
             }
 
-            $scope.mapMarkerLayer.addLayer(marker);
+            $scope.mapMarkerLayer.addLayer($scope.mapMarker);
 
             var radius = $scope.selectedJobSearch.radius;
             if(radius != null && radius != 0){
-                var circle = L.circle(latlng, radius * 1000);
-                circle.options.stroke = false;
-                circle.options.clickable = false;
-                $scope.mapMarkerLayer.addLayer(circle);
+                setMapMarkerCircle(latlng, radius);
             }
 
-            $scope.map.panTo(marker.getLatLng(), {animate: true});
+            $scope.map.panTo($scope.mapMarker.getLatLng(), {animate: true});
         }
 
-        $scope.$watch('selectedJobSearch.location.address', function(){
-            var address = $scope.selectedJobSearch.location.address;
+        function setMapMarkerCircle(latlng, radius){
+            $scope.mapMarkerCircle = L.circle(latlng, radius * 1000);
+            $scope.mapMarkerCircle.options.stroke = false;
+            $scope.mapMarkerCircle.options.clickable = false;
+            $scope.mapMarkerCircleLayer.addLayer($scope.mapMarkerCircle);
+        }
+
+        function clearMapMarker(){
+            $scope.mapMarkerLayer.clearLayers();
+            $scope.mapMarker = null;
+            $scope.mapMarkerCircleLayer.clearLayers();
+            $scope.mapMarkerCircle = null;
+        }
+
+        $scope.$watch('searchAddress', function(){
+            var address = $scope.searchAddress;
             if(address != null && address != ""){
                 GeoService.getLocations(address).then(function(response){
                     var results = response.data.results;
@@ -98,12 +125,44 @@
             }
         });
 
+        function radiusChanged(){
+            if($scope.mapMarker != null){
+                var latlng = $scope.mapMarker.getLatLng();
+                $scope.mapMarkerCircleLayer.clearLayers();
+                $scope.mapMarkerCircle = null;
+
+                setMapMarkerCircle(latlng, $scope.selectedJobSearch.radius);
+            }
+
+        }
+
         function setSuggestedDropdownLocations(locations){
             if(locations != null && locations.length > 0){
                 $scope.dropdownSearchLocations = locations;
             }else{
                 $scope.dropdownSearchLocations = "";
             }
+        }
+
+        function offersUpdated(){
+            clearMapOfferLayer();
+
+            for(var index = 0; index < $scope.offers.length; index++){
+                var offer = $scope.offers[index];
+                var icon = GeoService.createVioletIcon();
+                var marker = L.marker([offer.lat, offer.lng], { icon: icon });
+
+                var html = "<a href='#/job/profile/" + offer.offerId + "'>";
+                html += offer.name;
+                html += "</a>";
+                marker.bindPopup(html);
+
+                $scope.mapOfferLayer.addLayer(marker);
+            }
+        }
+
+        function clearMapOfferLayer(){
+            $scope.mapOfferLayer.clearLayers();
         }
 
         function getRecentJobs() {
@@ -132,6 +191,7 @@
                         $scope.noResults.text = "Please try again later.";
                         $scope.dataLoading = false;
                     }
+                    offersUpdated();
                 });
         };
 
@@ -165,6 +225,7 @@
                         $scope.noResults.text = "Please try again later.";
                         $scope.dataLoading = false;
                     }
+                    offersUpdated();
                 });
         };
 

@@ -116,8 +116,8 @@
                         </div>
                     </div>
                     <div ng-show="isLocationFocused" class="jobOfferAddressDropdown">
-                        <div class="btn btn-default btn-sm jobOfferAddressDropdownItem"
-                             ng-mousedown="locationSelected(row)" ng-repeat="row in searchLocations">
+                        <div class="list-group-item jobOfferAddressDropdownItem"
+                             ng-mousedown="locationSelected(row)" ng-repeat="row in dropdownSearchLocations">
                             {{row.formatted_address}}
                         </div>
                     </div>

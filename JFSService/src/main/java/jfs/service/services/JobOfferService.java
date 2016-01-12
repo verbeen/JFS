@@ -1,15 +1,13 @@
 package jfs.service.services;
 
-import com.mongodb.BasicDBObject;
 import jfs.data.dataobjects.JobOfferDO;
 import jfs.data.dataobjects.enums.JobType;
-import jfs.data.dataobjects.helpers.GeoJSONPoint;
 import jfs.data.dataobjects.helpers.Location;
-import jfs.data.dataobjects.helpers.Pair;
 import jfs.data.stores.JobOfferStore;
 import jfs.transferdata.transferobjects.JobOfferDTO;
 import jfs.transferdata.transferobjects.SearchDTO;
 import jfs.transferdata.transferobjects.enums.JobTypeDTO;
+import org.bson.Document;
 
 import javax.ejb.Singleton;
 import java.util.ArrayList;
@@ -20,7 +18,6 @@ import java.util.List;
  * Created by lpuddu on 12-11-2015.
  *
  * Job offer service wrapper for jobOfferStore
- *
  */
 @Singleton
 public class JobOfferService {
@@ -33,7 +30,7 @@ public class JobOfferService {
         offer.description = offerDTO.description;
         offer.duration = offerDTO.duration;
         offer.function = offerDTO.function;
-        offer.location = new Location(offerDTO.address, new GeoJSONPoint(offerDTO.lat, offerDTO.lng));
+        offer.location = new Location(offerDTO.address, offerDTO.lat, offerDTO.lng);
         offer.name = offerDTO.name;
         offer.task = offerDTO.task;
         offer.skills = offerDTO.skills;
@@ -83,63 +80,54 @@ public class JobOfferService {
         return this.createOfferDTOList(offerDOs);
     }
 
-    //Get all available job offers as List<JobOfferDTO>
+    /***
+     * Get all available job offers as List<JobOfferDTO>
+     */
     public List<JobOfferDTO> getAllOffers(){
         List<JobOfferDO> offerDOs = this.jobOfferStore.getAllOffers();
         return this.createOfferDTOList(offerDOs);
     }
 
-    //Search for specific job offers by search criteria specified in SearchDTO
-    //Returns a list of job offers as List<JobOfferDTO>
+    /***
+     * Search for specific job offers by search criteria specified in SearchDTO
+     * @param searchDTO contains search terms to be used.
+     * @return Returns a list of job offers as List<JobOfferDTO>
+     */
     public List<JobOfferDTO> search(SearchDTO searchDTO){
-        ArrayList<Pair<String, Object>> pairs = new ArrayList<Pair<String, Object>>();
-        if(searchDTO.location != null && !"".equals(searchDTO.location)){
-            pairs.add(new Pair("location", new BasicDBObject("$regex", searchDTO.location)));
+        Document document = new Document();
+        if(searchDTO.coordinates != null && searchDTO.coordinates.size() == 2 && searchDTO.radius != 0){
+            this.jobOfferStore.appendGeoQuery(document, searchDTO.coordinates.get(0), searchDTO.coordinates.get(1), searchDTO.radius);
         }
         if(searchDTO.skills != null && !"".equals(searchDTO.skills)){
-            /*
-                For easier creation of the search string and array is created
-                which also removes all whitespaces before or after commas that are seperating the skills
-                \\Q...\\E is used to quote string in Regex. This is necessary in order to not take e.g. the + character as a command
-                | is used to combine all skills by OR
-            */
-            List<String> myList = Arrays.asList(searchDTO.skills.split("\\s*,\\s*"));
-
-            String skillsRegex = "\\Q";
-            if (myList.size() > 1) {
-                for (int i = 0; i < myList.size(); i++){
-                    skillsRegex += myList.get(i);
-                    if (i != myList.size() -1) {
-                        skillsRegex += "\\E|\\Q";
-                    }
-                }
-            }else{
-                skillsRegex += myList.get(0);
-            }
-            skillsRegex += "\\E";
-
-            pairs.add(new Pair("skills", new BasicDBObject("$regex", skillsRegex)));
+            this.jobOfferStore.appendSkillsQuery(document, searchDTO.skills);
         }
         if(searchDTO.type != null && searchDTO.type != JobTypeDTO.all){
-            pairs.add(new Pair("type", searchDTO.type.name()));
+            this.jobOfferStore.appendTypeQuery(document, searchDTO.type.name());
         }
-        List<JobOfferDO> doList = this.jobOfferStore.getJobOffers(pairs);
+
+        List<JobOfferDO> doList = this.jobOfferStore.getJobOffers(document, searchDTO.amount);
         return this.createOfferDTOList(doList);
     }
 
-    //Create an JobOfferDTO out of an JobOfferDO
+    /***
+     * Create a JobOfferDTO out of a JobOfferDO
+     */
     private JobOfferDTO createOfferDTO(JobOfferDO offerDO){
-        Double[] coordinates = offerDO.location.coordinates.coordinates;
+        List<Double> coordinates = offerDO.location.coordinates;
         return new JobOfferDTO(
                 offerDO._id, offerDO.userId, offerDO.contactEmail, offerDO.name,
                 offerDO.function, offerDO.description, offerDO.task, offerDO.skills,
                 offerDO.duration, offerDO.validUntil, offerDO.startDate,
-                offerDO.location.address, coordinates[0], coordinates[1],
+                offerDO.location.address, coordinates.get(1), coordinates.get(0),
                 offerDO.website, JobTypeDTO.valueOf(offerDO.type.name())
         );
     }
 
-    //Create a List<JobOfferDTO> out of List<JobOfferDO>
+    /***
+     * Create a List<JobOfferDTO> out of List<JobOfferDO>
+     * @param offerDOs list of offerDOs with which the result will be populated
+     * @return list of JobOfferDTO, each populated with data from the original list.
+     */
     public List<JobOfferDTO> createOfferDTOList(List<JobOfferDO> offerDOs){
         List<JobOfferDTO> offers = new ArrayList<JobOfferDTO>();
         for(JobOfferDO offerDO : offerDOs){
