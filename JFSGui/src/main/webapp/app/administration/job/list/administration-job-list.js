@@ -38,12 +38,15 @@
         };
 
         function remove(jobOfferId) {
-            $scope.jobOfferId = jobOfferId;
-            JobService.deleteJobOffer($scope.jobOfferId)
+            var obj = {
+                "token": $rootScope.globals.currentUser.authdata,
+                "jobOfferId": jobOfferId
+            };
+
+            JobService.deleteJobOffer(obj)
                 .then(function(response) {
                     $scope.responseMessage = {};
                     if (response.success) {
-                        $scope.dataLoading = false;
                         $scope.responseMessage.success = true;
                         $scope.responseMessage.text = "The job offer has been deleted successfully.";
                         getAll();
@@ -53,7 +56,6 @@
                         $scope.responseMessage.error = true;
                         $scope.responseMessage.title = "An error occurred!";
                         $scope.responseMessage.text = "Please try again later.";
-                        $scope.dataLoading = false;
                     }
                 });
         };

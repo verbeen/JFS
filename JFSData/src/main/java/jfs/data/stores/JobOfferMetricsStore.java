@@ -113,7 +113,19 @@ public class JobOfferMetricsStore extends DataStore {
 
         return metricsDOList;
     }
+    
 
+    public boolean deleteSingleJobMetrics(String offerId){
+        if (offerId != null || !offerId.isEmpty()){
+            BasicDBObject filter = new BasicDBObject("_id", offerId);
+            DeleteResult deleteResult = this.collection.deleteOne(filter);
+            return deleteResult.wasAcknowledged();
+        }else {
+            throw new NullPointerException("offerId parameter is null or empty");
+        }
+    }
+
+    
     /**
      * Delete job metrics for a specific company by companyId
      */

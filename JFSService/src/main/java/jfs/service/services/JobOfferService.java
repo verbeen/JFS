@@ -165,8 +165,8 @@ public class JobOfferService {
      * Delete a job offer by jobOfferId
      * @return boolean for success
      */
-    public boolean delete(String jobOfferId){
-        boolean result = this.jobOfferStore.delete(jobOfferId);
+    public boolean delete(String jobOfferId, String userType, String companyId){
+        boolean result = this.jobOfferStore.delete(jobOfferId, userType, companyId);
         return result;
     }
 }

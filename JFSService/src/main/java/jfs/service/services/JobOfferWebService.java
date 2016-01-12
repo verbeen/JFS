@@ -192,20 +192,26 @@ public class JobOfferWebService {
     /**
      * Delete a job offer by jobOfferId
      */
-    @DELETE
-    @Path("/delete/{id}") @Consumes("application/json") @Produces("application/json")
-    @ApiOperation(value = "Delete a job offer", notes = "Returns an ActionResultDTO type that indicates the result.")
-    public ActionResultDTO deleteJobOffer(@PathParam("id") String jobOfferId){
+    @POST
+    @Path("/delete") @Consumes("application/json") @Produces("application/json")
+    @ApiOperation(value = "Delete offer", notes = "Deletes one specific offer.")
+    public ActionResultDTO deleteJobOffer(JobOfferDeleteDTO jobOfferDeleteDTO){
         ActionResultDTO deleteJobOfferResult = new ActionResultDTO();
-        boolean result = this.jobOfferService.delete(jobOfferId);
-        deleteJobOfferResult.hasSucceeded =result;
 
-        if (result){
-            deleteJobOfferResult.type = ResultTypeDTO.success;
+        String companyId = SessionService.sessions.get(jobOfferDeleteDTO.token).userId;
+        String userType = SessionService.sessions.get(jobOfferDeleteDTO.token).type.toString();
+
+        if (jobOfferDeleteDTO.token == null) {
+            return null;
+        } else {
+            boolean result = this.jobOfferService.delete(jobOfferDeleteDTO.jobOfferId, userType, companyId);
+            deleteJobOfferResult.hasSucceeded = result;
+            if (result) {
+                deleteJobOfferResult.type = ResultTypeDTO.success;
+            } else{
+                deleteJobOfferResult.type = ResultTypeDTO.data_error;
+            }
+            return deleteJobOfferResult;
         }
-        else{
-            deleteJobOfferResult.type = ResultTypeDTO.data_error;
-        }
-        return deleteJobOfferResult;
     }
 }
