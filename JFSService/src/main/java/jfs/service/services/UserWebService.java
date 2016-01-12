@@ -84,6 +84,18 @@ public class UserWebService {
     }
 
     /**
+     * Check if user is logged in
+     */
+    @POST
+    @Path("/isloggedin")
+    @Consumes("application/json") @Produces("application/json")
+    @ApiOperation(value = "Is logged in", notes = "Check if your token is still valid, meaning the user is  still logged in.")
+    public boolean isLoggedIn(String token){
+        Session session = SessionService.sessions.get(token);
+        return session != null;
+    }
+
+    /**
      * Get all user accounts
      */
     @POST
