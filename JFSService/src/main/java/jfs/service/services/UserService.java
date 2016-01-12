@@ -33,15 +33,19 @@ public class UserService {
     private JobOfferMetricsStore metricsStore = JobOfferMetricsStore.jobOfferMetricsStore;
     private JobOfferStore jobOfferStore = JobOfferStore.store;
 
-    //Register a user by email, password and UserType
-    //Returns boolean for success
+    /**
+     * Register a user by email, password and UserType
+     * @return boolean for success
+     */
     public Boolean registerUser(String email, String password, UserType type){
         UserDO user = new UserDO(email, password, type);
         return this.userStore.addUser(user);
     }
 
-    //Login a user by email and password
-    //Returns a LoginResultDTO which can be verified
+    /**
+     * Login a user by email and password
+     * @return a LoginResultDTO which can be verified
+     */
     public LoginResultDTO loginUser(String email, String password) {
         UserDO user = this.userStore.getUser(email, password);
         LoginResultDTO result = new LoginResultDTO();
@@ -56,7 +60,9 @@ public class UserService {
         return result;
     }
 
-    //Get all users as List<UserDTO>
+    /**
+     * Get all users as List<UserDTO>
+     */
     public List<UserDTO> getAllUsers(){
         List<UserDTO> users = new ArrayList<UserDTO>();
         for(UserDO userDO : this.userStore.getAllUsers()){
@@ -65,7 +71,9 @@ public class UserService {
         return users;
     }
 
-    //Delete a user by userId
+    /**
+     * Delete a user by userId
+     */
     public boolean deleteUser(String userId){
         UserDO user = this.userStore.getUser(userId);
         boolean result = false;
@@ -94,7 +102,9 @@ public class UserService {
         return result;
     }
 
-    //Used for creating a UserDTO out of a UserDO
+    /**
+     * Used for creating a UserDTO out of a UserDO
+     */
     private UserDTO createUserDTO(UserDO userDO){
         return new UserDTO(
                 userDO._id, UserTypeDTO.valueOf(userDO.type.name())

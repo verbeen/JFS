@@ -22,7 +22,9 @@ public class StudentProfileStore extends DataStore {
         super("studentProfiles");
     }
 
-    //Add a student profile by StudentProfileDO
+    /**
+     * Add a student profile by StudentProfileDO
+     */
     public Boolean addStudentProfile(StudentProfileDO studentProfile) {
         if (studentProfile != null) {
             return this.insert(studentProfile, studentProfile._id) != null;
@@ -31,7 +33,9 @@ public class StudentProfileStore extends DataStore {
         }
     }
 
-    //Get a student profile as StudentProfileDO by user_id
+    /**
+     * Get a student profile as StudentProfileDO by user_id
+     */
     public StudentProfileDO getStudentProfile(String user_id) {
         StudentProfileDO studentProfile = null;
         DBObject doc = (DBObject)this.collection.find(new BasicDBObject("_id", user_id)).first();

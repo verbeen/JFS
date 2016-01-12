@@ -24,7 +24,9 @@ public class UserWebService {
     @Inject
     UserService service;
 
-    //Register a company
+    /**
+     * Register a company
+     */
     @POST
     @Path("/register/company")
     @ApiOperation(value = "Register company",
@@ -37,7 +39,9 @@ public class UserWebService {
         return result;
     }
 
-    //Register a student
+    /**
+     * Register a student
+     */
     @POST
     @Path("/register/student")
     @ApiOperation(value = "Register student",
@@ -50,7 +54,9 @@ public class UserWebService {
         return result;
     }
 
-    //Register an admin account
+    /**
+     * Register an admin account
+     */
     @POST
     @Path("/register/admin")
     @ApiOperation(value = "Register admin",
@@ -63,7 +69,9 @@ public class UserWebService {
         return result;
     }
 
-    //Login
+    /**
+     * Login
+     */
     @POST
     @Path("/login")
     @ApiOperation(value = "Login",
@@ -75,7 +83,9 @@ public class UserWebService {
         return result;
     }
 
-    //Get all user accounts
+    /**
+     * Get all user accounts
+     */
     @POST
     @Path("/all")
     @ApiOperation(value = "Get all user accounts",
@@ -93,7 +103,9 @@ public class UserWebService {
         return null;
     }
 
-    //Delete a user by userId
+    /**
+     * Delete a user by userId
+     */
     @DELETE
     @Path("/delete/{id}")
     @ApiOperation(value = "Delete a user account",

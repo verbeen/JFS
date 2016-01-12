@@ -20,10 +20,14 @@ import java.util.List;
  *
  */
 public class CreateGitHubCSVOffers {
-    //Class that is used for connection to Git Hub job offers
+    /**
+     * Class that is used for connection to Git Hub job offers
+     */
     private GitHubConnection connection = new GitHubConnection();
 
-    //Create CSV file with job offers in input parameter directory
+    /**
+     * Create CSV file with job offers in input parameter directory
+     */
     public CreateGitHubCSVOffers(String directory) throws IOException {
         CsvMapper mapper = new CsvMapper();
         CsvSchema schema = mapper.schemaFor(JobOfferDTO.class).withHeader().withLineSeparator("\r\n");
@@ -43,7 +47,9 @@ public class CreateGitHubCSVOffers {
         }
     }
 
-    //Main methods that shows a directory pickers and gets the job offers from Git Hub
+    /**
+     * Main methods that shows a directory pickers and gets the job offers from Git Hub
+     */
     public static void main(String[] args){
         String directory = new GitHubDirectoryChooser().showDialog();
         try{

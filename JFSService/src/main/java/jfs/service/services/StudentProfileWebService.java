@@ -20,7 +20,9 @@ public class StudentProfileWebService {
     @Inject
     StudentProfileService studentProfileService;
 
-    //Add a student profile
+    /**
+     * Add a student profile
+     */
     @POST
     @Path("/add") @Consumes("application/json") @Produces("application/json")
     @ApiOperation(value = "Add a student profile", notes = "Returns boolean for success")
@@ -29,7 +31,9 @@ public class StudentProfileWebService {
         return result;
     }
 
-    //Get a student profile
+    /**
+     * Get a student profile
+     */
     @POST
     @Path("/get") @Consumes("application/json") @Produces("application/json")
     @ApiOperation(value = "Get a student profile", notes = "Returns the student profile")

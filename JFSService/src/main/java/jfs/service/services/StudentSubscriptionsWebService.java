@@ -1,11 +1,8 @@
 package jfs.service.services;
 
-<<<<<<< HEAD
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import io.swagger.annotations.ApiOperation;
-=======
 import jfs.service.sessions.Session;
->>>>>>> refs/remotes/origin/feature-sprint5-S-01060-locations
 import jfs.transferdata.transferobjects.JobOfferListDTO;
 import jfs.transferdata.transferobjects.StudentSubscriptionsDTO;
 
@@ -43,12 +40,7 @@ public class StudentSubscriptionsWebService {
      */
     @POST
     @Path("/get") @Consumes("application/json") @Produces("application/json")
-<<<<<<< HEAD
     @ApiOperation(value = "Get a student subscription", notes = "Returns a student subscription")
-    public StudentSubscriptionsDTO getStudentSubscriptions(String userId){
-        StudentSubscriptionsDTO result = this.studentSubscriptionsService.getStudentSubscriptions(userId);
-        return result;
-=======
     public StudentSubscriptionsDTO getStudentSubscriptions(String token){
         Session session = SessionService.sessions.get(token);
         if(session != null){
@@ -57,7 +49,6 @@ public class StudentSubscriptionsWebService {
         else{
             return null;
         }
->>>>>>> refs/remotes/origin/feature-sprint5-S-01060-locations
     }
 
     /**
@@ -85,20 +76,13 @@ public class StudentSubscriptionsWebService {
      */
     @POST
     @Path("/checkSubscriptions") @Consumes("application/json") @Produces("application/json")
-<<<<<<< HEAD
     @ApiOperation(value = "Search for job offers by a student subscription", notes = "Returns a list of job offers that match the student subscription criteria")
-    public JobOfferListDTO checkSubscriptions(String userId){
-        //1. get job offers by userId -> type, location, skills
-        JobOfferListDTO list = new JobOfferListDTO();
-        list.offers = this.studentSubscriptionsService.checkSubscriptions(userId);
-=======
     public JobOfferListDTO checkSubscriptions(String token){
         Session session = SessionService.sessions.get(token);
         if(session != null){
             //1. get job offers by userId -> type, location, skills
             JobOfferListDTO list = new JobOfferListDTO();
             list.offers = this.studentSubscriptionsService.checkSubscriptions(session.userId);
->>>>>>> refs/remotes/origin/feature-sprint5-S-01060-locations
 
             Date myDate = new Date();
 
@@ -110,5 +94,4 @@ public class StudentSubscriptionsWebService {
             return null;
         }
     }
-
 }

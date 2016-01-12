@@ -30,7 +30,9 @@ public abstract class DataStore<T> {
         this.collection = DataClient.defaultClient.getCollection(dbName, DBObject.class);
     }
 
-    //Insert an object into the database
+    /**
+     * Insert an object into the database
+     */
     public Boolean insert(DataObject obj){
         return this.insert(obj, null);
     }
@@ -55,10 +57,10 @@ public abstract class DataStore<T> {
     }
 
     /*
-    * Function to replace and existing object in the collection
-    * key is an unique ObjectId
-    * value is the new document
-    */
+     * Function to replace and existing object in the collection
+     * key is an unique ObjectId
+     * value is the new document
+     */
     public <T> Boolean replace(String key, T value){
         BasicDBObject doc = (BasicDBObject) this.collection.find(new BasicDBObject("_id", key)).first();
         UpdateResult updateResult = this.collection.replaceOne(doc, BasicDBObject.parse(this.serializer.serialize(value)));
