@@ -230,6 +230,7 @@
             $scope.locationMarkerLayer.clearLayers();
             $scope.locationMarker = "";
             $scope.jobProfile.location.coordinates = "";
+            $scope.mapAnimatePanning = false;
         }
 
         function create() {
