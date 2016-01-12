@@ -37,7 +37,7 @@ angular
                             } else {
                                 $scope.offers = [];
                                 $scope.noResults.info = true;
-                                $scope.noResults.title = "No new Offers!";
+                                $scope.noResults.title = "No new Offers.";
                                 $scope.noResults.text = "No job offers according to your notification settings.";
                             }
                             $scope.dataLoading = false;
@@ -67,7 +67,8 @@ angular
                             console.info("failed!No data retrieved");
                             //$scope.noResults.error = true;
                             $scope.noResults.info = true;
-                            $scope.noResults.title = "Please setup the notification!";
+                            // redundant message.
+                            //$scope.noResults.title = "Please setup the notification.";
                             $scope.noResults.text = "Please setup the notification settings for getting recent " +
                                 "job updates.";
                             $scope.dataLoading = false;

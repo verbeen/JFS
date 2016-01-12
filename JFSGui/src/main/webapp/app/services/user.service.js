@@ -26,7 +26,7 @@
 
         function deleteUser(userId){
             return $http.delete('/service/users/delete/' + userId)
-                .then(handleSuccess,handleError('Deleting user failed'));
+                .then(handleSuccess,handleError('Deleting user failed!'));
         }
 
         // private functions
