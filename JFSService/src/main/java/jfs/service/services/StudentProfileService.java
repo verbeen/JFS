@@ -17,7 +17,9 @@ import javax.ejb.Singleton;
 public class StudentProfileService {
     private StudentProfileStore studentProfileStore = StudentProfileStore.store;
 
-    //Created StudentProfileDO out of StudentProfileDTO
+    /**
+     * Created StudentProfileDO out of StudentProfileDTO
+     */
     private StudentProfileDO createStudentDO(StudentProfileDTO studentProfileDTO){
         return new StudentProfileDO(
                 studentProfileDTO.userId, studentProfileDTO.name, studentProfileDTO.email , studentProfileDTO.organization, studentProfileDTO.address, studentProfileDTO.skills,
@@ -25,7 +27,9 @@ public class StudentProfileService {
         );
     }
 
-    //Created StudentProfileDTO out of StudentProfileDO
+    /**
+     * Created StudentProfileDTO out of StudentProfileDO
+     */
     private StudentProfileDTO createStudentDTO(StudentProfileDO studentDO){
         return new StudentProfileDTO(
                 studentDO._id, studentDO.name, studentDO.email , studentDO.organization, studentDO.address, studentDO.skills,
@@ -33,13 +37,17 @@ public class StudentProfileService {
         );
     }
 
-    //Add a student profile
-    //Returns boolean for success
+    /**
+     * Add a student profile
+     * @return boolean for success
+     */
     public Boolean addStudentProfile(StudentProfileDTO studentProfileDTO){
         return this.studentProfileStore.addStudentProfile(this.createStudentDO(studentProfileDTO));
     }
 
-    //Get a student profile by userId
+    /**
+     * Get a student profile by userId
+     */
     public StudentProfileDTO getStudentProfile(String userId){
         return createStudentDTO(this.studentProfileStore.getStudentProfile(userId));
     }

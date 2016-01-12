@@ -23,7 +23,9 @@ public class UserStore extends DataStore {
         super("users");
     }
 
-    //Add a new user by UserDO
+    /**
+     * Add a new user by UserDO
+     */
     public Boolean addUser(UserDO user){
         if (user != null) {
             return this.insert(user, user._id);
@@ -32,7 +34,9 @@ public class UserStore extends DataStore {
         }
     }
 
-    //Get a UserDO by id and password
+    /**
+     * Get a UserDO by id and password
+     */
     public UserDO getUser(String id, String password){
         UserDO user = null;
         DBObject doc = (DBObject)this.collection.find(new BasicDBObject("_id", id)).first();
@@ -45,7 +49,9 @@ public class UserStore extends DataStore {
         return null;
     }
 
-    //Get all users as a List<UserDO>
+    /**
+     * Get all users as a List<UserDO>
+     */
     public List<UserDO> getAllUsers(){
         List<UserDO> users = new ArrayList<UserDO>();
         FindIterable<DBObject> results = this.collection.find();
@@ -55,6 +61,9 @@ public class UserStore extends DataStore {
         return users;
     }
 
+    /**
+     * Get a user by userId
+     */
     public UserDO getUser(String userId){
         DBObject user = this.getOneDocument("_id", userId);
         if (user != null){
@@ -66,6 +75,9 @@ public class UserStore extends DataStore {
         }
     }
 
+    /**
+     * Delete a user by userId
+     */
     public boolean deleteUser(String userId){
         if (userId != null || !userId.isEmpty()) {
             BasicDBObject filter = new BasicDBObject("_id", userId);
@@ -76,4 +88,3 @@ public class UserStore extends DataStore {
         }
     }
 }
-

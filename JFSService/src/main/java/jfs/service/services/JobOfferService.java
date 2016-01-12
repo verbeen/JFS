@@ -18,12 +18,15 @@ import java.util.List;
  * Created by lpuddu on 12-11-2015.
  *
  * Job offer service wrapper for jobOfferStore
+ *
  */
 @Singleton
 public class JobOfferService {
     private JobOfferStore jobOfferStore = JobOfferStore.store;
 
-    //Used for creating an JobOfferDO out of an JobOfferDTO
+    /**
+     * Used for creating an JobOfferDO out of an JobOfferDTO
+     */
     private JobOfferDO createOfferDO(JobOfferDTO offerDTO, String userId){
         JobOfferDO offer = new JobOfferDO();
 
@@ -44,22 +47,28 @@ public class JobOfferService {
         return offer;
     }
 
-    //Get JobOfferDTO by id
-    //Query the jobOfferStore and create an JobOfferDTO
+    /**
+     * Get JobOfferDTO by id
+     * Query the jobOfferStore and create an JobOfferDTO
+     */
     public JobOfferDTO getById(String id){
         JobOfferDO offerDO = this.jobOfferStore.getById(id);
         JobOfferDTO offer = this.createOfferDTO(offerDO);
         return offer;
     }
 
-    //Add an job offer from an JobOfferDTO and userId
-    //Returns boolean for success
+    /**
+     * Add an job offer from an JobOfferDTO and userId
+     * @return boolean for success
+     */
     public Boolean addOffer(JobOfferDTO offerDTO, String userId){
         return this.jobOfferStore.addOffer(this.createOfferDO(offerDTO, userId), userId);
     }
 
-    //Add a list of job offers with List<JobOfferDTO
-    //Returns boolean for success
+    /**
+     * Add a list of job offers with List<JobOfferDTO
+     * @return boolean for success
+     */
     public Boolean addOffers(List<JobOfferDTO> offerDTOs, String userId){
         List<JobOfferDO> offers = new ArrayList<JobOfferDO>();
         for(JobOfferDTO offerDTO : offerDTOs){
@@ -68,13 +77,17 @@ public class JobOfferService {
         return this.jobOfferStore.addOffers(offers, userId);
     }
 
-    //Get job offers by seach term as List<JobOfferDTO>
+    /**
+     * Get job offers by seach term as List<JobOfferDTO>
+     */
     public List<JobOfferDTO> searchText(String term){
         List<JobOfferDO> offerDOs = this.jobOfferStore.getJobOffersText(term);
         return this.createOfferDTOList(offerDOs);
     }
 
-    //Get recent job offers limited by amount as List<JobOfferDTO>
+    /**
+     * Get recent job offers limited by amount as List<JobOfferDTO>
+     */
     public List<JobOfferDTO> searchRecent(int amount){
         List<JobOfferDO> offerDOs = this.jobOfferStore.getJobOffersRecent(amount);
         return this.createOfferDTOList(offerDOs);
@@ -88,6 +101,10 @@ public class JobOfferService {
         return this.createOfferDTOList(offerDOs);
     }
 
+
+    /***
+     * Get all available job offers as List<JobOfferDTO> by companyId
+     */
     public List<JobOfferDTO> getAllOffersCompany(String companyId){
         List<JobOfferDO> offerDOs = this.jobOfferStore.getAllOffersCompany(companyId);
         return this.createOfferDTOList(offerDOs);
@@ -144,6 +161,10 @@ public class JobOfferService {
         return offers;
     }
 
+    /**
+     * Delete a job offer by jobOfferId
+     * @return boolean for success
+     */
     public boolean delete(String jobOfferId, String userType, String companyId){
         boolean result = this.jobOfferStore.delete(jobOfferId, userType, companyId);
         return result;

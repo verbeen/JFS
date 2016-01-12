@@ -35,7 +35,9 @@ public class JobOfferStore extends DataStore {
         this.collection.createIndex(index2dSphere);
     }
 
-    //Get all job offers
+    /**
+     * Get all job offers
+     */
     public List<JobOfferDO> getAllOffers(){
         List<JobOfferDO> offers = new ArrayList<JobOfferDO>();
         FindIterable<DBObject> results = this.collection.find();
@@ -44,6 +46,10 @@ public class JobOfferStore extends DataStore {
         }
         return offers;
     }
+
+    /**
+     * Get all job offers by companyId
+     */
     public List<JobOfferDO> getAllOffersCompany(String companyId){
         List<JobOfferDO> offers = new ArrayList<JobOfferDO>();
         Document select = new Document("userId", companyId);
@@ -54,7 +60,9 @@ public class JobOfferStore extends DataStore {
         return offers;
     }
 
-    //Add a new job offer by JobOfferDO and companyId
+    /**
+     * Add a new job offer by JobOfferDO and companyId
+     */
     public Boolean addOffer(JobOfferDO offer, String companyId){
         if (offer != null) {
             return this.insert(offer) && this.metricsStore.add(offer._id, companyId);
@@ -63,7 +71,9 @@ public class JobOfferStore extends DataStore {
         }
     }
 
-    //Add a several job offer by List<JobOfferDO> and companyId
+    /**
+     * Add a several job offer by List<JobOfferDO> and companyId
+     */
     public Boolean addOffers(List<JobOfferDO> offers, String companyId){
         List<DBObject> docs = this.createDocumentList(offers);
         try{
@@ -76,7 +86,9 @@ public class JobOfferStore extends DataStore {
         }
     }
 
-    //Get a specific job offer by id
+    /**
+     * Get a specific job offer by id
+     */
     public JobOfferDO getById(String id){
         DBObject obj = (DBObject)this.collection.find(new BasicDBObject("_id", id)).first();
         if(obj != null){
@@ -86,12 +98,16 @@ public class JobOfferStore extends DataStore {
         }
     }
 
-    //Get a list of the job offers by a search term, limited to 100 findings
+    /**
+     * Get a list of the job offers by a search term, limited to 100 findings
+     */
     public List<JobOfferDO> getJobOffersText(String term){
         return this.getJobOffersText(term, 100);
     }
 
-    //Get a list of the job offers by a search term and an amount
+    /**
+     * Get a list of the job offers by a search term and an amount
+     */
     public List<JobOfferDO> getJobOffersText(String term, int amount){
         List<JobOfferDO> offers = new ArrayList<JobOfferDO>();
         FindIterable<DBObject> results = this.collection.find(new BasicDBObject("textSearch", term)).limit(amount);
@@ -101,7 +117,9 @@ public class JobOfferStore extends DataStore {
         return offers;
     }
 
-    //Get a list of the job offers sorted by recency and a maximum amount
+    /**
+     * Get a list of the job offers sorted by recency and a maximum amount
+     */
     public List<JobOfferDO> getJobOffersRecent(int amount){
         List<JobOfferDO> offers = new ArrayList<JobOfferDO>();
         FindIterable<DBObject> results = this.collection.find().sort(Sorts.descending("_id")).limit(amount);
@@ -111,10 +129,12 @@ public class JobOfferStore extends DataStore {
         return offers;
     }
 
-    //Get a list of the job offers by a specific studentSubscriptionDO and jobOfferVisibilityBuffer
-    //jobOfferVisibilityBuffer is giving as a long and represents the seconds since the job offer was created
-    //all offers that were created before the seconds will not be considered even if they would quality the criteria in the jobOfferVisibilityBuffer
-    public List<JobOfferDO> getJobOffersByCriteria(StudentSubscriptionsDO studentSubscriptionsDO, long jobOfferVisibilityBuffer){
+    /**
+     * Get a list of the job offers by a specific studentSubscriptionDO and jobOfferVisibilityBuffer
+     * jobOfferVisibilityBuffer is giving as a long and represents the seconds since the job offer was created
+     * all offers that were created before the seconds will not be considered even if they would quality the criteria in the jobOfferVisibilityBuffer
+     */
+     public List<JobOfferDO> getJobOffersByCriteria(StudentSubscriptionsDO studentSubscriptionsDO, long jobOfferVisibilityBuffer){
 
         ArrayList<Pair<String, Object>> pairs = new ArrayList<Pair<String, Object>>();
 
@@ -207,6 +227,9 @@ public class JobOfferStore extends DataStore {
         doc.append("location.coordinates", new Document("$geoWithin", geo));
     }
 
+    /**
+     * Get job offers search function
+     */
     public List<JobOfferDO> getJobOffers(Document doc, int amount){
         List<JobOfferDO> offers = new ArrayList<JobOfferDO>();
         FindIterable<DBObject> results;
@@ -222,8 +245,10 @@ public class JobOfferStore extends DataStore {
         return offers;
     }
 
-    //Function to search for specific job offers by pairs of search terms
-    //Reused in other functions
+    /**
+     * Function to search for specific job offers by pairs of search terms
+     * Reused in other functions
+     */
     public List<JobOfferDO> getJobOffers(List<Pair<String, Object>> pairs){
         List<JobOfferDO> offers = new ArrayList<JobOfferDO>();
         Document query = new Document();
@@ -237,6 +262,9 @@ public class JobOfferStore extends DataStore {
         return offers;
     }
 
+    /**
+     * Delete a job offer by jobOfferId
+     */
     public boolean delete(String jobOfferId, String userType, String companyId){
         if (jobOfferId != null || !jobOfferId.isEmpty() || companyId != null || !companyId.isEmpty()) {
             DeleteResult result;
@@ -254,6 +282,9 @@ public class JobOfferStore extends DataStore {
         }
     }
 
+    /**
+     * Delete all job offers for a company by companyId
+     */
     public boolean deleteJobOffers(String companyId){
         if (companyId != null || !companyId.isEmpty()) {
             BasicDBObject filter = new BasicDBObject("userId", companyId);
@@ -264,8 +295,10 @@ public class JobOfferStore extends DataStore {
         }
     }
 
-    //deserialize a JobOfferDO from a DBObject
-    //Reused in other functions
+    /**
+     * deserialize a JobOfferDO from a DBObject
+     * Reused in other functions
+     */
     private JobOfferDO extractJobOffer(DBObject object){
         return this.serializer.deSerialize(object.toString(), JobOfferDO.class);
     }
