@@ -11,3 +11,8 @@
 #jfsJobProfile .mapelement {
     height:150px;
 }
+
+#jfsJobProfile h2,
+#jfsJobProfile dl dd {
+    word-break: break-all;
+}

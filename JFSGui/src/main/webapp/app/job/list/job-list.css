@@ -51,6 +51,12 @@
     display: block;
 }
 
+#jfsJobList .masonry-brick .panel-heading,
+#jfsJobList .masonry-brick .panel-body p,
+#jfsJobList .masonry-brick .panel-body ul li {
+    word-break: break-all;
+}
+
 #jfsJobList .jobOfferAddressDropdown{
     z-index: 1000;
     position: absolute;
