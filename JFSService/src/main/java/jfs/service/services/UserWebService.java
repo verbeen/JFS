@@ -51,12 +51,9 @@ public class UserWebService {
     }
 
     //Register an admin account
-    @POST
-    @Path("/register/admin")
-    @ApiOperation(value = "Register admin",
-        notes = "A user account for admin will be created.")
-    @Consumes("application/json")
-    @Produces("application/json")
+    @POST @Path("/register/admin")
+    @Consumes("application/json") @Produces("application/json")
+    @ApiOperation(value = "Register admin", notes = "A user account for admin will be created.")
     public Boolean registerAdmin(RegisterDTO register){
         Boolean result = false;
         result = this.service.registerUser(register.email, register.password, UserType.ADMIN);
@@ -64,24 +61,26 @@ public class UserWebService {
     }
 
     //Login
-    @POST
-    @Path("/login")
-    @ApiOperation(value = "Login",
-        notes = "Login with email and password.")
-    @Consumes("application/json")
-    @Produces("application/json")
+    @POST @Path("/login")
+    @Consumes("application/json") @Produces("application/json")
+    @ApiOperation(value = "Login", notes = "Login with email and password.")
     public LoginResultDTO login(AuthenticationDTO login){
         LoginResultDTO result = this.service.loginUser(login.email, login.password);
         return result;
     }
 
+    @POST @Path("/isloggedin")
+    @Consumes("application/json") @Produces("application/json")
+    @ApiOperation(value = "Is logged in", notes = "Check if your token is still valid, meaning the user is  still logged in.")
+    public boolean isLoggedIn(String token){
+        Session session = SessionService.sessions.get(token);
+        return session != null;
+    }
+
     //Get all user accounts
-    @POST
-    @Path("/all")
-    @ApiOperation(value = "Get all user accounts",
-        notes = "Returns an array of all registered user accounts.")
-    @Consumes("application/json")
-    @Produces("application/json")
+    @POST @Path("/all")
+    @Consumes("application/json") @Produces("application/json")
+    @ApiOperation(value = "Get all user accounts", notes = "Returns an array of all registered user accounts.")
     public List<UserDTO> getAll(String token){
         if(token != null && token != "") {
             Session session = SessionService.sessions.get(token);
