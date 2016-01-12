@@ -14,4 +14,5 @@ public class SearchDTO {
     public int radius;
     public String skills;
     public JobTypeDTO type;
+    public String address;
 }

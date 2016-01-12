@@ -109,6 +109,9 @@ public class JobOfferService {
         if(searchDTO.type != null && searchDTO.type != JobTypeDTO.all){
             this.jobOfferStore.appendTypeQuery(document, searchDTO.type.name());
         }
+        if(searchDTO.address != null && searchDTO.address != ""){
+            this.jobOfferStore.appendAddressQuery(document, searchDTO.address);
+        }
 
         List<JobOfferDO> doList = this.jobOfferStore.getJobOffers(document, searchDTO.amount);
         return this.createOfferDTOList(doList);

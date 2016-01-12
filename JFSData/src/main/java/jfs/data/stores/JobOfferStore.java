@@ -129,7 +129,7 @@ public class JobOfferStore extends DataStore {
             pairs.add(new Pair("type", studentSubscriptionsDO.type.name()));
         }
         if(studentSubscriptionsDO.location != null && !"".equals(studentSubscriptionsDO.location)){
-            pairs.add(new Pair("location", new BasicDBObject("$regex", studentSubscriptionsDO.location)));
+            pairs.add(new Pair("location.address", new BasicDBObject("$regex", studentSubscriptionsDO.location)));
         }
         if(studentSubscriptionsDO.skills != null && !"".equals(studentSubscriptionsDO.skills)){
             /*
@@ -162,6 +162,10 @@ public class JobOfferStore extends DataStore {
 
     public void appendTypeQuery(Document doc, String type){
         doc.append("type", type);
+    }
+
+    public void appendAddressQuery(Document doc, String address){
+        doc.append("location.address", new Document("$regex", address));
     }
 
     public void appendSkillsQuery(Document doc, String skills){
