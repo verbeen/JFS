@@ -266,7 +266,7 @@
                     $scope.responseMessage = {};
                     $scope.responseMessage.showForm = false;
                     if (response.success && response.data != null && response.data.hasSucceeded) {
-                        console.info("Job offer created!");
+                        console.info("Job offer created.");
                         $scope.responseMessage.success = true;
                         $scope.responseMessage.text = "Your job offer has been successfully created.";
                         $scope.dataLoading = false;

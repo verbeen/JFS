@@ -54,7 +54,7 @@
                         console.log("deleted");
                         $scope.dataLoading = false;
                         $scope.responseMessage.success = true;
-                        $scope.responseMessage.text = "The job has been deleted successfully.";
+                        $scope.responseMessage.text = "The job offer has been deleted successfully.";
                         getAll();
                     }
                     else {

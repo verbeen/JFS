@@ -80,7 +80,7 @@
                     $scope.responseMessage = {};
                     $scope.responseMessage.showForm = false;
                     if (response.success) {
-                        console.info("Job offers uploaded!");
+                        console.info("Job offers uploaded.");
                         $scope.responseMessage.success = true;
                         $scope.responseMessage.text = "Your job offers have been successfully added.";
                         $scope.dataLoading = false;
@@ -88,7 +88,7 @@
                         // backend service is not reachable (e.g. database down)
                         console.error(response.message);
                         $scope.responseMessage.error = true;
-                        $scope.responseMessage.text = "An error occurred while adding your job offers.";
+                        $scope.responseMessage.text = "An error occurred while adding your job offers!";
                         $scope.dataLoading = false;
                     }
                 });

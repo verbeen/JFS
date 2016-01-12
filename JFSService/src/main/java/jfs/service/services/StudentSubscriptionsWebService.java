@@ -23,7 +23,7 @@ public class StudentSubscriptionsWebService {
     StudentSubscriptionsService studentSubscriptionsService;
 
     /**
-     * Add a studet subscription
+     * Add a student subscription
      */
     @POST
     @Path("/add") @Consumes("application/json") @Produces("application/json")
