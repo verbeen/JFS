@@ -20,7 +20,7 @@
 
                 <div class="form-group">
                     <div class="input-group">
-                        <input type="text" class="form-control" ng-model="selectedJobSearch.location" placeholder="Location">
+                        <input type="text" class="form-control" ng-model="selectedJobSearch.address" placeholder="Location">
                         <div class="searchButton input-group-addon">
                             <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
                         </div>
@@ -67,7 +67,7 @@
                             <th>Type</th>
                             <th>Company</th>
                             <th>Function</th>
-                            <th>Location</th>
+                            <th>Address</th>
                             <th>Start date</th>
                             <th>Duration</th>
                             <th>Valid until</th>
@@ -80,7 +80,7 @@
                             <td>{{ offer.type }}</td>
                             <td>{{ offer.companyId }}</td>
                             <td>{{ offer.function }}</td>
-                            <td>{{ offer.location }}</td>
+                            <td>{{ offer.address }}</td>
                             <td>{{ offer.startDate | dateCheckedZero: 'yyyy-MM-dd' }}</td>
                             <td>{{ offer.duration | duration }}</td>
                             <td>{{ offer.validUntil | dateCheckedZero: 'yyyy-MM-dd' }}</td>

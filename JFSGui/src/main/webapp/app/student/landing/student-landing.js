@@ -26,7 +26,7 @@ angular
                 var t = new Date();
                 var time = new Date(t).getTime();
                 $scope.time = time;
-                JobService.getJobsSubs($rootScope.globals.currentUser.username)
+                JobService.getJobsSubs($rootScope.globals.currentUser.authdata)
                     .then(function(response) {
                         $scope.noResults = {};
                         $scope.noResults.info = false;
@@ -53,8 +53,7 @@ angular
             };
 
             function checkSub() {
-                var user = $rootScope.globals.currentUser.username;
-                JobService.checkSubscription($rootScope.globals.currentUser.username)
+                JobService.checkSubscription($rootScope.globals.currentUser.authdata)
                     .then(function(response) {
                         $scope.noResults = {};
                         $scope.noResults.info = false;

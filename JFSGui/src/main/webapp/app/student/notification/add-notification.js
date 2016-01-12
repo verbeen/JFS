@@ -36,6 +36,7 @@
         $scope.redirect = function () {
             window.location = "#/student";
         }
+
         function saveSub() {
             $scope.$watch('$scope.flag', function () {
                 if ($scope.flag > 0) {
@@ -44,10 +45,7 @@
                     createSub();
                 }
             });
-
-
         }
-
 
         function createSub() {
             //Getting current time and converting it to milliseconds
