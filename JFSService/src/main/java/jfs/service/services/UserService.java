@@ -26,8 +26,6 @@ import java.util.UUID;
  */
 @Singleton
 public class UserService {
-    @Inject
-    private SessionService sessionService;
     private UserStore userStore = UserStore.store;
     private StudentSubscriptionsStore studentSubscriptionsStore = StudentSubscriptionsStore.store;
     private JobOfferMetricsStore metricsStore = JobOfferMetricsStore.jobOfferMetricsStore;
@@ -53,7 +51,7 @@ public class UserService {
             result.isLoggedIn = true;
             result.token = UUID.randomUUID().toString();
             result.type = UserTypeDTO.valueOf(user.type.name());
-            this.sessionService.sessions.put(result.token, new Session(user._id, UserTypeDTO.valueOf(user.type.name())));
+            SessionService.sessions.put(result.token, new Session(user._id, UserTypeDTO.valueOf(user.type.name())));
         }else{
             result.isLoggedIn = false;
         }
